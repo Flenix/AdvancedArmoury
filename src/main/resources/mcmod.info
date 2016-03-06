@@ -1,0 +1,16 @@
+[
+{
+  "modid": "advancedarmoury",
+  "name": "Advanced Armoury",
+  "description": "Complex weapon system mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Flenix"],
+  "credits": "surferconor425 & Kinuferu for early alpha testing :)",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
