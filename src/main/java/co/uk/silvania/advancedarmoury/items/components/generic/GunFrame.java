@@ -2,17 +2,14 @@ package co.uk.silvania.advancedarmoury.items.components.generic;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Random;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import co.uk.silvania.advancedarmoury.AAItems;
 import co.uk.silvania.advancedarmoury.AAUtils;
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.DamageSourceShot;
+import co.uk.silvania.advancedarmoury.IGun;
 import co.uk.silvania.advancedarmoury.IMagazine;
-import co.uk.silvania.advancedarmoury.IRound;
 import co.uk.silvania.advancedarmoury.gun.inventory.ItemIInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.ItemInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultContainer;
@@ -27,14 +24,10 @@ import co.uk.silvania.advancedarmoury.network.GunEventPacket;
 import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -43,7 +36,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class GunFrame extends ItemInventory {
+public class GunFrame extends ItemInventory implements IGun {
 	
 	private Entity pointedEntity;
 	private int fireRate = 2;
@@ -51,6 +44,8 @@ public class GunFrame extends ItemInventory {
 	private int tickRecoil;
 	private int fireCooldownClient;
 	FireAutomaticGun gunFire = new FireAutomaticGun();
+	
+	public int weight;
 
 	public GunFrame() {
 		maxStackSize = 1;
@@ -348,6 +343,7 @@ public class GunFrame extends ItemInventory {
 							//receiver.stackTagCompound.setString("boltMaterial", boltItem.material.getRawString());
 							receiver.stackTagCompound.setString("chargingHandleMaterial", chargingHandleItem.material.getRawString());
 							receiver.stackTagCompound.setString("fireSelectorMaterial", fireSelectorItem.material.getRawString());
+							item.stackTagCompound.setInteger("weight", getWeight(item));
 						}
 					}
 				}

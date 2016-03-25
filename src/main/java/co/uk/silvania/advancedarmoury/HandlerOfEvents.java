@@ -63,36 +63,56 @@ public class HandlerOfEvents {
     
     //increaseHealth() Increases player's maximum health drastically, to give gun damages more room to play with.
     @SubscribeEvent public void onRespawn(PlayerRespawnEvent event) { increaseHealth(event.player); }
-    @SubscribeEvent public void onLivingUpdate(LivingUpdateEvent event) { increaseHealth(event.entity); }
+    
+    @SubscribeEvent public void onLivingUpdate(LivingUpdateEvent event) {
+    	//99% for existing worlds, but good to have to be safe. If entity's health hasn't been increased, we increase it.
+    	increaseHealth(event.entity);
+    	//Applies the weight of whatever the entity has, restricting their movement.
+    	applyWeight(event.entity);
+    }
         
     //TODO add support for mods which also increase health. Current known mods:
     //Tinkers Construct, DifficultLife
     //Mods need to be open source (Or at least have a deobfuscated jar available) for me to be able to support them.
     public void increaseHealth(Entity eventEntity) {
-    	if (eventEntity instanceof EntityLiving) {
+    	if (eventEntity instanceof EntityLivingBase) {
 			EntityLivingBase entity = (EntityLivingBase) eventEntity;
 			
 			//Makes the modification unique so that other mods can still modify the modified modifier and your mod won't be confused by the other mods mods.
 			//Generated using https://www.uuidgenerator.net/
 			final UUID healthModUuid = UUID.fromString("a56f642f-d7bf-44a5-8897-c416a340c412");
 			AttributeModifier healthBump = (new AttributeModifier(healthModUuid, "healthBump", 9, 2));
-			IAttributeInstance iai = entity.getEntityAttribute(SharedMonsterAttributes.maxHealth);
-			if (iai.getModifier(healthModUuid) == null) {
-				iai.applyModifier(healthBump);
+			IAttributeInstance health = entity.getEntityAttribute(SharedMonsterAttributes.maxHealth);
+			if (health.getModifier(healthModUuid) == null) {
+				health.applyModifier(healthBump);
 				entity.setHealth(entity.getMaxHealth());
 			}
-    	} else if (eventEntity instanceof EntityPlayer) {
-			EntityPlayer entity = (EntityPlayer) eventEntity;
-			
-			//Makes the modification unique so that other mods can still modify the modified modifier and your mod won't be confused by the other mods mods.
-			//Generated using https://www.uuidgenerator.net/
-			final UUID healthModUuid = UUID.fromString("a56f642f-d7bf-44a5-8897-c416a340c412");
-			AttributeModifier healthBump = (new AttributeModifier(healthModUuid, "healthBump", 9, 2));
-			IAttributeInstance iai = entity.getEntityAttribute(SharedMonsterAttributes.maxHealth);
-			if (iai.getModifier(healthModUuid) == null) {
-				iai.applyModifier(healthBump);
-				entity.setHealth(entity.getMaxHealth());
-			}
+    	}
+    }
+    
+    public void applyWeight(Entity eventEntity) {
+    	if (eventEntity instanceof EntityPlayer) {
+    		EntityPlayer player = (EntityPlayer) eventEntity;
+    		int totalWeight = 0;
+    		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+    			ItemStack item = player.inventory.getStackInSlot(i);
+    			
+    			if (item != null && item.stackTagCompound != null) {
+    				totalWeight += item.stackTagCompound.getInteger("weight");
+    			}
+    		}
+    		
+    		//We add the held item twice (It was caught in the loop above) because the held item throws balance more.
+    		//When you're running with a weapon in hand, it's harder than running with one slung over your shoulder
+    		//Therefore weilding a gun impacts you more than just having it in your inventory.
+    		ItemStack heldItem = player.getHeldItem();
+    		if (heldItem != null && heldItem.stackTagCompound != null) {
+    			totalWeight += heldItem.stackTagCompound.getInteger("weight");
+    		}
+    		
+    		player.moveEntityWithHeading(player.moveStrafing, player.moveForward * 1.2F);
+    		//player.capabilities.setPlayerWalkSpeed(0.5F);
+    		System.out.println("Total weight: " + totalWeight);
     	}
     }
     
