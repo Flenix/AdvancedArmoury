@@ -24,6 +24,10 @@ public class RoundRenderer implements IItemRenderer {
 	
 	private static RenderItem renderItem = new RenderItem();
 	private Random random = new Random();
+	
+	public RoundRenderer() {
+		
+	}
 
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {

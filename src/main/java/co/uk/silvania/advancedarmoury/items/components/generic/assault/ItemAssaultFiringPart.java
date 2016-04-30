@@ -7,29 +7,28 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class ItemAssaultBoltPart extends ItemAssaultComponent {
+public class ItemAssaultFiringPart extends ItemAssaultComponent {
 	
-	String identColour;
-	String identId;
-	String mat;
-	String matColour;
-	
-	public ItemAssaultBoltPart(String identColour, String identId, String partName, String displayName, double size, String materialName, double dura, int weight, float acc, String col, int rgb, int rate, String oredict) {
-		super(partName, displayName, size, materialName, dura, weight, acc, col, rgb, rate, oredict);
-		this.identColour = identColour;
-		this.identId = identId;
-		this.mat = materialName;
-		this.matColour = col;
+	String matName;
+	String col;
+	String partId;
+
+	public ItemAssaultFiringPart(String partId, String displayName, String partName, double size, String name, double durability, int weight, float accuracy, String textCol, int rgb, int fireRate, String oreDict) {
+		super(partName, displayName, size, name, durability, weight, accuracy, textCol, rgb, fireRate, oreDict);
+		this.fireRate = fireRate;
+		this.matName = name;
+		this.col = textCol;
+		this.partId = partId;
 	}
 	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
-		list.add(identColour + "Part Identifier: " + identId);
+		list.add("\u00A71" + "Part Identifier: " + partId);
 		list.add("");
-		list.add(matColour + "Material: " + mat);
+		list.add(col + "Material: " + matName);
 		list.add("");
 		list.add("\u00A78" + "Accuracy: N/A");
-		list.add("\u00A78" + "Fire Rate: N/A");
+		list.add("Fire Rate: " + fireRate);
 		list.add("Power Modifier: " + power);
 		list.add("Weight: " + weight);
 		list.add("");

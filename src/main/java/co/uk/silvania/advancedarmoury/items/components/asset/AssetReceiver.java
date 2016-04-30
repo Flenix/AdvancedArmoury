@@ -1,7 +1,7 @@
 package co.uk.silvania.advancedarmoury.items.components.asset;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.items.EnumMaterial;
+import co.uk.silvania.advancedarmoury.config.MaterialStats;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class AssetReceiver extends Receiver {
@@ -15,7 +15,6 @@ public class AssetReceiver extends Receiver {
 				cpt.modelTexture, 
 				cpt.iconTexture, 
 				cpt.gunType, 
-				EnumMaterial.valueOf(cpt.material.toUpperCase()), 
 				cpt.buildTime, 
 				cpt.partCost, 
 				cpt.xSize,
@@ -37,7 +36,11 @@ public class AssetReceiver extends Receiver {
 				cpt.attachmentY,
 				cpt.attachmentZ,
 				cpt.magId, 
-				cpt.topRail);
+				cpt.topRail,
+				MaterialStats.getWeight(cpt.material),
+				MaterialStats.getDurability(cpt.material),
+				cpt.material,
+				MaterialStats.getTextCol(cpt.material));
 		
 		GameRegistry.registerItem(this, cpt.unlocalizedName, AdvancedArmoury.modid);
 	}

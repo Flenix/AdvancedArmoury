@@ -1,9 +1,5 @@
 package co.uk.silvania.advancedarmoury.items.components.asset;
 
-import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.items.EnumMaterial;
-import cpw.mods.fml.common.registry.GameRegistry;
-
 public class Receiver extends ItemAsset {
 	
 	public float barrelX;
@@ -27,7 +23,7 @@ public class Receiver extends ItemAsset {
 	
 	static double size = 4.5;
 
-	public Receiver(String name, String modelName, String modelTexture, String iconTexture, String gunType, EnumMaterial material, 
+	public Receiver(String name, String modelName, String modelTexture, String iconTexture, String gunType, 
 			int buildTime, int cost, 
 			float xSize, float ySize, float zSize, 
 			float barrelX, float barrelY, float barrelZ,
@@ -35,15 +31,14 @@ public class Receiver extends ItemAsset {
 			float triggerX, float triggerY, float triggerZ,
 			float magX, float magY, float magZ,
 			float attachmentX, float attachmentY, float attachmentZ,
-			int magId, boolean topRail) {
+			int magId, boolean topRail,
+			int weight, double durability, String materialName, String textCol) {
 		
-		super("\u00A7d", "R", "receiver", size, (int) Math.round((size*material.weight)/4), (int) Math.round((size*material.durability)*100), 0, material);
+		super("\u00A7d", "R", "receiver", size, (int) Math.round((size*weight)/4), (int) Math.round((size*durability)*100), 0, materialName, textCol);
 		this.displayName = name;
 		this.modelName = modelName;
 		this.modelTexture = modelTexture;
 		this.iconTexture = iconTexture;
-		this.gunType = gunType;
-		this.material = material;
 		this.buildTime = buildTime;
 		this.cost = cost;
 		

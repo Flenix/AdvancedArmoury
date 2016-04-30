@@ -102,6 +102,7 @@ public class FireAutomaticGun {
 		
 			if (!(chambreCal == barrelCal && barrelCal == roundCal)) {
 				//damage gun
+				world.playSoundAtEntity(player, "advancedarmoury:dryfire", 3.0F, 1.0F);
 				return;
 			}
 

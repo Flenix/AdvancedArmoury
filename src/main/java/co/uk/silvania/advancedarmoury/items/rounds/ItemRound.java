@@ -109,7 +109,17 @@ public class ItemRound extends Item implements IRound {
 
 		System.out.println("OH NOES");
 		return caseIcons[0];
-	}	
+	}
+	
+	@Override
+	public IIcon getIconFromDamageForRenderPass(int damage, int pass) {
+		if (pass == 0) {
+			return caseIcons[1];
+		} else {
+			return caseIcons[0];
+		}
+		
+	}
 	
 	@Override
 	public void onUpdate(ItemStack item, World world, Entity entity, int par4, boolean par5) {

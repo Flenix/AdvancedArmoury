@@ -3,6 +3,7 @@ package co.uk.silvania.advancedarmoury.client.renderers.assault;
 import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
+import co.uk.silvania.advancedarmoury.config.MaterialStats;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -18,27 +19,40 @@ public class AssaultReceiverRenderer implements IItemRenderer {
 	public ResourceLocation modelFireSelector;
 
 	public ResourceLocation textureReceiver;
-	public ResourceLocation textureBolt;
-	public ResourceLocation textureChargingHandle;
-	public ResourceLocation textureFireSelector;
+	public ResourceLocation texturePart = new ResourceLocation(AdvancedArmoury.modid, "models/white.png");
 
 	public IModelCustom mdlReceiver;
 	public IModelCustom mdlBolt;
 	public IModelCustom mdlChargingHandle;
 	public IModelCustom mdlFireSelector;
+	
+	boolean useRGB = false;
+	int rgbRec;
+	int rgbBolt;
+	int rgbCharge;
+	int rgbFireSel;
+	
 
-	public AssaultReceiverRenderer(String model, String texture) {
+	public AssaultReceiverRenderer(String model, String texture, boolean customTextured, int rgb) {
 		modelReceiver = new ResourceLocation(AdvancedArmoury.modid, "models/" + model + ".obj");
 		modelBolt = new ResourceLocation(AdvancedArmoury.modid, "models/" + model + "_bolt.obj");
 		modelChargingHandle = new ResourceLocation(AdvancedArmoury.modid, "models/" + model + "_charginghandle.obj");
 		modelFireSelector = new ResourceLocation(AdvancedArmoury.modid, "models/" + model + "_fireselector.obj");
-
-		textureReceiver = new ResourceLocation(AdvancedArmoury.modid, "models/" + texture + ".png");
+		
+		if (customTextured) {
+			useRGB = false;
+			textureReceiver = new ResourceLocation(AdvancedArmoury.modid, "models/" + texture + ".png");
+		} else {
+			useRGB = true;
+			textureReceiver = new ResourceLocation(AdvancedArmoury.modid, "models/white.png");
+		}
 
 		mdlReceiver = AdvancedModelLoader.loadModel(modelReceiver);
 		mdlBolt = AdvancedModelLoader.loadModel(modelBolt);
 		mdlChargingHandle = AdvancedModelLoader.loadModel(modelChargingHandle);
 		mdlFireSelector = AdvancedModelLoader.loadModel(modelFireSelector);
+		
+		this.rgbRec = rgb;
 	}
 
 	@Override
@@ -54,41 +68,41 @@ public class AssaultReceiverRenderer implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		if (item.stackTagCompound != null) {
-			textureBolt = new ResourceLocation(AdvancedArmoury.modid, "models/texture" + item.stackTagCompound.getString("boltMaterial") + ".png");
-			textureChargingHandle = new ResourceLocation(AdvancedArmoury.modid, "models/texture" + item.stackTagCompound.getString("chargingHandleMaterial") + ".png");
-			textureFireSelector = new ResourceLocation(AdvancedArmoury.modid, "models/texture" + item.stackTagCompound.getString("fireSelectorMaterial") + ".png");
+			rgbBolt = MaterialStats.getRGB(item.stackTagCompound.getString("boltMaterial"));
+			rgbCharge = MaterialStats.getRGB(item.stackTagCompound.getString("chargingHandleMaterial"));
+			rgbFireSel = MaterialStats.getRGB(item.stackTagCompound.getString("fireSelectorMaterial"));
 		} else {
-			textureBolt = new ResourceLocation(AdvancedArmoury.modid, "models/texturePolymer.png");
-			textureChargingHandle = new ResourceLocation(AdvancedArmoury.modid, "models/texturePolymer.png");
-			textureFireSelector = new ResourceLocation(AdvancedArmoury.modid, "models/texturePolymer.png");
+			rgbBolt = MaterialStats.getRGB("Polymer");
+			rgbCharge = MaterialStats.getRGB("Polymer");
+			rgbFireSel = MaterialStats.getRGB("Polymer");
 		}
 		switch (type) {
 			case ENTITY: {
 				doRender(textureReceiver, mdlReceiver, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureBolt, mdlBolt, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureChargingHandle, mdlChargingHandle, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureFireSelector, mdlFireSelector, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlBolt, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlChargingHandle, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlFireSelector, 0, 0, 1.5F, 0, 0, 0);
 				return;
 			}
 			case EQUIPPED: {
 				doRender(textureReceiver, mdlReceiver, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureBolt, mdlBolt, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureChargingHandle, mdlChargingHandle, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureFireSelector, mdlFireSelector, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlBolt, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlChargingHandle, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlFireSelector, 0, 0, 1.5F, 0, 0, 0);
 				return;
 			}
 			case EQUIPPED_FIRST_PERSON: {
 				doRender(textureReceiver, mdlReceiver, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureBolt, mdlBolt, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureChargingHandle, mdlChargingHandle, 0, 0, 1.5F, 0, 0, 0);
-				doRender(textureFireSelector, mdlFireSelector, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlBolt, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlChargingHandle, 0, 0, 1.5F, 0, 0, 0);
+				doRender(texturePart, mdlFireSelector, 0, 0, 1.5F, 0, 0, 0);
 				return;
 			}
 			case INVENTORY: {
 				doRender(textureReceiver, mdlReceiver, 0, 0, 2F, 0, 0, 0);
-				doRender(textureBolt, mdlBolt, 0, 0, 2F, 0, 0, 0);
-				doRender(textureChargingHandle, mdlChargingHandle, 0, 0, 2F, 0, 0, 0);
-				doRender(textureFireSelector, mdlFireSelector, 0, 0, 2F, 0, 0, 0);
+				doRender(texturePart, mdlBolt, 0, 0, 2F, 0, 0, 0);
+				doRender(texturePart, mdlChargingHandle, 0, 0, 2F, 0, 0, 0);
+				doRender(texturePart, mdlFireSelector, 0, 0, 2F, 0, 0, 0);
 				return;
 			}
 			default:
@@ -100,9 +114,26 @@ public class AssaultReceiverRenderer implements IItemRenderer {
 	public void doRender(ResourceLocation texture, IModelCustom model, int rotX, int rotY, float scale, float moveX, float moveY, float moveZ) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		GL11.glPushMatrix();
+		if (useRGB && model == mdlReceiver)  { applyColor(rgbRec); }
+		else if (model == mdlBolt) 			 { applyColor(rgbBolt); }
+		else if (model == mdlChargingHandle) { applyColor(rgbCharge); }
+		else if (model == mdlFireSelector) 	 { applyColor(rgbFireSel); }
 		GL11.glScalef(scale, scale, scale);
 		model.renderAll();
+		GL11.glColor3f(1,1,1);
 		GL11.glPopMatrix();
+	}
+	
+	public void applyColor(int rgb) {
+		if ((rgb & -67108864) == 0) {
+			rgb |= -16777216;
+        }
+		
+		float red = (float)(rgb >> 16 & 255) / 255.0F;
+		float blue = (float)(rgb >> 8 & 255) / 255.0F;
+		float green = (float)(rgb & 255) / 255.0F;
+		
+		GL11.glColor3f(red, blue, green);
 	}
 
 }

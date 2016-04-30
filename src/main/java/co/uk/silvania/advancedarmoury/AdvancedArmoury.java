@@ -12,10 +12,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import co.uk.silvania.advancedarmoury.items.AAItemAssaultComponents;
-import co.uk.silvania.advancedarmoury.items.AAItemComponents;
-import co.uk.silvania.advancedarmoury.items.AAItemModifierCores;
-import co.uk.silvania.advancedarmoury.items.AAItemPrebuiltGuns;
+import co.uk.silvania.advancedarmoury.config.AAConfig;
+import co.uk.silvania.advancedarmoury.config.ComponentGenerator;
+import co.uk.silvania.advancedarmoury.config.ComponentGeneratorConfig;
 import co.uk.silvania.advancedarmoury.items.components.ComponentType;
 import co.uk.silvania.advancedarmoury.items.components.asset.AssetFrontEnd;
 import co.uk.silvania.advancedarmoury.items.components.asset.AssetReceiver;
@@ -40,6 +39,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -49,7 +49,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class AdvancedArmoury
 {
     public static final String modid = "advancedarmoury";
-    public static final String version = "Pre-Alpha-0.0.11";
+    public static final String version = "Alpha-0.0.1";
     
     public static DamageSource damageShot;
     public static DamageSource damageMelee;
@@ -69,7 +69,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabComponentsGeneric = new CreativeTabs("tabComponentsGeneric") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AAItemComponents.triggerGold);
+    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemComponents.triggerGold);
     		return stack.getItem();
     	}
     };
@@ -77,7 +77,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabComponentsAssault = new CreativeTabs("tabComponentsAssault") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AAItemAssaultComponents.assaultBoltSteel);
+    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemAssaultComponents.assaultBoltSteel);
     		return stack.getItem();
     	}
     };
@@ -85,7 +85,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabComponentsCalibre = new CreativeTabs("tabComponentsCalibre") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AAItemComponents.barrelIron);
+    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemComponents.barrelIron);
     		return stack.getItem();
     	}
     };
@@ -93,7 +93,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabParts = new CreativeTabs("tabParts") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AAItems.itemPartGear);
+    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItems.itemPartGear);
     		return stack.getItem();
     	}
     };
@@ -101,7 +101,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabMachines = new CreativeTabs("tabMachines") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AABlocks.assaultRifleAssemblyTable);
+    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AABlocks.assaultRifleAssemblyTable);
     		return stack.getItem();
     	}
     };
@@ -109,7 +109,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabModifiers = new CreativeTabs("tabModifiers") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AAItemModifierCores.coreSimpleChamberNet);
+    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemModifierCores.coreSimpleChamberNet);
     		return stack.getItem();
     	}
     };
@@ -117,7 +117,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabGuns = new CreativeTabs("tabGuns") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack item = new ItemStack(AAItemPrebuiltGuns.m4CarbineBling);
+    		ItemStack item = new ItemStack(Items.apple);//new ItemStack(AAItemPrebuiltGuns.m4CarbineBling);
     		return item.getItem();
     	}
     };
@@ -128,9 +128,8 @@ public class AdvancedArmoury
     public void preInit(FMLPreInitializationEvent event) {
     	NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
     	AAConfig.init(event.getModConfigurationDirectory().getParent() + "/Advanced Armoury/");
-    	
+    	ComponentGeneratorConfig.init(event.getModConfigurationDirectory().getParent() + "/Advanced Armoury/");
     	assetDir = new File(event.getModConfigurationDirectory().getParentFile(), "/Advanced Armoury/");
-    	
     	
     	if (!assetDir.exists()) {
     		println("Asset Directory not found. Creating.");
@@ -138,7 +137,7 @@ public class AdvancedArmoury
     	} else {
     		println("Asset directory found.");
     	}
-    	
+
     	readAssetPacks(event);
     }
     
@@ -154,6 +153,7 @@ public class AdvancedArmoury
     	//Me: ok.
     	MinecraftForge.EVENT_BUS.register(new HandlerOfEvents());
 
+    	ComponentGenerator.init();
     	AAItems.init();
     	AABlocks.init();
     	

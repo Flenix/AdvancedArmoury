@@ -18,7 +18,6 @@ import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultMagazineIInve
 import co.uk.silvania.advancedarmoury.gun.mechanics.FireAutomaticGun;
 import co.uk.silvania.advancedarmoury.items.components.asset.Receiver;
 import co.uk.silvania.advancedarmoury.items.components.cores.IModifierCore;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultChargingHandle;
 import co.uk.silvania.advancedarmoury.items.magazines.ItemMagazine;
 import co.uk.silvania.advancedarmoury.network.GunEventPacket;
 import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
@@ -274,7 +273,7 @@ public class GunFrame extends ItemInventory implements IGun {
 			}
 			
 			if (world.isRemote) {
-				int recoil = 20;
+				/*int recoil = 20;
 				
 				if (firing && fireCooldownClient <= 0) {
 					System.out.println("RECOILING");
@@ -283,13 +282,13 @@ public class GunFrame extends ItemInventory implements IGun {
 					fireCooldownClient = fireRate + 1;
 				}
 				if (tickRecoil > 0) {
-					System.out.println("Tick: " + tickRecoil);
+					//System.out.println("Tick: " + tickRecoil);
 					//if (tickRecoil % 10 == 0 && !(tickRecoil % 30 == 0)) {
-						System.out.println("Windback");
+						//System.out.println("Windback");
 						player.setAngles(0, -6);
 					//}
 					tickRecoil -= 2;
-				}
+				}*/
 				
 				if (fireCooldownClient > 0) {
 					fireCooldownClient--;
@@ -333,7 +332,7 @@ public class GunFrame extends ItemInventory implements IGun {
 						if (receiver.getItem() instanceof Receiver) {
 							Receiver rec = (Receiver) receiver.getItem();
 							//ItemAssaultBoltPart boltItem = (ItemAssaultBoltPart) bolt.getItem();
-							ItemAssaultChargingHandle chargingHandleItem = (ItemAssaultChargingHandle) chargingHandle.getItem();
+							ItemComponent chargingHandleItem = (ItemComponent) chargingHandle.getItem();
 							ItemFireSelector fireSelectorItem = (ItemFireSelector) fireSelector.getItem();
 							
 							if (receiver.stackTagCompound == null) {
@@ -341,8 +340,8 @@ public class GunFrame extends ItemInventory implements IGun {
 							}
 							
 							//receiver.stackTagCompound.setString("boltMaterial", boltItem.material.getRawString());
-							receiver.stackTagCompound.setString("chargingHandleMaterial", chargingHandleItem.material.getRawString());
-							receiver.stackTagCompound.setString("fireSelectorMaterial", fireSelectorItem.material.getRawString());
+							receiver.stackTagCompound.setString("chargingHandleMaterial", chargingHandleItem.material);
+							receiver.stackTagCompound.setString("fireSelectorMaterial", fireSelectorItem.material);
 							item.stackTagCompound.setInteger("weight", getWeight(item));
 						}
 					}

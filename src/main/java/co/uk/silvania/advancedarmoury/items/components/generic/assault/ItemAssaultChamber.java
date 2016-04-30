@@ -3,7 +3,6 @@ package co.uk.silvania.advancedarmoury.items.components.generic.assault;
 import java.util.List;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.items.EnumMaterial;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -18,24 +17,36 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 public class ItemAssaultChamber extends ItemAssaultComponent {
+	
+	String matName;
+	String col;
+	double dura;
 
-	public ItemAssaultChamber(EnumMaterial mat) {
-		super("chamber", 1.76, mat);
+	public ItemAssaultChamber(String displayName, double dura, int weight, float acc, String col, int rgb, int rate, String oredict) {
+		super("chamber", "Chamber", 1.76, displayName, dura, weight, acc, col, rgb, rate, oredict);
 		this.setCreativeTab(AdvancedArmoury.tabComponentsCalibre);
+		
+		this.matName = displayName;
+		this.col = col;
+		this.dura = dura;
 	}
 	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
-		list.add("\u00A7bPart Identifier: B");
+		list.add("\u00A7b" + "Part Identifier: " + "B");
 		list.add("");
-		list.add("Material: " + material.getString());
-		list.add("Accuracy: N/A");
-		list.add("Fire Rate: N/A");
-		list.add("Cost (Parts): " + cost);
-		list.add("Build Time: " + buildTime);
+		list.add(col + "Material: " + matName);
+		list.add("");
+		list.add("\u00A78" + "Accuracy: N/A");
+		list.add("\u00A78" + "Fire Rate: N/A");
 		list.add("Power Modifier: " + power);
 		list.add("Weight: " + weight);
+		list.add("");
+		list.add("Cost (Parts): " + cost);
+		list.add("Build Time: " + buildTime);
+		list.add("");
 		list.add("Damage: " + this.getDamage(item) + "/" + this.getMaxDamage());
+		list.add("");
 		if (item.stackTagCompound != null) {
 			list.add("Calibre: " + item.stackTagCompound.getDouble("calibre"));
 		} else {
@@ -59,14 +70,14 @@ public class ItemAssaultChamber extends ItemAssaultComponent {
 			item.stackTagCompound.setDouble("calibre", 5.56);
 			item.stackTagCompound.setString("partName", partName);
 		} else {
-			setMaxDamage((int)Math.round(material.durability * (this.durability * Math.round(item.stackTagCompound.getDouble("size")))));
+			setMaxDamage((int)Math.round(dura * (this.durability * Math.round(item.stackTagCompound.getDouble("size")))));
 		}
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister icon) {
-		itemIcon = icon.registerIcon(AdvancedArmoury.modid + ":" + this.getUnlocalizedName().substring(5));
+		itemIcon = icon.registerIcon(AdvancedArmoury.modid + ":chamber");
 	}
 	
 	@Override

@@ -3,7 +3,7 @@ package co.uk.silvania.advancedarmoury.client.renderers.blocks;
 import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.blocks.storage.lootcrates.LootCrateEntity;
-import co.uk.silvania.advancedarmoury.client.RenderRegisters;
+import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import co.uk.silvania.advancedarmoury.client.renderers.models.TinyLootCrateModel;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -65,7 +64,7 @@ public class TinyLootCrateRenderer extends TileEntitySpecialRenderer implements 
 
 	@Override
 	public int getRenderId() {
-		return RenderRegisters.tinyLootCrateRenderID;
+		return ClientProxy.tinyLootCrateRenderID;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package co.uk.silvania.advancedarmoury.items.components.asset.internal;
 
-import co.uk.silvania.advancedarmoury.items.EnumMaterial;
 import co.uk.silvania.advancedarmoury.items.components.asset.Receiver;
 
 public class M4Receiver extends Receiver {
@@ -29,15 +28,15 @@ public class M4Receiver extends Receiver {
 	static float attachmentY = 0.0F;
 	static float attachmentZ = 0.0F;
 
-	public M4Receiver(String name, String iconTexture, String gunType, EnumMaterial mat, boolean topRail) {
-		super(name, "m4receiver", "m4receiver", iconTexture, gunType, mat, (int) Math.round((3.8*mat.durability)*100), (int) Math.round((3.8*mat.weight)/4),
+	public M4Receiver(String name, String iconTexture, String gunType, String materialName, double dura, int weight, String col, boolean topRail) {
+		super(name, "m4receiver", "m4receiver", iconTexture, gunType, (int) Math.round((3.8*dura)*100), (int) Math.round((3.8*weight)/4),
 				xSize, ySize, zSize,
 				frontEndX, frontEndY, frontEndZ,
 				stockX, stockY, stockZ,
 				triggerX, triggerY, triggerZ,
 				magX, magY, magZ,
 				attachmentX, attachmentY, attachmentZ,
-				0, topRail);
+				0, topRail, weight, dura, materialName, col);
 	}
 
 }

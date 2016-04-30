@@ -1,7 +1,7 @@
 package co.uk.silvania.advancedarmoury.items.components.generic;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.items.EnumMaterial;
+import co.uk.silvania.advancedarmoury.config.MaterialStats;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,36 +14,83 @@ import net.minecraft.world.World;
 
 public class ItemComponent extends Item {
 
-	public EnumMaterial material;
 	public String partName;
+	public String material;
 	public int cost;
 	public int buildTime;
 	public int power;
-	public int weight;
-	public int fireRate;
-	public int durability;
-	public float accuracy;
 	public double calibre;
 	public double size;
 	
-	public ItemComponent(String partName, double size, int cost, int buildTime, int power, EnumMaterial mat) {
+	public int durability;
+	public int weight;
+	public float accuracy;
+	public String textColour;
+	public int itemRGB;
+	public int fireRate;
+	public String oreDict;
+	
+	public String textureName;
+	public String displayName;
+	
+	public ItemComponent(String weaponType, String displayName, String partName, String materialName, double size, int cost, int buildTime, int power, double durability, int weight, float acc, String textCol, int rgb, int fireRate, String oreDict) {
 		super();
 		this.partName = partName;
+		this.material = materialName;
 		this.durability = (int) Math.round(200 * size);
 		this.size = size;
-		this.material = mat;
 		this.cost = cost;
 		this.buildTime = buildTime / 4;
 		this.power = power;
-		this.weight = (int)Math.round(mat.weight * size);
-		this.setMaxDamage((int)Math.round(mat.durability * this.durability));
+		this.weight = (int)Math.round(weight * size);
+		this.accuracy = acc;
+		this.setMaxDamage((int)Math.round(durability * this.durability));
 		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
+		this.textColour = textCol;
+		this.itemRGB = rgb;
+		this.fireRate = fireRate;
+		this.oreDict = oreDict;
+		this.textureName = weaponType + partName;
+		this.displayName = material + " " + displayName;
+	}
+	
+	public ItemComponent(String weaponType, String displayName, String partName, String materialName, double size, int cost, int buildTime, int power) {
+		super();
+		MaterialStats stats = new MaterialStats();
+		this.partName = partName;
+		this.material = materialName;
+		this.durability = (int) Math.round(200 * size);
+		this.size = size;
+		this.cost = cost;
+		this.buildTime = buildTime / 4;
+		this.power = power;
+		this.weight = (int)Math.round(stats.getWeight(materialName) * size);
+		this.accuracy = stats.getAccuracry(materialName);
+		this.setMaxDamage((int)Math.round(stats.getDurability(materialName) * this.durability));
+		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
+		this.textColour = stats.getTextCol(materialName);
+		this.itemRGB = stats.getRGB(materialName);
+		this.fireRate = stats.getFireRate(materialName);
+		this.oreDict = stats.getOreDict(materialName);
+		this.textureName = weaponType + partName;
+		this.displayName = material + " " + displayName;
+	}
+	
+	@Override
+    public String getItemStackDisplayName(ItemStack item) {
+        return displayName;
+    }
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister icon) {
+		itemIcon = icon.registerIcon(AdvancedArmoury.modid + ":" + textureName);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister icon) {
-		itemIcon = icon.registerIcon(AdvancedArmoury.modid + ":" + this.getUnlocalizedName().substring(5));
+	public int getColorFromItemStack(ItemStack item, int par2) {
+		return itemRGB;
 	}
 	
 	public void damagePart(ItemStack item, int dmg) {

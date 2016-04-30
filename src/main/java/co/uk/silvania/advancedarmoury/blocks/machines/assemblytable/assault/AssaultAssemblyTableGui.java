@@ -12,7 +12,7 @@ import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemComponent;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultChamber;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultGasChamber;
+import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultFiringPart;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultGasFeed;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultPiston;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultPistonChamber;
@@ -204,7 +204,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 		boolean internalsValid = false;
 		
 		if (te.getStackInSlot(11) != null && te.getStackInSlot(12) != null) {
-			if (te.getStackInSlot(11).getItem() instanceof ItemAssaultGasChamber && te.getStackInSlot(12).getItem() instanceof ItemAssaultGasFeed) {
+			if (te.getStackInSlot(11).getItem() instanceof ItemAssaultFiringPart && te.getStackInSlot(12).getItem() instanceof ItemAssaultGasFeed) {
 				if (te.getStackInSlot(13) == null) {
 					internalsValid = true;
 				}

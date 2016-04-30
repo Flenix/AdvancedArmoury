@@ -1,33 +1,9 @@
 package co.uk.silvania.advancedarmoury.items.components.generic.assault;
 
-import java.util.List;
+public class ItemAssaultPistonChamber extends ItemAssaultFiringPart {
 
-import co.uk.silvania.advancedarmoury.items.EnumMaterial;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-
-public class ItemAssaultPistonChamber extends ItemAssaultComponent {
-	
-
-	public ItemAssaultPistonChamber(EnumMaterial mat) {
-		super("pistonChamber", 2.8, mat);
-		this.fireRate = mat.fireRate;
+	public ItemAssaultPistonChamber(String partName, double size, String name, double durability, int weight, float accuracy, String textCol, int rgb, int fireRate, String oreDict) {
+		super("A", "Piston Chamber", partName, size, name, durability, weight, accuracy, textCol, rgb, fireRate, oreDict);
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-    public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
-		list.add("\u00A74Part Identifier: A");
-		list.add("");
-		list.add("Material: " + material.getString());
-		list.add("Accuracy: N/A");
-		list.add("Fire Rate: " + fireRate);
-		list.add("Cost (Parts): " + cost);
-		list.add("Build Time: " + buildTime);
-		list.add("Power Modifier: " + power);
-		list.add("Weight: " + weight);
-		list.add("Damage: " + this.getDamage(item) + "/" + this.getMaxDamage());
-	}
+
 }

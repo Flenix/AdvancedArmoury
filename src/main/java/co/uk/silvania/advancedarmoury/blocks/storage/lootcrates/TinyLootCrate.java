@@ -1,7 +1,7 @@
 package co.uk.silvania.advancedarmoury.blocks.storage.lootcrates;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.client.RenderRegisters;
+import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
@@ -12,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class TinyLootCrate extends BlockContainer {
@@ -140,7 +139,7 @@ public class TinyLootCrate extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return RenderRegisters.tinyLootCrateRenderID;
+		return ClientProxy.tinyLootCrateRenderID;
 	}
 	
 	@Override

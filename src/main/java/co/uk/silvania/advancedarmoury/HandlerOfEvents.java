@@ -112,7 +112,7 @@ public class HandlerOfEvents {
     		
     		player.moveEntityWithHeading(player.moveStrafing, player.moveForward * 1.2F);
     		//player.capabilities.setPlayerWalkSpeed(0.5F);
-    		System.out.println("Total weight: " + totalWeight);
+    		//System.out.println("Total weight: " + totalWeight);
     	}
     }
     

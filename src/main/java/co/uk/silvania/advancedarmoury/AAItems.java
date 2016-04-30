@@ -1,8 +1,5 @@
 package co.uk.silvania.advancedarmoury;
 
-import co.uk.silvania.advancedarmoury.attachment.magazine.Magazine;
-import co.uk.silvania.advancedarmoury.items.AAItemAssaultComponents;
-import co.uk.silvania.advancedarmoury.items.AAItemComponents;
 import co.uk.silvania.advancedarmoury.items.AAItemModifierCores;
 import co.uk.silvania.advancedarmoury.items.AAItemPrebuiltGuns;
 import co.uk.silvania.advancedarmoury.items.ItemParts;
@@ -65,9 +62,8 @@ public class AAItems {
 		magazines();
 		rounds();
 		
+		//General item component registration etc is found in the ComponentGenerator class.
 		AAItemPrebuiltGuns.init();
-		AAItemComponents.init();
-		AAItemAssaultComponents.init();
 		AAItemModifierCores.init();
 		
 		registerItems();
