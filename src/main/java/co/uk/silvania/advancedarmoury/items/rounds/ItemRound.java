@@ -13,6 +13,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,6 +23,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class ItemRound extends Item implements IRound {
 	
@@ -31,16 +33,24 @@ public class ItemRound extends Item implements IRound {
 	}
 	
 	@Override
-	public void onShotBlock(ItemStack item, Block blockHit) {
+	public void onShotBlock(ItemStack item, World world, Block blockHit, int x, int y, int z, int sideHit) {
+		System.out.println("onShotBlock");
 		String bullet = item.stackTagCompound.getString("bullet");
-		
-		
+		if (!world.isRemote) {
+			if (bullet.equalsIgnoreCase("exploding")) { shotExplosiveBlock(blockHit, world, x, y, z, sideHit); }
+			if (bullet.equalsIgnoreCase("incendiary")) { shotIncendiaryBlock(blockHit, world, x, y, z, sideHit); }
+		}
 	}
 	
 	public void onShotEntity(ItemStack item, EntityLivingBase entityShot) {
-		System.out.println("onShotEntity (round)");
 		String bullet = item.stackTagCompound.getString("bullet");
-		if (bullet.equalsIgnoreCase("poison")) { shotPoisonEntity(entityShot); }
+		if (!entityShot.worldObj.isRemote) {
+			if (bullet.equalsIgnoreCase("poison")) { shotPoisonEntity(entityShot); }
+			if (bullet.equalsIgnoreCase("exploding")) { shotExplosiveEntity(entityShot); }
+			if (bullet.equalsIgnoreCase("ArmourPiercing")) { shotArmourPiercingEntity(entityShot); }
+			if (bullet.equalsIgnoreCase("Incendiary")) { shotIncendiaryEntity(entityShot); }
+			if (bullet.equalsIgnoreCase("Uranium")) { shotUraniumEntity(entityShot); }
+		}
 	}
 	
 	@Override
@@ -107,18 +117,7 @@ public class ItemRound extends Item implements IRound {
 			}
 		}
 
-		System.out.println("OH NOES");
 		return caseIcons[0];
-	}
-	
-	@Override
-	public IIcon getIconFromDamageForRenderPass(int damage, int pass) {
-		if (pass == 0) {
-			return caseIcons[1];
-		} else {
-			return caseIcons[0];
-		}
-		
 	}
 	
 	@Override
@@ -177,5 +176,45 @@ public class ItemRound extends Item implements IRound {
 		int effectTime = 20;
 		if (chance == 5) { effectTime = 100; }
 		entity.addPotionEffect(new PotionEffect(Potion.poison.getId(), effectTime, 1));
+	}
+	
+	public void shotExplosiveEntity(EntityLivingBase entity) {
+		Random rand = new Random();
+		int chance = rand.nextInt(30);
+		int explosionSize = 1;
+		if (chance == 5) { explosionSize = 4; }
+		entity.worldObj.createExplosion(entity, entity.posX, entity.posY, entity.posZ, explosionSize, false);
+	}
+	
+	public void shotArmourPiercingEntity(EntityLivingBase entity) {}
+	
+	public void shotIncendiaryEntity(EntityLivingBase entity) {
+		Random rand = new Random();
+		int chance = rand.nextInt(5);
+		if (chance == 3) {
+			entity.setFire(2);
+		}
+	}
+	
+	public void shotUraniumEntity(EntityLivingBase entity) {
+		entity.addPotionEffect(new PotionEffect(Potion.poison.getId(), 25, 3));
+	}
+	
+	public void shotExplosiveBlock(Block block, World world, int x, int y, int z, int sideHit) {
+		Random rand = new Random();
+		int chance = rand.nextInt(30);
+		int explosionSize = 1;
+		if (chance == 5) { explosionSize = 4; }
+		world.createExplosion(null, x, y, z, explosionSize, false);
+	}
+	
+	public void shotIncendiaryBlock(Block block, World world, int x, int y, int z, int sideHit) {
+		Random rand = new Random();
+		int chance = rand.nextInt(5);
+		if (chance == 3) {
+			if (block.isFlammable(world, x, y, z, ForgeDirection.getOrientation(sideHit))) {
+				world.setBlock(x, y, z, Blocks.fire);
+			}
+		}
 	}
 }

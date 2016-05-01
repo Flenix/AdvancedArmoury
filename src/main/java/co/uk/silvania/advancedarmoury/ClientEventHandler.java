@@ -50,7 +50,7 @@ public class ClientEventHandler extends Gui {
     
     //Black border/red heart = normal
     //White border/red heart = under attack
-	@SubscribeEvent
+	/*@SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Pre event) {
     	Minecraft mc = Minecraft.getMinecraft();
     	ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
@@ -145,7 +145,7 @@ public class ClientEventHandler extends Gui {
 
             mc.renderEngine.bindTexture(new ResourceLocation("minecraft", "textures/gui/icons.png"));
     	}
-    }
+    }*/
 	
 	//This is used for locational damage display on-screen. It renders an indicator to show
     //which direction damage came from - a staple of most FPS or even many combat games.
@@ -154,6 +154,7 @@ public class ClientEventHandler extends Gui {
 	boolean flag = false;
 	public static long timeHit = 0;
 	float fade = 0.2F;
+	
     @SubscribeEvent
     public void renderHurtOverlay(RenderGameOverlayEvent.Post event) {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -223,7 +224,7 @@ public class ClientEventHandler extends Gui {
     	}
     }
     
-private Entity pointedEntity;
+    private Entity pointedEntity;
     
     @SubscribeEvent
     public void renderCrosshair(RenderGameOverlayEvent.Pre event) {

@@ -148,8 +148,9 @@ public class FireAutomaticGun {
 			double modifyY = ((rand.nextInt((int) Math.round(accuracy * 200)) - (int) accuracy*100)/7500D);
 			double modifyZ = ((rand.nextInt((int) Math.round(accuracy * 200)) - (int) accuracy*100)/7500D);
 			
+			int[] tgtBlk = targetBlock(world, player, gun, modifyX, modifyY, modifyZ);
 			Vec3 playerPos = Vec3.createVectorHelper(player.posX, player.posY, player.posZ);
-			Vec3 targetBlock = targetBlock(world, player, gun, modifyX, modifyY, modifyZ);
+			Vec3 targetBlock = Vec3.createVectorHelper(tgtBlk[0], tgtBlk[1], tgtBlk[2]);
 			Entity targetEntity = targetEntity(world, player, gun, modifyX, modifyY, modifyZ);
 			
 			double blockDistance = -1;
@@ -162,11 +163,10 @@ public class FireAutomaticGun {
 				entityDistance = targetEntity.getDistanceToEntity(player);
 			}
 			
-			System.out.println("Block distance: " + blockDistance + ", entityDistance: " + entityDistance);
-			
-			if (blockDistance >= 0 && blockDistance < entityDistance) {
-				shootBlock(targetBlock, player, gun, round, mod);
-			} else if (entityDistance >= 0 && entityDistance < blockDistance) {
+			if (blockDistance >= 0 && (blockDistance < entityDistance || entityDistance < 0)) {
+				shootBlock(targetBlock, player, gun, round, mod, tgtBlk[3]);
+			}
+			if (entityDistance >= 0 && entityDistance < blockDistance) {
 				shootEntity(targetEntity, player, gun, round, mod);
 			}
 			
@@ -188,8 +188,7 @@ public class FireAutomaticGun {
 	}
 	
 	//Returns Vec3 of the block hit, or null if none found.
-	public Vec3 targetBlock(World world, EntityPlayer player, ItemStack gun, double modifyX, double modifyY, double modifyZ) {
-		System.out.println("FIND block.");
+	public int[] targetBlock(World world, EntityPlayer player, ItemStack gun, double modifyX, double modifyY, double modifyZ) {
 		double range = getRange(gun);
 		
 		if (!world.isRemote) {
@@ -208,9 +207,7 @@ public class FireAutomaticGun {
             	int x = mopBlock.blockX;
             	int y = mopBlock.blockY;
             	int z = mopBlock.blockZ;
-            	System.out.println("Hit block: " + world.getBlock(x, y, z).getLocalizedName());
-            	
-            	return Vec3.createVectorHelper(x, y, z);
+            	return new int[] {x, y, z, mopBlock.sideHit};
             }
 		}
 		return null;
@@ -218,7 +215,6 @@ public class FireAutomaticGun {
 	
 	//Returns the first entity in-line.
 	public Entity targetEntity(World world, EntityPlayer player, ItemStack gun, double modifyX, double modifyY, double modifyZ) {
-		System.out.println("FIND entity.");
 		double range = getRange(gun);
 		
 		if (!world.isRemote) {
@@ -248,7 +244,6 @@ public class FireAutomaticGun {
 	                if (axisalignedbb.isVecInside(vec3)) {
 	                    if (0.0D < d2 || d2 == 0.0D) {
 	                        this.pointedEntity = entity;
-	                        System.out.println("Target aquired! " + entity.getCommandSenderName());
 	                        vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
 	                        d2 = 0.0D;
 	                        return entity;
@@ -259,7 +254,6 @@ public class FireAutomaticGun {
 	                    if (d3 < d2 || d2 == 0.0D) {
 	                        if (!(entity == player.ridingEntity && !entity.canRiderInteract())) {
 	                            this.pointedEntity = entity;
-		                        System.out.println("Target aquired! " + entity.getCommandSenderName());
 	                            vec33 = movingobjectposition.hitVec;
 	                            d2 = d3;
 	                            return entity;
@@ -272,24 +266,23 @@ public class FireAutomaticGun {
 		return null;
 	}
 	
-	public void shootBlock(Vec3 blockVec, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
+	public void shootBlock(Vec3 blockVec, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod, int side) {
 		Block block = player.worldObj.getBlock((int) blockVec.xCoord, (int) blockVec.yCoord, (int) blockVec.zCoord);
 		ItemRound rnd = (ItemRound) round.getItem();
-		System.out.println("Shoot block.");
 		
 		if (mod != null) {
 			mod.onBlockShot(gun, player, block);
 		}
-    	rnd.onShotBlock(round, block);
+    	rnd.onShotBlock(round, player.worldObj, block, (int) blockVec.xCoord, (int) blockVec.yCoord, (int) blockVec.zCoord, side);
 	}
 	
 	public void shootEntity(Entity entity, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
 		ItemRound rnd = (ItemRound) round.getItem();
-		System.out.println("Shoot entity.");
 		
 		int damage = 10;
 		
 		entity.attackEntityFrom(new DamageSourceShot(player), damage);
+		entity.hurtResistantTime = 0; //There is no immunity to rapidfire attacks from guns - else fast firing weapons are useless!
 		
 		if (mod != null) { mod.onEntityShot(gun, player, entity); }
         if (entity instanceof EntityLivingBase) {

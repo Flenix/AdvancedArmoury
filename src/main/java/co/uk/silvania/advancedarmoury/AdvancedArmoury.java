@@ -15,6 +15,8 @@ import java.util.zip.ZipInputStream;
 import co.uk.silvania.advancedarmoury.config.AAConfig;
 import co.uk.silvania.advancedarmoury.config.ComponentGenerator;
 import co.uk.silvania.advancedarmoury.config.ComponentGeneratorConfig;
+import co.uk.silvania.advancedarmoury.items.AAItemModifierCores;
+import co.uk.silvania.advancedarmoury.items.AAItemPrebuiltGuns;
 import co.uk.silvania.advancedarmoury.items.components.ComponentType;
 import co.uk.silvania.advancedarmoury.items.components.asset.AssetFrontEnd;
 import co.uk.silvania.advancedarmoury.items.components.asset.AssetReceiver;
@@ -26,6 +28,32 @@ import co.uk.silvania.advancedarmoury.network.GunBuildPacket;
 import co.uk.silvania.advancedarmoury.network.GunEventPacket;
 import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
 import co.uk.silvania.advancedarmoury.network.LocateDamagePacket;
+import co.uk.silvania.advancedarmoury.skills.SkillAssaultCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillAssaultRifles;
+import co.uk.silvania.advancedarmoury.skills.SkillCombatKnives;
+import co.uk.silvania.advancedarmoury.skills.SkillEnergyAssaultRifles;
+import co.uk.silvania.advancedarmoury.skills.SkillEnergyLMGs;
+import co.uk.silvania.advancedarmoury.skills.SkillEnergyPistols;
+import co.uk.silvania.advancedarmoury.skills.SkillEnergyRifles;
+import co.uk.silvania.advancedarmoury.skills.SkillEnergySMGs;
+import co.uk.silvania.advancedarmoury.skills.SkillEnergyShotguns;
+import co.uk.silvania.advancedarmoury.skills.SkillExplosivesCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillExplosives;
+import co.uk.silvania.advancedarmoury.skills.SkillFirearms;
+import co.uk.silvania.advancedarmoury.skills.SkillLMGCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillLMGs;
+import co.uk.silvania.advancedarmoury.skills.SkillPistolCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillPistols;
+import co.uk.silvania.advancedarmoury.skills.SkillRegistrationHandler;
+import co.uk.silvania.advancedarmoury.skills.SkillRifleCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillRifles;
+import co.uk.silvania.advancedarmoury.skills.SkillRoundCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillSMGCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillSMGs;
+import co.uk.silvania.advancedarmoury.skills.SkillShotgunCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillShotguns;
+import co.uk.silvania.rpgcore.RegisterSkill;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -45,7 +73,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 
-@Mod(modid = AdvancedArmoury.modid, version = AdvancedArmoury.version)
+@Mod(modid = AdvancedArmoury.modid, version = AdvancedArmoury.version, dependencies="after:rpgcore")
 public class AdvancedArmoury
 {
     public static final String modid = "advancedarmoury";
@@ -93,7 +121,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabParts = new CreativeTabs("tabParts") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItems.itemPartGear);
+    		ItemStack stack = new ItemStack(AAItems.itemPartGear);
     		return stack.getItem();
     	}
     };
@@ -101,7 +129,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabMachines = new CreativeTabs("tabMachines") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AABlocks.assaultRifleAssemblyTable);
+    		ItemStack stack = new ItemStack(AABlocks.assaultRifleAssemblyTable);
     		return stack.getItem();
     	}
     };
@@ -109,7 +137,7 @@ public class AdvancedArmoury
     public static CreativeTabs tabModifiers = new CreativeTabs("tabModifiers") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemModifierCores.coreSimpleChamberNet);
+    		ItemStack stack = new ItemStack(AAItemModifierCores.coreSimpleChamberNet);
     		return stack.getItem();
     	}
     };
@@ -117,12 +145,14 @@ public class AdvancedArmoury
     public static CreativeTabs tabGuns = new CreativeTabs("tabGuns") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		ItemStack item = new ItemStack(Items.apple);//new ItemStack(AAItemPrebuiltGuns.m4CarbineBling);
+    		ItemStack item = new ItemStack(AAItemPrebuiltGuns.m4CarbineBling);
     		return item.getItem();
     	}
     };
     
     public static SimpleNetworkWrapper network;
+    
+    public static boolean rpgcore = false;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -148,6 +178,62 @@ public class AdvancedArmoury
     	network.registerMessage(GunGuiPacket.Handler.class, GunGuiPacket.class, 1, Side.SERVER);
     	network.registerMessage(GunBuildPacket.Handler.class, GunBuildPacket.class, 2, Side.SERVER);
     	network.registerMessage(LocateDamagePacket.Handler.class, LocateDamagePacket.class, 3, Side.CLIENT);
+    	
+    	if (Loader.isModLoaded("rpgcore")) {
+    		rpgcore = true;
+    		println("RPGCore detected! Initializing skills!");
+    		
+    		SkillFirearms skillFirearms = new SkillFirearms(null, "skillFirearms");
+    		SkillPistols skillPistols = new SkillPistols(null, "skillPistols");
+    		SkillSMGs skillSMGs = new SkillSMGs(null, "skillSMGs");
+    		SkillShotguns skillShotguns = new SkillShotguns(null, "skillShotguns");
+    		SkillAssaultRifles skillAssault = new SkillAssaultRifles(null, "skillAssaultRifles");
+    		SkillLMGs skillLMGs = new SkillLMGs(null, "skillLMGs");
+    		SkillRifles skillRifles = new SkillRifles(null, "skillSnipers");
+    		SkillEnergyPistols skillEnergyPistols = new SkillEnergyPistols(null, "skillEnergyPistols");
+    		SkillEnergySMGs skillEnergySMGs = new SkillEnergySMGs(null, "skillEnergySMGs");
+    		SkillEnergyShotguns skillEnergyShotguns = new SkillEnergyShotguns(null, "skillEnergyShotguns");
+    		SkillEnergyAssaultRifles skillEnergyAssaults = new SkillEnergyAssaultRifles(null, "skillEnergyAssaultRifles");
+    		SkillEnergyLMGs skillEnergyLMGs = new SkillEnergyLMGs(null, "skillEnergyLMGs");
+    		SkillEnergyRifles skillEnergyRifles = new SkillEnergyRifles(null, "skillEnergyRifles");
+    		SkillExplosives skillExplosives = new SkillExplosives(null, "skillExplosives");
+    		SkillCombatKnives skillCombatKnives = new SkillCombatKnives(null, "skillCombatKnives");
+    		SkillPistolCraft skillPistolCraft = new SkillPistolCraft(null, "skillPistolCraft");
+    		SkillSMGCraft skillSMGCraft = new SkillSMGCraft(null, "skillSMGCraft");
+    		SkillShotgunCraft skillShotgunCraft = new SkillShotgunCraft(null, "skillShotgunCraft");
+    		SkillAssaultCraft skillAssaultCraft = new SkillAssaultCraft(null, "skillAssaultCraft");
+    		SkillLMGCraft skillLMGCraft = new SkillLMGCraft(null, "skillLMGCraft");
+    		SkillRifleCraft skillRifleCraft = new SkillRifleCraft(null, "skillRifleCraft");
+    		SkillExplosivesCraft skillExplosivesCraft = new SkillExplosivesCraft(null, "skillExplosivesCraft");
+    		SkillRoundCraft skillRoundCraft = new SkillRoundCraft(null, "skillRoundCraft");
+    		
+    		RegisterSkill.register(skillFirearms);
+    		RegisterSkill.register(skillPistols);
+    		RegisterSkill.register(skillSMGs);
+    		RegisterSkill.register(skillShotguns);
+    		RegisterSkill.register(skillAssault);
+    		RegisterSkill.register(skillLMGs);
+    		RegisterSkill.register(skillRifles);
+    		RegisterSkill.register(skillEnergyPistols);
+    		RegisterSkill.register(skillEnergySMGs);
+    		RegisterSkill.register(skillEnergyShotguns);
+    		RegisterSkill.register(skillEnergyAssaults);
+    		RegisterSkill.register(skillEnergyLMGs);
+    		RegisterSkill.register(skillEnergyRifles);
+    		RegisterSkill.register(skillExplosives);
+    		RegisterSkill.register(skillCombatKnives);
+    		RegisterSkill.register(skillPistolCraft);
+    		RegisterSkill.register(skillSMGCraft);
+    		RegisterSkill.register(skillShotgunCraft);
+    		RegisterSkill.register(skillAssaultCraft);
+    		RegisterSkill.register(skillLMGCraft);
+    		RegisterSkill.register(skillRifleCraft);
+    		RegisterSkill.register(skillExplosivesCraft);
+    		RegisterSkill.register(skillRoundCraft);
+    		
+    		
+    		MinecraftForge.EVENT_BUS.register(new SkillRegistrationHandler());
+    	}
     	
     	//Forge: "Do not name your event handler "EventHandler"
     	//Me: ok.

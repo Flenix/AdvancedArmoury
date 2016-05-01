@@ -62,19 +62,19 @@ public class HandlerOfEvents {
     }
     
     //increaseHealth() Increases player's maximum health drastically, to give gun damages more room to play with.
-    @SubscribeEvent public void onRespawn(PlayerRespawnEvent event) { increaseHealth(event.player); }
+    //@SubscribeEvent public void onRespawn(PlayerRespawnEvent event) { increaseHealth(event.player); }
     
-    @SubscribeEvent public void onLivingUpdate(LivingUpdateEvent event) {
+    //@SubscribeEvent public void onLivingUpdate(LivingUpdateEvent event) {
     	//99% for existing worlds, but good to have to be safe. If entity's health hasn't been increased, we increase it.
-    	increaseHealth(event.entity);
+    	//TODO increaseHealth(event.entity);
     	//Applies the weight of whatever the entity has, restricting their movement.
-    	applyWeight(event.entity);
-    }
+    	//TODO applyWeight(event.entity);
+    //}
         
     //TODO add support for mods which also increase health. Current known mods:
     //Tinkers Construct, DifficultLife
     //Mods need to be open source (Or at least have a deobfuscated jar available) for me to be able to support them.
-    public void increaseHealth(Entity eventEntity) {
+    /*public void increaseHealth(Entity eventEntity) {
     	if (eventEntity instanceof EntityLivingBase) {
 			EntityLivingBase entity = (EntityLivingBase) eventEntity;
 			
@@ -114,19 +114,19 @@ public class HandlerOfEvents {
     		//player.capabilities.setPlayerWalkSpeed(0.5F);
     		//System.out.println("Total weight: " + totalWeight);
     	}
-    }
+    }*/
     
     //Also increase the overall damage, unless the damagesource is from AA.
     //By doing this, we have no impact on the health increase as far as any other mod is concerned.
     //Damage balance tables are totally unaffected, unless another mod directly supports it.
     @SubscribeEvent
     public void onHurtEvent(LivingHurtEvent event) {
-    	if (event.source instanceof DamageSourceShot || event.source instanceof DamageSourceMelee) {
+    	/*if (event.source instanceof DamageSourceShot || event.source instanceof DamageSourceMelee) {
     		//System.out.println("Shot/melee. No modification.");
     		return;
     	}
     	double rand = new Random().nextDouble();
-    	event.ammount = (float) (event.ammount * (8 + (rand*2)));
+    	event.ammount = (float) (event.ammount * (8 + (rand*2)));*/
     	
     	//While we're here, fire off a packet saying where abouts the attacker is in relation to the player.
     	//We use this for displaying located damage on-screen, which has to be done client-side.
@@ -151,7 +151,7 @@ public class HandlerOfEvents {
     	//System.out.println("Entity: " + event.entity.getCommandSenderName() + ", Amount: " + event.ammount + ", Health: " + event.entityLiving.getHealth() + "/" + event.entityLiving.getMaxHealth() + ", Source: " + event.source);
     }
     
-    /**
+    /*
     @SubscribeEvent
     public void renderPlayer(RenderPlayerEvent.Specials event) {
     	if (event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof GunFrame) {
