@@ -13,28 +13,11 @@ public class ItemAssaultFiringPart extends ItemAssaultComponent {
 	String col;
 	String partId;
 
-	public ItemAssaultFiringPart(String partId, String displayName, String partName, double size, String name, double durability, int weight, float accuracy, String textCol, int rgb, int fireRate, String oreDict) {
-		super(partName, displayName, size, name, durability, weight, accuracy, textCol, rgb, fireRate, oreDict);
+	public ItemAssaultFiringPart(String partId, String displayName, String partName, double size, String name, float accuracy, String textCol, int rgb, int fireRate, boolean powerBool, String oreDict) {
+		super(partName, displayName, size, name, accuracy, textCol, rgb, fireRate, powerBool, oreDict, "\u00A71", partId);
 		this.fireRate = fireRate;
 		this.matName = name;
 		this.col = textCol;
 		this.partId = partId;
-	}
-	
-	@SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
-		list.add("\u00A71" + "Part Identifier: " + partId);
-		list.add("");
-		list.add(col + "Material: " + matName);
-		list.add("");
-		list.add("\u00A78" + "Accuracy: N/A");
-		list.add("Fire Rate: " + fireRate);
-		list.add("Power Modifier: " + power);
-		list.add("Weight: " + weight);
-		list.add("");
-		list.add("Cost (Parts): " + cost);
-		list.add("Build Time: " + buildTime);
-		list.add("");
-		list.add("Damage: " + this.getDamage(item) + "/" + this.getMaxDamage());
 	}
 }

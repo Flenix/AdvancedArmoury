@@ -33,20 +33,20 @@ public class ComponentGeneratorConfig {
 					" - The oreDict name for the ingot used to craft, eg ingotIron. If not found, you won't be able to craft.\n" +
 					"Each section -MUST- be seperated with a comma! If you're confused, see the examples.\n");
 			materials = config.getStringList("Materials", ConfigurationCustom.CATEGORY_GENERAL, new String[] {
-					"Gold, 1.1, 1935, 0.31, \u00A7e, 16635392, 3, ingotGold",
+					"Gold, 0.6, 1935, 0.31, \u00A7e, 16635392, 3, ingotGold",
 					"Iron, 1.5, 785, 0.5, \u00A77, 12303291, 2, ingotIron",
 					"Bronze, 2.65, 770, 0.49, \u00A76, 11231279, 2, ingotBronze",
-					"Titanium, 3.1, 450, 0.43, \u00A78, 12042182, 1, ingotTitanium",
-					"Aluminium, 1.4, 256, 0.51, \u00A7b, 12042182, 2, ingotAluminium",
+					//"Titanium, 3.1, 450, 0.43, \u00A78, 12042182, 1, ingotTitanium",
+					//"Aluminium, 1.4, 256, 0.51, \u00A7b, 12042182, 2, ingotAluminium",
 					"Steel, 3.9, 800, 0.4, \u00A78, 10329501, 2, ingotSteel",
 					"Polymer, 1.9, 95, 0.68, \u00A78, 4079166, 1, ingotPolymer",
-					"Mythian, 4.8, 1000, 0.38, \u00A72, 1789472, 2, ingotMythian",
+					/*"Mythian, 4.8, 1000, 0.38, \u00A72, 1789472, 2, ingotMythian",
 					"Promethium, 6.9, 1450, 0.34, \u00A7d, 6706030, 3, ingotPromethium",
 					"Sarinum, 4.4, 1100, 0.39, \u00A74, 8257536, 3, ingotSarinum",
 					"Velerium, 3.7, 1050, 0.41, \u00A7a, 3255808, 3, ingotVelerium",
 					"Celibras, 4.1, 995, 0.41, \u00A71, 141567, 2, ingotCelibras",
 					"Aericas, 3.95, 1125, 0.4, \u00A7f, 15066597, 3, ingoAericas",
-					"Darisin, 3.95, 1125, 0.4, \u00A78, 1644825, 3, ingotDarisin"}, "A list of material names");
+					"Darisin, 3.95, 1125, 0.4, \u00A78, 1644825, 3, ingotDarisin"*/}, "A list of material names");
 		} catch (Exception e) {
 			System.out.println("### WARNING! Advanced Armoury custom component creation system has failed to load!! ###");
 		} finally {

@@ -2,8 +2,8 @@ package co.uk.silvania.advancedarmoury.items.components.cores;
 
 import java.util.List;
 
-import co.uk.silvania.advancedarmoury.AAUtils;
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
+import co.uk.silvania.advancedarmoury.RarityRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -33,12 +33,12 @@ public class ModifierCoreBase extends Item implements IModifierCore {
 	
 	@Override
 	public String getItemStackDisplayName(ItemStack item) {
-		return (AAUtils.getColorFromRarity(rarity) + StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(item) + ".name")).trim();
+		return (RarityRegistry.getColorFromRarity(rarity) + StatCollector.translateToLocal(this.getUnlocalizedNameInefficiently(item) + ".name")).trim();
     }
 	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack item, EntityPlayer player, List list, boolean holding) {
-		list.add(AAUtils.getRarity(rarity));
+		list.add(RarityRegistry.getRarityTag(rarity));
 	}
 
 	@Override

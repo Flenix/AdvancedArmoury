@@ -52,28 +52,4 @@ public class AAUtils {
 	public static String formatText(String str) {
 		return str.replace("&", "\u00A7");
 	}
-	
-	public static String getColorFromRarity(EnumRarity rarity) {
-		if (rarity == EnumRarity.VERY_COMMON) { return "\u00A7f"; }
-		if (rarity == EnumRarity.COMMON) { 		return "\u00A77"; }
-		if (rarity == EnumRarity.UNCOMMON) {	return "\u00A72"; }
-		if (rarity == EnumRarity.RARE) { 		return "\u00A7e"; }
-		if (rarity == EnumRarity.VERY_RARE) { 	return "\u00A7c"; }
-		if (rarity == EnumRarity.LEGENDARY) {	return "\u00A79\u00A7l"; }
-		if (rarity == EnumRarity.MYTHIC) { 		return "\u00A7d\u00A7l"; }
-		if (rarity == EnumRarity.ULTIMATE) { 	return "\u00A7b\u00A7l"; }
-		return "";
-	}
-	
-	public static String getRarity(EnumRarity rarity) {
-		if (rarity == EnumRarity.VERY_COMMON) { return "\u00A7f\u00A7oVery Common"; }
-		if (rarity == EnumRarity.COMMON) { 		return "\u00A77\u00A7oCommon"; }
-		if (rarity == EnumRarity.UNCOMMON) {	return "\u00A72\u00A7oUncommon"; }
-		if (rarity == EnumRarity.RARE) { 		return "\u00A7e\u00A7oRare"; }
-		if (rarity == EnumRarity.VERY_RARE) { 	return "\u00A7c\u00A7oVery Rare"; }
-		if (rarity == EnumRarity.LEGENDARY) {	return "\u00A79\u00A7l\u00A7oLegendary"; }
-		if (rarity == EnumRarity.MYTHIC) { 		return "\u00A7d\u00A7l\u00A7oMythic"; }
-		if (rarity == EnumRarity.ULTIMATE) { 	return "\u00A7b\u00A7l\u00A7oUltimate"; }
-		return "";
-	}
 }

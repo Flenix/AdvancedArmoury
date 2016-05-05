@@ -12,8 +12,6 @@ public class AssetFrontEnd extends FrontEnd {
 				cpt.modelTexture, 
 				cpt.iconTexture, 
 				cpt.gunType, 
-				cpt.buildTime, 
-				cpt.partCost, 
 				cpt.xSize,
 				cpt.ySize, 
 				cpt.zSize,

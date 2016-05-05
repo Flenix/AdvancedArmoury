@@ -30,16 +30,13 @@ public class FrontEnd extends ItemAsset{
 	
 	static double size = 3.4;
 
-	public FrontEnd(String name, String modelName, String modelTexture, String iconTexture, String gunType, int buildTime, int cost, float xSize, float ySize, float zSize, 
+	public FrontEnd(String name, String modelName, String modelTexture, String iconTexture, String gunType, float xSize, float ySize, float zSize, 
 			boolean topRail, boolean leftRail, boolean rightRail, boolean bottomRail, int weight, double durability, String materialName, String textCol) {
-		super("\u00A7c", "F", "frontEnd", size, (int) Math.round((size*weight)/4), (int) Math.round((size*durability)*100), 0, materialName, textCol);
+		super(gunType, "\u00A7c", "F", "frontEnd", size, materialName, textCol);
 		this.displayName = name;
 		this.modelName = modelName;
 		this.modelTexture = modelTexture;
 		this.iconTexture = iconTexture;
-		this.gunType = gunType;
-		this.buildTime = buildTime;
-		this.cost = cost;
 		
 		this.xSize = xSize;
 		this.ySize = ySize;

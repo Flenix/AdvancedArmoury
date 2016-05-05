@@ -20,18 +20,29 @@ public class ItemBarrel extends ItemComponent {
 
 	String material;
 	String col;
-	double dura;
-	float acc;
 	
-	public ItemBarrel(String name, double size, String materialName, double durability, int weight, float acc, String textCol, int rgb, int fireRate, String oreDict, boolean rifled) {
-		super("", "Barrel", name, materialName, size, (int) Math.round((size*weight)/4), (int) Math.round((size*durability)*100), (int) Math.round(weight / size), durability, weight, acc, textCol, rgb, fireRate, oreDict);
-		this.accuracy = acc;
-		this.durability = (int) Math.round(200 * size);
+	double size;
+	int weight;
+	double durability;
+	
+	float accuracy;
+	int fireRate;
+	int power;
+	
+	public ItemBarrel(String name, double size, String materialName, double durability, int weight, float accuracy, String textCol, int rgb, int fireRate, String oreDict, boolean rifled) {
+		super("", "Barrel", name, materialName, textCol, rgb, oreDict, "\u00A7b", "A");
 		this.material = materialName;
 		this.col = textCol;
-		this.dura = durability;
+		
+		this.size = size;
+		this.weight = weight;
+		this.durability = durability;
+		
+		this.accuracy = accuracy;
+		this.fireRate = fireRate;
+		this.power = (int) Math.round(weight / size);
+		
 		this.setCreativeTab(AdvancedArmoury.tabComponentsCalibre);
-		//this.setMaxDamage((int)Math.round(getDurability(mat, this.durability, weight)));
 	}
 
 	public float getAccuracy(ItemStack item) {
@@ -56,11 +67,11 @@ public class ItemBarrel extends ItemComponent {
 			item.stackTagCompound.setString("partName", partName);
 			item.stackTagCompound.setFloat("accuracy", accuracy);
 		} else {
-			setMaxDamage((int)Math.round(dura * (this.durability * Math.round(item.stackTagCompound.getDouble("size")))));
+			setMaxDamage((int)Math.round(this.durability * Math.round(item.stackTagCompound.getDouble("size"))));
 		}
 	}
 	
-	@SideOnly(Side.CLIENT)
+	/*@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
 		list.add("\u00A7b" + "Part Identifier: " + "A");
 		list.add("");
@@ -79,11 +90,11 @@ public class ItemBarrel extends ItemComponent {
 			list.add("Barrel Length: " + item.stackTagCompound.getInteger("length") + "\"");
 			list.add("Calibre: " + item.stackTagCompound.getDouble("calibre"));
 			list.add("");
-			list.add("Damage: " + this.getDamage(item) + "/" + (int)Math.round(dura * (this.durability * Math.round(item.stackTagCompound.getDouble("size")))));
+			list.add("Damage: " + this.getDamage(item) + "/" + (int)Math.round(this.durability * Math.round(item.stackTagCompound.getDouble("size"))));
 		} else {
 			list.add(EnumChatFormatting.DARK_RED + "Something has broken horribly. You should throw this away and tell Flenix.");
 		}
-	}
+	}*/
 	
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -105,4 +116,11 @@ public class ItemBarrel extends ItemComponent {
 			}
 		}
 	}
+
+	@Override public double size(ItemStack item) { return size; }
+	@Override public int weight(ItemStack item) { return (int) (weight*(item.stackTagCompound.getInteger("length")*size)); }
+	@Override public double durability(ItemStack item) { return Math.round(((item.stackTagCompound.getInteger("length")*size)*stats.getDurability(material))*100); }
+	@Override public float accuracy(ItemStack item) { return accuracy; }
+	@Override public int fireRate(ItemStack item) { return fireRate; }
+	@Override public int power(ItemStack item) { return power; }
 }

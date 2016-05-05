@@ -8,8 +8,8 @@ import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemFireSelector;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemFlashHider;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemTrigger;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultBoltPart;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultChamber;
+import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultComponent;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultGasChamber;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultGasFeed;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultPiston;
@@ -36,25 +36,25 @@ public class ComponentGenerator {
 			
 			AdvancedArmoury.println("Loaded custom Component Material: " + materialName);
 			
-			Item itemBarrel = new ItemBarrel("barrel", 0.3, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict, false).setUnlocalizedName("barrel"+materialName);
-			Item itemBarrelRifled = new ItemBarrel("barrel", 0.3, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict, true).setUnlocalizedName("barrelRifled"+materialName);
-			Item itemTrigger = new ItemTrigger("trigger", 0.95, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("trigger"+materialName);
-			Item itemFlashHider = new ItemFlashHider("flashHider", 1, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("flashHider"+materialName);
-			Item itemFireSelector = new ItemFireSelector("fireSelector", 0.6, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("fireSelector"+materialName);
-			
-			Item itemAssaultBolt 			= new ItemAssaultBoltPart("\u00A72", "A", "bolt", "Bolt", 1.5, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultBolt"+materialName);
-			Item itemAssaultBoltCarrier 	= new ItemAssaultBoltPart("\u00A72", "B", "boltCarrier", "Bolt Carrier", 2.5, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultBoltCarrier"+materialName);
-			Item itemAssaultChamber 		= new ItemAssaultChamber(materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultChamber"+materialName);
-			Item itemAssaultChargingHandle 	= new ItemAssaultBoltPart("\u00A72", "C", "chargingHandle", "Charging Handle", 2.3, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultChargingHandle"+materialName);
-			Item itemAssaultEjector 		= new ItemAssaultBoltPart("\u00A72", "D", "ejector", "Ejector", 0.8, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultEjector"+materialName);
-			Item itemAssaultExtractor 		= new ItemAssaultBoltPart("\u00A72", "E", "extractor", "Extractor", 0.8, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultExtractor"+materialName);
-			Item itemAssaultFiringPin 		= new ItemAssaultBoltPart("\u00A72", "F", "firingPin", "Firing Pin", 1.3, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultFiringPin"+materialName);
-			Item itemAssaultFiringPinRetainerPin = new ItemAssaultBoltPart("\u00A72", "G", "firingPinRetainerPin", "Firing Pin Retainer Pin", 0.5, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultFiringPinRetainerPin"+materialName);
-			Item itemAssaultGasChamber 		= new ItemAssaultGasChamber("gasChamber", 2.8, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultGasChamber"+materialName);
-			Item itemAssaultGasFeed 		= new ItemAssaultGasFeed("gasFeed", 1.5, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultGasFeed"+materialName);
-			Item itemAssaultPiston 			= new ItemAssaultPiston("piston", 1.5, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultPiston"+materialName);
-			Item itemAssaultPistonChamber 	= new ItemAssaultPistonChamber("pistonChamber", 2.8, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultPistonChamber"+materialName);
-			Item itemAssaultSpring 			= new ItemAssaultSpring("spring", 1.7, materialName, durability, weight, accuracy, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultSpring"+materialName);
+			Item itemBarrel = new ItemBarrel("barrel", 0.3, materialName, durability, weight, accuracy, textCol, rgb, -1, oreDict, false).setUnlocalizedName("barrel"+materialName);
+			Item itemBarrelRifled = new ItemBarrel("barrel", 0.3, materialName, durability, weight, accuracy, textCol, rgb, -1, oreDict, true).setUnlocalizedName("barrelRifled"+materialName);
+			Item itemTrigger = new ItemTrigger("trigger", 0.95, materialName, durability, weight, -1, textCol, rgb, -1, oreDict).setUnlocalizedName("trigger"+materialName);
+			Item itemFlashHider = new ItemFlashHider("flashHider", 1, materialName, durability, weight, -1, textCol, rgb, -1, oreDict).setUnlocalizedName("flashHider"+materialName);
+			Item itemFireSelector = new ItemFireSelector("fireSelector", 0.6, materialName, durability, weight, -1, textCol, rgb, -1, oreDict).setUnlocalizedName("fireSelector"+materialName);
+			//componentName, displayName, size, mat, acc, col, rgb, fireRate, power-affecting?, oredict, identCol, identName
+			Item itemAssaultBolt 			= new ItemAssaultComponent("bolt", "Bolt", 1.5, materialName, -1, textCol, rgb, fireRate, true, oreDict, "\u00A72", "A").setUnlocalizedName("assaultBolt"+materialName);
+			Item itemAssaultBoltCarrier 	= new ItemAssaultComponent("boltCarrier", "Bolt Carrier", 2.5, materialName, -1, textCol, rgb, fireRate, true, oreDict, "\u00A72", "B").setUnlocalizedName("assaultBoltCarrier"+materialName);
+			Item itemAssaultChamber 		= new ItemAssaultChamber("", "", materialName, -1, textCol, rgb, fireRate, true, oreDict).setUnlocalizedName("assaultChamber"+materialName);
+			Item itemAssaultChargingHandle 	= new ItemAssaultComponent("chargingHandle", "Charging Handle", 2.3, materialName, -1, textCol, rgb, -1, false, oreDict, "\u00A72", "C").setUnlocalizedName("assaultChargingHandle"+materialName);
+			Item itemAssaultEjector 		= new ItemAssaultComponent("ejector", "Ejector", 0.8, materialName, -1, textCol, rgb, -1, false, oreDict, "\u00A72", "D").setUnlocalizedName("assaultEjector"+materialName);
+			Item itemAssaultExtractor 		= new ItemAssaultComponent("extractor", "Extractor", 0.8, materialName, -1, textCol, rgb, -1, false, oreDict, "\u00A72", "E").setUnlocalizedName("assaultExtractor"+materialName);
+			Item itemAssaultFiringPin 		= new ItemAssaultComponent("firingPin", "Firing Pin", 1.3, materialName, -1, textCol, rgb, -1, false, oreDict, "\u00A72", "F").setUnlocalizedName("assaultFiringPin"+materialName);
+			Item itemAssaultFiringPinRetainerPin = new ItemAssaultComponent("firingPinRetainerPin", "Firing Pin Retainer Pin", 0.5, materialName, -1, textCol, rgb, -1, false, oreDict, "\u00A72", "G").setUnlocalizedName("assaultFiringPinRetainerPin"+materialName);
+			Item itemAssaultGasChamber 		= new ItemAssaultGasChamber("gasChamber", 2.8, materialName, -1, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultGasChamber"+materialName);
+			Item itemAssaultGasFeed 		= new ItemAssaultGasFeed("gasFeed", 1.5, materialName, -1, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultGasFeed"+materialName);
+			Item itemAssaultPiston 			= new ItemAssaultPiston("piston", 1.5, materialName, -1, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultPiston"+materialName);
+			Item itemAssaultPistonChamber 	= new ItemAssaultPistonChamber("pistonChamber", 2.8, materialName, -1, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultPistonChamber"+materialName);
+			Item itemAssaultSpring 			= new ItemAssaultSpring("spring", 1.7, materialName, -1, textCol, rgb, fireRate, oreDict).setUnlocalizedName("assaultSpring"+materialName);
 			
 			Item assaultReceiverM4 = new M4Receiver(capitalize(materialName) + " M4A1 Receiver", "m4receiver", "assault", materialName, durability, weight, textCol, true).setUnlocalizedName("m4Receiver"+materialName);
 			Item assaultFrontEndM4 = new M4FrontEnd(capitalize(materialName) + " M4A1 Front End", "m4frontEnd", "assault", materialName, durability, weight, textCol, true, true, true, true).setUnlocalizedName("m4FrontEnd"+materialName);

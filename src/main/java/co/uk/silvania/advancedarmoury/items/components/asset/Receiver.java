@@ -34,7 +34,7 @@ public class Receiver extends ItemAsset {
 			int magId, boolean topRail,
 			int weight, double durability, String materialName, String textCol) {
 		
-		super("\u00A7d", "R", "receiver", size, (int) Math.round((size*weight)/4), (int) Math.round((size*durability)*100), 0, materialName, textCol);
+		super(gunType, "\u00A7d", "R", "receiver", size, materialName, textCol);
 		this.displayName = name;
 		this.modelName = modelName;
 		this.modelTexture = modelTexture;

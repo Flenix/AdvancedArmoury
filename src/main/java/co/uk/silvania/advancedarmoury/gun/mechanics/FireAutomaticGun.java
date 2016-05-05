@@ -34,7 +34,7 @@ public class FireAutomaticGun {
 		ItemStack barrel = inventory.getBarrel();
 		if (barrel != null) {
 			ItemBarrel itemBarrel = (ItemBarrel) barrel.getItem();
-			float accuracy = itemBarrel.accuracy;
+			float accuracy = itemBarrel.accuracy(item);
 			int length = barrel.stackTagCompound.getInteger("length");
 			double d0 = length / 100.0;
 			if (d0 < 0.01) { d0 = 0.01; }
@@ -42,12 +42,17 @@ public class FireAutomaticGun {
 			if (f0 < 0.0F) {
 				f0 = 0.0F;
 			}
-			return f0;
+			
+			float qualityOffset = item.stackTagCompound.getFloat("accBuildOffset");
+			
+			return f0 + qualityOffset;
+			
+			//TODO attachments etc
 		}
 		return 0;
 	}
 	
-	public int getRange(ItemStack item) {
+	public int getEffectiveRange(ItemStack item) {
 		//TODO
 		return 150;
 	}
@@ -157,6 +162,7 @@ public class FireAutomaticGun {
 				targetBlock = Vec3.createVectorHelper(tgtBlk[0], tgtBlk[1], tgtBlk[2]);
 			}
 			Entity targetEntity = targetEntity(world, player, gun, modifyX, modifyY, modifyZ);
+			//TODO FMJ rounds should fire targetEntity in a loop with 50% reduction on damage for each entity hit.
 			
 			double blockDistance = -1;
 			double entityDistance = -1;
@@ -204,7 +210,7 @@ public class FireAutomaticGun {
 		}
 	}
 	
-	//Returns Vec3 of the block hit, or null if none found.
+	//Returns array with coordinates plus side of the block hit, or null if none found.
 	public int[] targetBlock(World world, EntityPlayer player, ItemStack gun, double modifyX, double modifyY, double modifyZ) {
 		double range = 250;//getRange(gun);
 		

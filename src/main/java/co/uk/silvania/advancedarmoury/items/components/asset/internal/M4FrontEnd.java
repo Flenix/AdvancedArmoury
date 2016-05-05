@@ -9,7 +9,7 @@ public class M4FrontEnd extends FrontEnd {
 	static float zSize = 1.042F;
 
 	public M4FrontEnd(String name, String iconTexture, String gunType, String materialName, double dura, int weight, String col, boolean topRail, boolean leftRail, boolean rightRail, boolean bottomRail) {
-		super(name, "", "", iconTexture, gunType, (int) Math.round((3.8*dura)*100), (int) Math.round((3.8*weight)/4), xSize, ySize, zSize, topRail, leftRail,
+		super(name, "", "", iconTexture, gunType, xSize, ySize, zSize, topRail, leftRail,
 				rightRail, bottomRail, weight, dura, materialName, col);
 	}
 

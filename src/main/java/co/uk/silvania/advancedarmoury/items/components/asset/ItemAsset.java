@@ -17,7 +17,7 @@ public class ItemAsset extends ItemComponent {
 	public String modelName = "m4receiver";
 	public String modelTexture = "m4receiver";
 	public String iconTexture = "m4receiver";
-	public String gunType = "assault";
+	public String weaponType;
 	public float xSize = 0;
 	public float ySize = 0;
 	public float zSize = 0;
@@ -27,12 +27,22 @@ public class ItemAsset extends ItemComponent {
 	String mat;
 	String textCol;
 	
-	public ItemAsset(String identColour, String identId, String partName, double size, int cost, int buildTime, int power, String material, String textColour) {
-		super("", "", partName, material, size, cost, buildTime / 2, power);
+	double size;
+	int weight;
+	double durability;
+	
+	public ItemAsset(String weaponType, String identColour, String identId, String componentName, double size, String material, String textColour) {
+		super(weaponType, "", componentName, material, size);
 		this.mat = material;
 		this.textCol = textColour;
 		this.identColour = identColour;
 		this.identId = identId;
+		
+		this.weaponType = weaponType;
+		
+		this.size = size;
+		this.weight = MaterialStats.getWeight(material);
+		this.durability = MaterialStats.getDurability(material);
 	}
 	
 	@Override
@@ -68,5 +78,12 @@ public class ItemAsset extends ItemComponent {
 		item.stackTagCompound.setString("modelTexture", modelTexture);
 		item.stackTagCompound.setString("iconTexture", iconTexture);
 	}
+
+	@Override public double size(ItemStack item) { return size; }
+	@Override public int weight(ItemStack item) { return (int) (size*weight); }
+	@Override public double durability(ItemStack item) { return Math.round((size*durability)*100); }
+	@Override public float accuracy(ItemStack item) { return -1; }
+	@Override public int fireRate(ItemStack item) { return -1; }
+	@Override public int power(ItemStack item) { return -1; }
 
 }

@@ -96,11 +96,13 @@ public class GunFrame extends ItemInventory implements IGun {
 			if (inventory.getStackInSlot(i) != null) {
 				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
 					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
-					power += itemComp.power;
+					if (itemComp.power(item) > 0) {
+						power += itemComp.power(item);
+					}
 				}
 			}
 		}
-		return power;
+		return power + item.stackTagCompound.getInteger("powerBuildOffset");
 	}
 	
 	public int getWeight(ItemStack item) {
@@ -111,11 +113,46 @@ public class GunFrame extends ItemInventory implements IGun {
 			if (inventory.getStackInSlot(i) != null) {
 				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
 					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
-					weight += itemComp.weight;
+					weight += itemComp.weight(item);
 				}
 			}
 		}
 		return weight;
+	}
+	
+	public int getDurability(ItemStack item) {
+		AssaultIInventory inventory = new AssaultIInventory(item);
+		int dura = 0;
+		
+		for (int i = 2; i < 20; i++) {
+			if (inventory.getStackInSlot(i) != null) {
+				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
+					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
+					dura += itemComp.durability(item);
+				}
+			}
+		}
+		return dura + item.stackTagCompound.getInteger("duraBuildOffset");
+	}
+	
+	public int getFireRate(ItemStack item) {
+		AssaultIInventory inventory = new AssaultIInventory(item);
+		double rate = 0.0;
+		double count = 0.0;
+		
+		for (int i = 2; i < 20; i++) {
+			if (inventory.getStackInSlot(i) != null) {
+				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
+					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
+					if (itemComp.fireRate(item) > 0) {
+						rate += itemComp.fireRate(item);
+						count++;
+					}
+				}
+			}
+		}
+		
+		return (int) (rate/count) + item.stackTagCompound.getInteger("rateBuildOffset");
 	}
 	
 	public String parseAccuracy(float acc) {
@@ -153,13 +190,33 @@ public class GunFrame extends ItemInventory implements IGun {
 				list.add("");
 			}
 		}
-
-		list.add(parseAccuracy(gunFire.getAccuracy(item)));
-		list.add("Actual accuracy: " + gunFire.getAccuracy(item));
-		list.add("Weight: " + getWeight(item));
-		list.add("Power: " + getPower(item));
+		list.add(parseAccuracy(gunFire.getAccuracy(item)) + " at 20m");
+		list.add("Weight: " + (double) getWeight(item) / 10000.0 + " KG");
+		list.add("Muzzle Velocity: " + getPower(item) + " fps");
+		list.add("Fire Rate: " + getFireRate(item) + " RPM");
+		list.add("Damage: 0/" + getDurability(item));
 		list.add("");
-		list.add("Created by: " + item.stackTagCompound.getString("creator"));
+		AssaultIInventory inventory = new AssaultIInventory(item);
+		if (inventory.getStackInSlot(0) != null) {
+			if (inventory.getStackInSlot(0).getItem() instanceof ItemMagazine) {
+				AssaultMagazineIInventory mag = new AssaultMagazineIInventory(item);
+				int rounds = 0;
+				for (int i = 0; i < mag.getSizeInventory(); i++) {
+					if (mag.getStackInSlot(i) != null) {
+						rounds++;
+					}
+				}
+				if (inventory.getStackInSlot(1) != null) {
+					rounds += 1;
+				}
+				list.add("Ammunition: " + rounds + "/" + mag.getSizeInventory());
+				list.add("");
+			}
+		}
+		if (item.stackTagCompound.getString("creator").length() > 3) {
+			list.add("Created by: " + item.stackTagCompound.getString("creator"));
+		}
+		list.add("\u00A7c\u00A7oThese values do not reflect your Skill!");
 	}
 	
 	/*@Override
