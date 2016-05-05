@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public class ItemComponent extends Item {
+public abstract class ItemComponent extends Item {
 
 	public String partName;
 	public String material;
@@ -53,6 +53,32 @@ public class ItemComponent extends Item {
 		this.textureName = weaponType + partName;
 		this.displayName = material + " " + displayName;
 	}
+	
+	public abstract int size();
+	public abstract int weight();
+	public abstract int durability();
+	
+	/**
+	 * Return less than zero if this component doesn't affect accuracy.
+	 * Lower values = more accurate
+	 * @return
+	 */
+	public abstract float accuracy();
+	
+	/**
+	 * Return less than zero if this component doesn't affect fire rate.
+	 * RETURNS DIFFERENT THINGS DEPENDING ON GUN SYSTEM! 
+	 * Rounds per second on full auto. Cooldown in ticks on semi auto.
+	 * @return
+	 */
+	public abstract int fireRate();
+	
+	/**
+	 * Return less than zero if this component doesn't affect power.
+	 * Defines damage, range etc
+	 * @return
+	 */
+	public abstract int power();
 	
 	public ItemComponent(String weaponType, String displayName, String partName, String materialName, double size, int cost, int buildTime, int power) {
 		super();
@@ -120,12 +146,4 @@ public class ItemComponent extends Item {
 	public void createTagCompound(ItemStack item, int meta) {
 		item.stackTagCompound.setString("partName", partName);
 	}
-	
-	public int getPartsCost() { 	return cost; 		}
-	public double getBuildTime() { 	return buildTime; 	}
-	public double getPower() { 		return power; 		}
-
-	public int fireRate() { 		return fireRate;	}
-	public float getAccuracy() { 	return accuracy; 	}
-	public double calibre() {		return calibre;		}
 }

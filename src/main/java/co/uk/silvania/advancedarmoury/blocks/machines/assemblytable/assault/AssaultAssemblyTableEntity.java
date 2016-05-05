@@ -1,5 +1,8 @@
 package co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.assault;
 
+import java.util.ArrayList;
+
+import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.blocks.machines.MachineEntity;
 import co.uk.silvania.advancedarmoury.gun.inventory.ItemIInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
@@ -8,12 +11,17 @@ import co.uk.silvania.advancedarmoury.items.components.generic.GunFrame;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemComponent;
 import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultChamber;
+import co.uk.silvania.advancedarmoury.skills.SkillAssaultCraft;
+import co.uk.silvania.advancedarmoury.skills.SkillAssaultRifles;
+import co.uk.silvania.rpgcore.skills.SkillLevelBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.EnumSkyBlock;
 
 public class AssaultAssemblyTableEntity extends MachineEntity implements IInventory {
@@ -94,10 +102,17 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 				if (buildProgress < buildTime) {
 					buildProgress++;
 				} else {
-					buildGun();
-					buildProgress = 0;
-					gunName = "";
-					building = false;
+					ArrayList<EntityPlayer> players = (ArrayList<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+					for (int i = 0; i < players.size(); i++) {
+						if (players.get(i).getDisplayName().equalsIgnoreCase(initiator)) {
+							buildGun(players.get(i));
+							buildProgress = 0;
+							gunName = "";
+							building = false;
+							return;
+						}
+					}
+					AdvancedArmoury.println("Assault Table failed to find creating player. Gun will not be created.");
 				}
 			} else {
 				building = false;
@@ -109,7 +124,7 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 		}
 	}
 	
-	public boolean buildGun() {
+	public boolean buildGun(EntityPlayer player) {
 		ItemStack frame = 			this.getStackInSlot(0);
 		
 		ItemStack bolt = 			this.getStackInSlot(4);
@@ -188,6 +203,17 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 						inventory.setInventorySlotContents(16, modifierCore);
 						this.setInventorySlotContents(2, null);
 					}
+					
+					frame.stackTagCompound.setInteger("weight", 0);
+					frame.stackTagCompound.setFloat("accuracy", 0);
+					frame.stackTagCompound.setInteger("fireRate", 0);
+					frame.stackTagCompound.setInteger("power", 0);
+					frame.stackTagCompound.setInteger("durability", 0);
+					frame.stackTagCompound.setString("creator", player.getDisplayName());
+					
+					System.out.println("Adding XP to player!");
+					SkillAssaultCraft skillAssaultCraft = (SkillAssaultCraft) SkillLevelBase.get(player, SkillAssaultCraft.staticSkillId);
+					skillAssaultCraft.addXPWithUpdate(20, player);
 				}
 			}
 			return true;

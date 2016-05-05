@@ -158,6 +158,8 @@ public class GunFrame extends ItemInventory implements IGun {
 		list.add("Actual accuracy: " + gunFire.getAccuracy(item));
 		list.add("Weight: " + getWeight(item));
 		list.add("Power: " + getPower(item));
+		list.add("");
+		list.add("Created by: " + item.stackTagCompound.getString("creator"));
 	}
 	
 	/*@Override
@@ -252,7 +254,7 @@ public class GunFrame extends ItemInventory implements IGun {
 								mod = (IModifierCore) modifier.getItem();
 								mod.onFireWeapon(item, player);
 							}
-							gunFire.fire(world, player, item, round, mod);
+							gunFire.fireAssault(world, player, item, round, mod);
 							if (!player.capabilities.isCreativeMode) {
 								//Only remove round if not creative.
 								inventory.setInventorySlotContents(1, null);

@@ -10,6 +10,8 @@ import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
 import co.uk.silvania.advancedarmoury.items.components.cores.IModifierCore;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
 import co.uk.silvania.advancedarmoury.items.rounds.ItemRound;
+import co.uk.silvania.advancedarmoury.skills.SkillAssaultRifles;
+import co.uk.silvania.rpgcore.skills.SkillLevelBase;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -75,7 +77,7 @@ public class FireAutomaticGun {
 		world.playSoundAtEntity(player, "advancedarmoury:dryfire", 3.0F, 1.0F);
 	}
 	
-	public void fire(World world, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
+	public void fireAssault(World world, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
 		AssaultIInventory gunInv = new AssaultIInventory(player.getHeldItem());
 		AssaultContainer container = new AssaultContainer(player, player.inventory, gunInv);
 		Random rand = new Random();
@@ -150,7 +152,10 @@ public class FireAutomaticGun {
 			
 			int[] tgtBlk = targetBlock(world, player, gun, modifyX, modifyY, modifyZ);
 			Vec3 playerPos = Vec3.createVectorHelper(player.posX, player.posY, player.posZ);
-			Vec3 targetBlock = Vec3.createVectorHelper(tgtBlk[0], tgtBlk[1], tgtBlk[2]);
+			Vec3 targetBlock = null;
+			if (tgtBlk != null) {
+				targetBlock = Vec3.createVectorHelper(tgtBlk[0], tgtBlk[1], tgtBlk[2]);
+			}
 			Entity targetEntity = targetEntity(world, player, gun, modifyX, modifyY, modifyZ);
 			
 			double blockDistance = -1;
@@ -167,7 +172,19 @@ public class FireAutomaticGun {
 				shootBlock(targetBlock, player, gun, round, mod, tgtBlk[3]);
 			}
 			if (entityDistance >= 0 && entityDistance < blockDistance) {
-				shootEntity(targetEntity, player, gun, round, mod);
+				float damage = shootEntity(targetEntity, player, gun, round, mod); //Does the shooting entity, and tells us how much damage we did.
+				
+				if (targetEntity instanceof EntityLivingBase) {
+					EntityLivingBase targetEntityLiving = (EntityLivingBase) targetEntity;
+					
+					SkillAssaultRifles skillAssault = (SkillAssaultRifles) SkillLevelBase.get(player, SkillAssaultRifles.staticSkillId);
+					skillAssault.addXPWithUpdate(damage/5, player);
+					System.out.println("Adding " + (damage/5) + " XP to player. Mob has " + targetEntityLiving.getHealth() + "/" + targetEntityLiving.getMaxHealth());
+					if (targetEntityLiving.getHealth() <= 0) {
+						skillAssault.addXPWithUpdate(targetEntityLiving.getMaxHealth()/5, player);
+						System.out.println("He's dead, jim! Adding " + (targetEntityLiving.getMaxHealth()/5) + " to player.");
+					}
+				}
 			}
 			
 			if (!player.capabilities.isCreativeMode) {
@@ -189,7 +206,7 @@ public class FireAutomaticGun {
 	
 	//Returns Vec3 of the block hit, or null if none found.
 	public int[] targetBlock(World world, EntityPlayer player, ItemStack gun, double modifyX, double modifyY, double modifyZ) {
-		double range = getRange(gun);
+		double range = 250;//getRange(gun);
 		
 		if (!world.isRemote) {
 			Vec3 headVec = getCorrectedHeadVec(world, player);
@@ -215,7 +232,7 @@ public class FireAutomaticGun {
 	
 	//Returns the first entity in-line.
 	public Entity targetEntity(World world, EntityPlayer player, ItemStack gun, double modifyX, double modifyY, double modifyZ) {
-		double range = getRange(gun);
+		double range = 250;//getRange(gun);
 		
 		if (!world.isRemote) {
 			Vec3 lookVec = player.getLookVec();			
@@ -275,11 +292,11 @@ public class FireAutomaticGun {
 		}
     	rnd.onShotBlock(round, player.worldObj, block, (int) blockVec.xCoord, (int) blockVec.yCoord, (int) blockVec.zCoord, side);
 	}
-	
-	public void shootEntity(Entity entity, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
+
+	public float shootEntity(Entity entity, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
 		ItemRound rnd = (ItemRound) round.getItem();
 		
-		int damage = 10;
+		float damage = 10.0F;
 		
 		entity.attackEntityFrom(new DamageSourceShot(player), damage);
 		entity.hurtResistantTime = 0; //There is no immunity to rapidfire attacks from guns - else fast firing weapons are useless!
@@ -288,6 +305,8 @@ public class FireAutomaticGun {
         if (entity instanceof EntityLivingBase) {
         	rnd.onShotEntity(round, (EntityLivingBase) entity);
         }
+        
+        return damage;
 	}
 	
 	private Vec3 getCorrectedHeadVec(World world, EntityPlayer player) {

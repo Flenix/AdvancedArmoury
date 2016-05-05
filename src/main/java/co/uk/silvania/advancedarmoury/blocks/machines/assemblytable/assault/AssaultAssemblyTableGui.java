@@ -81,7 +81,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 	protected void keyTyped(char par1, int keyId) {
 		text.textboxKeyTyped(par1, keyId);
 		if (keyId == Keyboard.KEY_ESCAPE) {
-			AdvancedArmoury.network.sendToServer(new GunBuildPacket(text.getText(), "false", x, y, z)); //Sync gun's name to server when closing GUI.
+			AdvancedArmoury.network.sendToServer(new GunBuildPacket(text.getText(), "false", mc.thePlayer.getDisplayName(), x, y, z)); //Sync gun's name to server when closing GUI.
 		}
 		if (!(keyId == Keyboard.KEY_E && this.text.isFocused())) {
 			super.keyTyped(par1, keyId); //Don't pass super if key is E, because it closes the container.
@@ -97,7 +97,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 		switch(button.id) {
 		case 1:
 			if (isGunValid()) {
-				AdvancedArmoury.network.sendToServer(new GunBuildPacket(text.getText(), "true", x, y, z));
+				AdvancedArmoury.network.sendToServer(new GunBuildPacket(text.getText(), "true", mc.thePlayer.getDisplayName(), x, y, z));
 				text.setText("Assault Rifle");
 			}
 			break;

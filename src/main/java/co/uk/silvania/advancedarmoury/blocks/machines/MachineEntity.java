@@ -21,6 +21,7 @@ public class MachineEntity extends TileEntity implements IInventory {
 	public int clientBuildProgress;
 	public int buildTime;
 	public boolean building;
+	public String initiator;
 	public String gunName;
 	public String gunTag;
 	

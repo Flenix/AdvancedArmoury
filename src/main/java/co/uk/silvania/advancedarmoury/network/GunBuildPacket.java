@@ -22,25 +22,29 @@ public class GunBuildPacket implements IMessage {
 	public static int z;
 	public static String name;
 	public static String buildGun;
+	public static String userName;
 	
 	public GunBuildPacket() {}
 	
-	public GunBuildPacket(String gunName, String build, int xPos, int yPos, int zPos) {
+	public GunBuildPacket(String gunName, String build, String username, int xPos, int yPos, int zPos) {
 		name = gunName;
 		x = xPos;
 		y = yPos;
 		z = zPos;
 		buildGun = build;
+		userName = username;
 	}
 	
 	@Override public void fromBytes(ByteBuf buf) {
 		name = ByteBufUtils.readUTF8String(buf);
 		buildGun = ByteBufUtils.readUTF8String(buf);
+		userName = ByteBufUtils.readUTF8String(buf);
 	}
 	
 	@Override public void toBytes(ByteBuf buf) {
 		ByteBufUtils.writeUTF8String(buf, name);
 		ByteBufUtils.writeUTF8String(buf, buildGun);
+		ByteBufUtils.writeUTF8String(buf, userName);
 	}
 	
 	public static class Handler implements IMessageHandler<GunBuildPacket, IMessage> {
@@ -52,6 +56,7 @@ public class GunBuildPacket implements IMessage {
 			int z = message.z;
 			String buildGun = message.buildGun;
 			String name = message.name;
+			String userName = message.userName;
 			
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
 			World world = player.worldObj;
@@ -64,6 +69,7 @@ public class GunBuildPacket implements IMessage {
 				if (tileEntity != null) {
 					if (buildGun.equalsIgnoreCase("true")) {
 						tileEntity.building = true;
+						tileEntity.initiator = userName;
 						ItemStack gun = tileEntity.getStackInSlot(0);
 						if (gun != null) {
 							if (gun.stackTagCompound == null) {
