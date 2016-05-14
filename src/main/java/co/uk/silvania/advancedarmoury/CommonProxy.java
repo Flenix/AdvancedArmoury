@@ -39,4 +39,6 @@ public class CommonProxy {
 	public void renderReceivers(Item item, String material, int rgb) {}
 	public void renderFrontEnds(Item item, String material) {}
 	public void renderStocks(Item item, String material) {}
+	
+	public void renderAssaultRifles(Item item) {}
 }

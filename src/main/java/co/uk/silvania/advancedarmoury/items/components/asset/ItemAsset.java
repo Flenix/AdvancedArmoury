@@ -58,8 +58,8 @@ public class ItemAsset extends ItemComponent {
 			list.add(identColour + "Part Identifier: " + identId);
 			list.add("");
 			list.add(textCol + "Material: " + mat);
-			list.add("Build Time: " + buildTime);
-			list.add("Part Cost: " + cost);
+			list.add("Part Cost: " + cost(item));
+			list.add("Build Time: " + buildTime(item));
 			if (item.stackTagCompound.getBoolean("broken")) {
 				list.add(EnumChatFormatting.ITALIC + "" + EnumChatFormatting.RED + "Broken");
 			}

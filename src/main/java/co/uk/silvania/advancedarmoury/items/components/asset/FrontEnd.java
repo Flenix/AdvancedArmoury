@@ -28,7 +28,7 @@ public class FrontEnd extends ItemAsset{
 	public float ironSightY;
 	public float ironSightZ;
 	
-	static double size = 3.4;
+	static double size = 13.9*0.75;
 
 	public FrontEnd(String name, String modelName, String modelTexture, String iconTexture, String gunType, float xSize, float ySize, float zSize, 
 			boolean topRail, boolean leftRail, boolean rightRail, boolean bottomRail, int weight, double durability, String materialName, String textCol) {

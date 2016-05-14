@@ -38,7 +38,7 @@ public class AssaultEncasementTableEntity extends MachineEntity implements IInve
 				if (itemComponent != null) {
 					if (itemComponent.getItem() instanceof ItemComponent) {
 						ItemComponent assaultComponent = (ItemComponent) itemComponent.getItem();
-						time = time + assaultComponent.buildTime;
+						time = time + assaultComponent.buildTime(itemComponent);
 					}
 				}
 			}

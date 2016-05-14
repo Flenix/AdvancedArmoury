@@ -37,8 +37,8 @@ import co.uk.silvania.advancedarmoury.skills.SkillEnergyPistols;
 import co.uk.silvania.advancedarmoury.skills.SkillEnergyRifles;
 import co.uk.silvania.advancedarmoury.skills.SkillEnergySMGs;
 import co.uk.silvania.advancedarmoury.skills.SkillEnergyShotguns;
-import co.uk.silvania.advancedarmoury.skills.SkillExplosivesCraft;
 import co.uk.silvania.advancedarmoury.skills.SkillExplosives;
+import co.uk.silvania.advancedarmoury.skills.SkillExplosivesCraft;
 import co.uk.silvania.advancedarmoury.skills.SkillFirearms;
 import co.uk.silvania.advancedarmoury.skills.SkillLMGCraft;
 import co.uk.silvania.advancedarmoury.skills.SkillLMGs;
@@ -52,6 +52,7 @@ import co.uk.silvania.advancedarmoury.skills.SkillSMGCraft;
 import co.uk.silvania.advancedarmoury.skills.SkillSMGs;
 import co.uk.silvania.advancedarmoury.skills.SkillShotgunCraft;
 import co.uk.silvania.advancedarmoury.skills.SkillShotguns;
+import co.uk.silvania.advancedarmoury.skills.SkillWeaponServicing;
 import co.uk.silvania.rpgcore.RegisterSkill;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -206,6 +207,7 @@ public class AdvancedArmoury
     		SkillRifleCraft skillRifleCraft = new SkillRifleCraft(null, "skillRifleCraft");
     		SkillExplosivesCraft skillExplosivesCraft = new SkillExplosivesCraft(null, "skillExplosivesCraft");
     		SkillRoundCraft skillRoundCraft = new SkillRoundCraft(null, "skillRoundCraft");
+    		SkillWeaponServicing skillWeaponServicing = new SkillWeaponServicing(null, "skillWeaponServicing");
     		
     		RegisterSkill.register(skillFirearms);
     		RegisterSkill.register(skillPistols);
@@ -230,7 +232,7 @@ public class AdvancedArmoury
     		RegisterSkill.register(skillRifleCraft);
     		RegisterSkill.register(skillExplosivesCraft);
     		RegisterSkill.register(skillRoundCraft);
-    		
+    		RegisterSkill.register(skillWeaponServicing);
     		
     		MinecraftForge.EVENT_BUS.register(new SkillRegistrationHandler());
     	}

@@ -8,13 +8,13 @@ import co.uk.silvania.advancedarmoury.DamageSourceShot;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultContainer;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
 import co.uk.silvania.advancedarmoury.items.components.cores.IModifierCore;
+import co.uk.silvania.advancedarmoury.items.components.generic.GunFrame;
 import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
 import co.uk.silvania.advancedarmoury.items.rounds.ItemRound;
 import co.uk.silvania.advancedarmoury.skills.SkillAssaultRifles;
 import co.uk.silvania.rpgcore.skills.SkillLevelBase;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -85,6 +85,7 @@ public class FireAutomaticGun {
 	public void fireAssault(World world, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
 		AssaultIInventory gunInv = new AssaultIInventory(player.getHeldItem());
 		AssaultContainer container = new AssaultContainer(player, player.inventory, gunInv);
+		GunFrame gunFrame = (GunFrame) gun.getItem();
 		Random rand = new Random();
 		
 		if (isCompleteGun(gun, gunInv)) {
@@ -108,7 +109,7 @@ public class FireAutomaticGun {
 			double roundCal   = round.stackTagCompound.getDouble("calibre");
 		
 			if (!(chambreCal == barrelCal && barrelCal == roundCal)) {
-				//damage gun
+				gunFrame.damageItem(gun, 5);
 				world.playSoundAtEntity(player, "advancedarmoury:dryfire", 3.0F, 1.0F);
 				return;
 			}
@@ -185,16 +186,14 @@ public class FireAutomaticGun {
 					
 					SkillAssaultRifles skillAssault = (SkillAssaultRifles) SkillLevelBase.get(player, SkillAssaultRifles.staticSkillId);
 					skillAssault.addXPWithUpdate(damage/5, player);
-					System.out.println("Adding " + (damage/5) + " XP to player. Mob has " + targetEntityLiving.getHealth() + "/" + targetEntityLiving.getMaxHealth());
 					if (targetEntityLiving.getHealth() <= 0) {
 						skillAssault.addXPWithUpdate(targetEntityLiving.getMaxHealth()/5, player);
-						System.out.println("He's dead, jim! Adding " + (targetEntityLiving.getMaxHealth()/5) + " to player.");
 					}
 				}
 			}
 			
 			if (!player.capabilities.isCreativeMode) {
-				//TODO Damage system
+				gunFrame.damageItem(gun, 1);
 				//System.out.println("Item name: " + gunInv.getStackInSlot(2).getDisplayName());
 				//System.out.println("Pre-damage: " + gunInv.getStackInSlot(2).getItemDamage());
 				//ItemStack newStack = new ItemStack(gunInv.getStackInSlot(2).getItem(), gunInv.getStackInSlot(2).stackSize, gunInv.getStackInSlot(2).getItemDamage() + 1);

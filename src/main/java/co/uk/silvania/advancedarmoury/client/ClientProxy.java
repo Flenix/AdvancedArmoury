@@ -66,7 +66,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public static void renderPrebuiltGuns() {
-		MinecraftForgeClient.registerItemRenderer(AAItemPrebuiltGuns.m4CarbinePolymer, new RenderAssaultRifle());
+		MinecraftForgeClient.registerItemRenderer(AAItemPrebuiltGuns.m4CarbineStandard, new RenderAssaultRifle());
 		MinecraftForgeClient.registerItemRenderer(AAItemPrebuiltGuns.m4CarbineBling, new RenderAssaultRifle());
 	}
 	
@@ -122,6 +122,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void renderStocks(Item item, String material) {
 		MinecraftForgeClient.registerItemRenderer(item, new PartRenderBase("m4stock", material, false));
+	}
+	
+	@Override
+	public void renderAssaultRifles(Item item) {
+		MinecraftForgeClient.registerItemRenderer(item, new RenderAssaultRifle());
 	}
 
 }

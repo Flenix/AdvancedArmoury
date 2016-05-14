@@ -21,15 +21,9 @@ public abstract class ItemComponent extends Item {
 	
 	public String partName;
 	public String material;
-	public int cost;
-	public int buildTime;
-	public int power;
 	public double calibre;
 	public double size;
 	
-	public double durability;
-	public int weight;
-	public float accuracy;
 	public String textColour;
 	public int itemRGB;
 	public int fireRate;
@@ -45,10 +39,6 @@ public abstract class ItemComponent extends Item {
 		super();
 		this.partName = componentName;
 		this.material = materialName;
-		this.durability = (int) Math.round(200 * size);
-		this.buildTime = buildTime / 4;
-		this.weight = (int)Math.round(weight * size);
-		this.setMaxDamage((int)Math.round(durability * this.durability));
 		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
 		this.textColour = textCol;
 		this.itemRGB = rgb;
@@ -64,13 +54,7 @@ public abstract class ItemComponent extends Item {
 		MaterialStats stats = new MaterialStats();
 		this.partName = componentName;
 		this.material = materialName;
-		this.durability = (int) Math.round(200 * size);
 		this.size = size;
-		this.cost = (int) Math.round((size*weight)/4);
-		this.buildTime = (int) Math.round((size*durability)*100);
-		this.weight = (int)Math.round(stats.getWeight(materialName) * size);
-		this.accuracy = stats.getAccuracry(materialName);
-		this.setMaxDamage((int)Math.round(stats.getDurability(materialName) * this.durability));
 		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
 		this.textColour = stats.getTextCol(materialName);
 		this.itemRGB = stats.getRGB(materialName);
@@ -106,6 +90,14 @@ public abstract class ItemComponent extends Item {
 	 */
 	public abstract int power(ItemStack item);
 	
+	public int cost(ItemStack item) {
+		return (int) Math.round((size(item)*weight(item))/20);
+	}
+	
+	public int buildTime(ItemStack item) {
+		return (int) Math.round(((size(item)*durability(item))*3)/100);
+	}
+	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
 		list.add(identCol + "Part Identifier: " + identName);
@@ -118,11 +110,16 @@ public abstract class ItemComponent extends Item {
 		list.add(weightDisplay(weight(item)));
 		list.add(durabilityDisplay(durability(item)));
 		list.add("");
-		list.add("Cost (Parts): " + cost);
-		list.add("Build Time: " + buildTime);
+		list.add("Cost (Parts): " + cost(item));
+		list.add("Build Time: " + buildTime(item));
 		list.add("");
 		if (item.stackTagCompound != null) {
-			list.add("Calibre: " + item.stackTagCompound.getDouble("calibre"));
+			if (item.stackTagCompound.getInteger("length") > 0) {
+				list.add("Length: " + item.stackTagCompound.getInteger("length") + "\"");
+			}
+			if (item.stackTagCompound.getDouble("calibre") > 0) {
+				list.add("Calibre: " + item.stackTagCompound.getDouble("calibre") + "mm");
+			}
 		}
 	}
 	

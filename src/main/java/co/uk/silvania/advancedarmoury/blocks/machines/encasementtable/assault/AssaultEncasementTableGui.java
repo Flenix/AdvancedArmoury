@@ -178,11 +178,11 @@ public class AssaultEncasementTableGui extends GuiContainer {
 	private int totalBuildTime() {
 		int total = 0;
 		for (int i = 2; i <= 5; i++) {
-			ItemStack itemPart = te.getStackInSlot(i);
-			if (itemPart != null) {
-				if (itemPart.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemPart.getItem();
-					total = total + component.buildTime;
+			ItemStack itemComponent = te.getStackInSlot(i);
+			if (itemComponent != null) {
+				if (itemComponent.getItem() instanceof ItemComponent) {
+					ItemComponent component = (ItemComponent) itemComponent.getItem();
+					total = total + component.buildTime(itemComponent);
 				}
 			}
 		}
@@ -196,7 +196,7 @@ public class AssaultEncasementTableGui extends GuiContainer {
 			if (itemComponent != null) {
 				if (itemComponent.getItem() instanceof ItemComponent) {
 					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					cost = cost + component.cost;
+					cost = cost + component.cost(itemComponent);
 				}
 			}
 		}

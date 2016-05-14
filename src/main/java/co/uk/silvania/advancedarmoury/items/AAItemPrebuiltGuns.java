@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 
 public class AAItemPrebuiltGuns {
 	
-	public static Item m4CarbinePolymer;
+	public static Item m4CarbineStandard;
 	public static Item m4CarbineBling;
 	
 	public static void init() {
@@ -15,12 +15,12 @@ public class AAItemPrebuiltGuns {
 	}
 	
 	public static void assaultRifles() {
-		m4CarbinePolymer = new M4CarbinePolymer().setUnlocalizedName("m4CarbinePolymer");
+		m4CarbineStandard = new M4CarbinePolymer().setUnlocalizedName("m4CarbineStandard");
 		m4CarbineBling = new M4CarbineBling().setUnlocalizedName("m4CarbineBling");
 	}
 	
 	public static void registerItems() {
-		GameRegistry.registerItem(m4CarbinePolymer, "m4CarbinePolymer");
+		GameRegistry.registerItem(m4CarbineStandard, "m4CarbineStandard");
 		GameRegistry.registerItem(m4CarbineBling, "m4CarbineBling");
 	}
 

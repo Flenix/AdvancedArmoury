@@ -29,6 +29,9 @@ public class ItemBarrel extends ItemComponent {
 	int fireRate;
 	int power;
 	
+	public static int[] length = {4, 6, 8, 10, 15, 18, 20, 22, 24, 27, 30};
+	public static double[] cal = {5.56, 7.62, 9.00, 12.7};
+	
 	public ItemBarrel(String name, double size, String materialName, double durability, int weight, float accuracy, String textCol, int rgb, int fireRate, String oreDict, boolean rifled) {
 		super("", "Barrel", name, materialName, textCol, rgb, oreDict, "\u00A7b", "A");
 		this.material = materialName;
@@ -71,37 +74,9 @@ public class ItemBarrel extends ItemComponent {
 		}
 	}
 	
-	/*@SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
-		list.add("\u00A7b" + "Part Identifier: " + "A");
-		list.add("");
-		list.add(col + "Material: " + material);
-		list.add("");
-		list.add("Accuracy: " + accuracy);
-		list.add("\u00A78" + "Fire Rate: N/A");
-		list.add("");
-		list.add("Cost (Parts): " + cost);
-		list.add("Build Time: " + buildTime);
-		list.add("");
-		list.add("Power Modifier: " + power);
-		if (item.stackTagCompound != null) {
-			list.add("Weight: " + weight * Math.round(item.stackTagCompound.getInteger("length")));
-			list.add("");
-			list.add("Barrel Length: " + item.stackTagCompound.getInteger("length") + "\"");
-			list.add("Calibre: " + item.stackTagCompound.getDouble("calibre"));
-			list.add("");
-			list.add("Damage: " + this.getDamage(item) + "/" + (int)Math.round(this.durability * Math.round(item.stackTagCompound.getDouble("size"))));
-		} else {
-			list.add(EnumChatFormatting.DARK_RED + "Something has broken horribly. You should throw this away and tell Flenix.");
-		}
-	}*/
-	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
-		int[] length = {4, 6, 8, 10, 15, 18, 20, 22, 24, 27, 30};
-		double[] cal = {5.56, 7.62, 9.00, 12.7};
-		
 		for (int i = 0; i < cal.length; i++) {
 			for (int j = 0; j < length.length; j++) {
 				ItemStack itemBarrel = new ItemStack(item);

@@ -90,7 +90,7 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 				if (itemComponent != null) {
 					if (itemComponent.getItem() instanceof ItemComponent) {
 						ItemComponent component = (ItemComponent) itemComponent.getItem();
-						time = time + component.buildTime;
+						time = time + component.buildTime(itemComponent);
 					}
 				}
 			}

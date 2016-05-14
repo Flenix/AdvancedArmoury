@@ -21,8 +21,8 @@ public class ItemAssaultChamber extends ItemAssaultComponent {
 	String matName;
 	String col;
 
-	public ItemAssaultChamber(String identCol, String identName, String displayName, float acc, String col, int rgb, int rate, boolean powerBool, String oredict) {
-		super("chamber", "Chamber", 1.76, displayName, acc, col, rgb, rate, powerBool, oredict, identCol, identName);
+	public ItemAssaultChamber(String identCol, String identName, String displayName, double size, float acc, String col, int rgb, int rate, boolean powerBool, String oredict) {
+		super("chamber", "Chamber", size, displayName, acc, col, rgb, rate, powerBool, oredict, identCol, identName);
 		this.setCreativeTab(AdvancedArmoury.tabComponentsCalibre);
 		
 		this.matName = displayName;

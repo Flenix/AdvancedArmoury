@@ -29,7 +29,7 @@ public class M4Receiver extends Receiver {
 	static float attachmentZ = 0.0F;
 
 	public M4Receiver(String name, String iconTexture, String gunType, String materialName, double dura, int weight, String col, boolean topRail) {
-		super(name, "m4receiver", "m4receiver", iconTexture, gunType, (int) Math.round((3.8*dura)*100), (int) Math.round((3.8*weight)/4),
+		super(name, "m4receiver", "m4receiver", iconTexture, gunType, 
 				xSize, ySize, zSize,
 				frontEndX, frontEndY, frontEndZ,
 				stockX, stockY, stockZ,

@@ -24,6 +24,8 @@ import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,6 +61,7 @@ public class GunFrame extends ItemInventory implements IGun {
 		if (round == null) {
 			if (entityLiving instanceof EntityPlayer) {
 				if (!((EntityPlayer)entityLiving).capabilities.isCreativeMode) {
+					damageItem(item, 5);
 					dryFire(entityLiving.worldObj, entityLiving, round);
 				}
 			} else {
@@ -132,7 +135,7 @@ public class GunFrame extends ItemInventory implements IGun {
 				}
 			}
 		}
-		return dura + item.stackTagCompound.getInteger("duraBuildOffset");
+		return (int) (dura/3.0) + item.stackTagCompound.getInteger("duraBuildOffset");
 	}
 	
 	public int getFireRate(ItemStack item) {
@@ -171,16 +174,27 @@ public class GunFrame extends ItemInventory implements IGun {
 		return col+"Accuracy: "+str+"%";
 	}
 	
-	public ItemStack damageItem(ItemStack item) {
-		System.out.println("Damage gun");
+	public ItemStack damageItem(ItemStack item, int dmg) {
+		System.out.println("Damage gun: " + dmg);
 		if (item != null) {
-			if (item.getItem() instanceof ItemComponent) {
-				ItemComponent itemComponent = (ItemComponent) item.getItem();
-				return itemComponent.getContainerItem(item);
-			}
+			item.stackTagCompound.setInteger("damage", item.stackTagCompound.getInteger("damage") + dmg);
 		}
 		return item;
-	}	
+	}
+	
+	public String displayWeight(double weight, boolean sneak) {
+		if (sneak) {
+			return "Weight: " + (weight*2.2) + " lbs";
+		}
+		return "Weight: " + weight + " KG";
+	}
+	
+	public String displayPower(int power, boolean sneak) {
+		if (sneak) {
+			return "Muzzle Velocity: " + power + " FPS";
+		}
+		return "Muzzle Velocity: " + (int) ((power/10000.0)*3048.0) + " M/S";
+	}
 	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack item, EntityPlayer player, List list, boolean isInHand) {
@@ -191,10 +205,15 @@ public class GunFrame extends ItemInventory implements IGun {
 			}
 		}
 		list.add(parseAccuracy(gunFire.getAccuracy(item)) + " at 20m");
-		list.add("Weight: " + (double) getWeight(item) / 10000.0 + " KG");
-		list.add("Muzzle Velocity: " + getPower(item) + " fps");
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			list.add(displayWeight((double) getWeight(item) / 10000.0, true));
+			list.add(displayPower(getPower(item), true));
+		} else {
+			list.add(displayWeight((double) getWeight(item) / 10000.0, false));
+			list.add(displayPower(getPower(item), false));
+		}
 		list.add("Fire Rate: " + getFireRate(item) + " RPM");
-		list.add("Damage: 0/" + getDurability(item));
+		list.add("Damage: " + item.stackTagCompound.getInteger("damage") + "/" + getDurability(item));
 		list.add("");
 		AssaultIInventory inventory = new AssaultIInventory(item);
 		if (inventory.getStackInSlot(0) != null) {

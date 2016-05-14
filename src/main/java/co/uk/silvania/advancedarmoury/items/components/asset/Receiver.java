@@ -21,10 +21,9 @@ public class Receiver extends ItemAsset {
 	public int magId = 0;
 	public boolean topRail = false;
 	
-	static double size = 4.5;
+	static double size = 19*0.75;
 
 	public Receiver(String name, String modelName, String modelTexture, String iconTexture, String gunType, 
-			int buildTime, int cost, 
 			float xSize, float ySize, float zSize, 
 			float barrelX, float barrelY, float barrelZ,
 			float stockX, float stockY, float stockZ,
@@ -39,8 +38,6 @@ public class Receiver extends ItemAsset {
 		this.modelName = modelName;
 		this.modelTexture = modelTexture;
 		this.iconTexture = iconTexture;
-		this.buildTime = buildTime;
-		this.cost = cost;
 		
 		this.ySize = ySize;
 		this.zSize = zSize;

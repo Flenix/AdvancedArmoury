@@ -19,8 +19,6 @@ public class ComponentType {
 	public String iconTexture;
 	public String gunType;
 	public String material;
-	public int buildTime;
-	public int partCost;
 	
 	public float xSize;
 	public float ySize;

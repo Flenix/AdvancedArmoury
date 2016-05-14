@@ -36,6 +36,8 @@ public class SkillRegistrationHandler {
 			event.entity.registerExtendedProperties(SkillRifleCraft.staticSkillId, new SkillRifleCraft((EntityPlayer)event.entity, SkillRifleCraft.staticSkillId));
 			event.entity.registerExtendedProperties(SkillExplosivesCraft.staticSkillId, new SkillExplosivesCraft((EntityPlayer)event.entity, SkillExplosivesCraft.staticSkillId));
 			event.entity.registerExtendedProperties(SkillRoundCraft.staticSkillId, new SkillRoundCraft((EntityPlayer)event.entity, SkillRoundCraft.staticSkillId));
+			
+			event.entity.registerExtendedProperties(SkillWeaponServicing.staticSkillId, new SkillWeaponServicing((EntityPlayer)event.entity, SkillWeaponServicing.staticSkillId));
 		}
 	}
 }

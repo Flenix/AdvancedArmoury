@@ -247,7 +247,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 			if (itemComponent != null) {
 				if (itemComponent.getItem() instanceof ItemComponent) {
 					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					total = total + component.buildTime;
+					total = total + component.buildTime(itemComponent);
 				}
 			}
 		}
@@ -261,7 +261,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 			if (itemComponent != null) {
 				if (itemComponent.getItem() instanceof ItemComponent) {
 					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					total = total + component.accuracy;
+					total = total + component.accuracy(itemComponent);
 				}
 			}
 		}
@@ -280,7 +280,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 			if (itemComponent != null) {
 				if (itemComponent.getItem() instanceof ItemComponent) {
 					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					power = power + component.power;
+					power = power + component.power(itemComponent);
 				}
 			}
 		}
@@ -295,7 +295,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 			if (itemComponent != null) {
 				if (itemComponent.getItem() instanceof ItemComponent) {
 					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					cost = cost + component.cost;
+					cost = cost + component.cost(itemComponent);
 				}
 			}
 		}

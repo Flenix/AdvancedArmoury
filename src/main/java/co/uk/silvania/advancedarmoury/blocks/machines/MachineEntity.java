@@ -104,7 +104,7 @@ public class MachineEntity extends TileEntity implements IInventory {
 			if (itemPart != null) {
 				if (itemPart.getItem() instanceof ItemComponent) {
 					ItemComponent component = (ItemComponent) itemPart.getItem();
-					cost = cost + component.cost;
+					cost = cost + component.cost(itemPart);
 				}
 			}
 		}
