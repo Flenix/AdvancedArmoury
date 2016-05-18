@@ -15,111 +15,66 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-public abstract class ItemComponent extends Item {
+public class ItemComponent extends Item {
 
 	MaterialStats stats = new MaterialStats();
 	
-	public String partName;
-	public String material;
 	public double calibre;
-	public double size;
+	double size;
 	
-	public String textColour;
-	public int itemRGB;
-	public int fireRate;
-	public String oreDict;
-	
+	public String componentName;
 	public String textureName;
 	public String displayName;
+	public String identifier;
 	
-	public String identCol;
-	public String identName;
-	
-	public ItemComponent(String weaponType, String displayName, String componentName, String materialName, String textCol, int rgb, String oreDict, String identCol, String identId) {
+	public ItemComponent(String displayName, String componentName, String materialName, String textCol, int rgb, String oreDict, String identCol, String identId) {
 		super();
-		this.partName = componentName;
-		this.material = materialName;
 		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
-		this.textColour = textCol;
-		this.itemRGB = rgb;
-		this.oreDict = oreDict;
-		this.textureName = weaponType + partName;
-		this.displayName = material + " " + displayName;
-		this.identCol = identCol;
-		this.identName = identId;
+		this.displayName = displayName;
 	}
 	
-	public ItemComponent(String weaponType, String displayName, String componentName, String materialName, double size) {
-		super();
-		MaterialStats stats = new MaterialStats();
-		this.partName = componentName;
-		this.material = materialName;
+	public ItemComponent(String displayName, String componentName, String identifier, double size) {
+		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
+		this.identifier = identifier;
+		this.textureName = componentName;
+		this.displayName = displayName;
 		this.size = size;
-		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
-		this.textColour = stats.getTextCol(materialName);
-		this.itemRGB = stats.getRGB(materialName);
-		this.fireRate = stats.getFireRate(materialName);
-		this.oreDict = stats.getOreDict(materialName);
-		this.textureName = weaponType + partName;
-		this.displayName = material + " " + displayName;
 	}
-	
-	public abstract double size(ItemStack item);
-	public abstract int weight(ItemStack item);
-	public abstract double durability(ItemStack item);
-	
-	/**
-	 * Return less than zero if this component doesn't affect accuracy.
-	 * Lower values = more accurate
-	 * @return
-	 */
-	public abstract float accuracy(ItemStack item);
-	
-	/**
-	 * Return less than zero if this component doesn't affect fire rate.
-	 * RETURNS DIFFERENT THINGS DEPENDING ON GUN SYSTEM! 
-	 * Rounds per second on full auto. Cooldown in ticks on semi auto.
-	 * @return
-	 */
-	public abstract int fireRate(ItemStack item);
-	
-	/**
-	 * Return less than zero if this component doesn't affect power.
-	 * Defines damage, range etc
-	 * @return
-	 */
-	public abstract int power(ItemStack item);
-	
+
 	public int cost(ItemStack item) {
-		return (int) Math.round((size(item)*weight(item))/20);
+		return (int) Math.round((size*getWeight(item))/20);
 	}
 	
 	public int buildTime(ItemStack item) {
-		return (int) Math.round(((size(item)*durability(item))*3)/100);
+		return (int) Math.round(((size*getDurability(item))*3)/100);
 	}
 	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack item, EntityPlayer player, List list, boolean p_77624_4_) {
-		list.add(identCol + "Part Identifier: " + identName);
-		list.add("");
-		list.add(textColour + "Material: " + material);
-		list.add("");
-		list.add(accDisplay(accuracy(item)));
-		list.add(fireRateDisplay(fireRate));
-		list.add(powerDisplay(power(item)));
-		list.add(weightDisplay(weight(item)));
-		list.add(durabilityDisplay(durability(item)));
-		list.add("");
-		list.add("Cost (Parts): " + cost(item));
-		list.add("Build Time: " + buildTime(item));
-		list.add("");
 		if (item.stackTagCompound != null) {
-			if (item.stackTagCompound.getInteger("length") > 0) {
-				list.add("Length: " + item.stackTagCompound.getInteger("length") + "\"");
+			list.add(identifier);//identCol + "Part Identifier: " + identName);
+			list.add("");
+			list.add(item.stackTagCompound.getString("textCol") + "Material: " + getMaterial(item));
+			list.add("");
+			list.add(accDisplay(getAccuracy(item)));
+			list.add(fireRateDisplay(getFireRate(item)));
+			list.add(powerDisplay(item, getPower(item)));
+			list.add(weightDisplay(item, getWeight(item)));
+			list.add(durabilityDisplay(item, getDurability(item)));
+			list.add("");
+			list.add("Cost (Parts): " + cost(item));
+			list.add("Build Time: " + buildTime(item));
+			list.add("");
+			if (item.stackTagCompound != null) {
+				if (item.stackTagCompound.getInteger("length") > 0) {
+					list.add("Length: " + item.stackTagCompound.getInteger("length") + "\"");
+				}
+				if (item.stackTagCompound.getDouble("calibre") > 0) {
+					list.add("Calibre: " + item.stackTagCompound.getDouble("calibre") + "mm");
+				}
 			}
-			if (item.stackTagCompound.getDouble("calibre") > 0) {
-				list.add("Calibre: " + item.stackTagCompound.getDouble("calibre") + "mm");
-			}
+		} else {
+			list.add("ITEM ISSUE DETECTED! OH NO D:");
 		}
 	}
 	
@@ -141,10 +96,10 @@ public abstract class ItemComponent extends Item {
 		return "\u00A78" + "Fire Rate: N/A";
 	}
 	
-	public String powerDisplay(int power) {
+	public String powerDisplay(ItemStack item, int power) {
 		//return "vulgar"; ;)
 		if (power > 0) {
-			int matWeight = stats.getWeight(material);
+			int matWeight = stats.getWeight(getMaterial(item)); //TODO make better
 			if (matWeight >= 1601) { return "\u00A72" + "Power: " + power; }
 			else if (matWeight >= 1201) { return "\u00A7a" + "Power: " + power; }
 			else if (matWeight >= 801) { return "\u00A7e" + "Power: " + power; }
@@ -154,8 +109,8 @@ public abstract class ItemComponent extends Item {
 		return "\u00A78" + "Power: N/A";
 	}
 	
-	public String weightDisplay(int weight) {
-		int matWeight = stats.getWeight(material);
+	public String weightDisplay(ItemStack item, int weight) {
+		int matWeight = stats.getWeight(getMaterial(item)); //TODO make better
 		if (matWeight >= 1601) { return "\u00A74" + "Weight: " + weight; }
 		else if (matWeight >= 1201) { return "\u00A7c" + "Weight: " + weight; }
 		else if (matWeight >= 801) { return "\u00A7e" + "Weight: " + weight; }
@@ -164,8 +119,8 @@ public abstract class ItemComponent extends Item {
 
 	}
 	
-	public String durabilityDisplay(double durability) {
-		double dura = stats.getDurability(material);
+	public String durabilityDisplay(ItemStack item, double durability) {
+		double dura = stats.getDurability(getMaterial(item)); //TODO make better
 		if (dura <= 0.6) { return "\u00A74" + "Durability: " + (int) durability; }
 		else if (dura <= 2.0) { return "\u00A7c" + "Durability: " + (int) durability; }
 		else if (dura <= 3.5) { return "\u00A7e" + "Durability: " + (int) durability; }
@@ -176,7 +131,7 @@ public abstract class ItemComponent extends Item {
 	
 	@Override
     public String getItemStackDisplayName(ItemStack item) {
-        return displayName;
+        return getMaterial(item) + " " + displayName;
     }
 
 	@Override
@@ -188,20 +143,14 @@ public abstract class ItemComponent extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack item, int par2) {
-		return itemRGB;
+		if (item.stackTagCompound != null) {
+			return item.stackTagCompound.getInteger("itemCol");
+		}
+		return 0;
 	}
 	
 	public void damagePart(ItemStack item, int dmg) {
 		this.setDamage(item, this.getDamage(item) + dmg);
-	}
-	
-	@Override
-	public void onUpdate(ItemStack item, World world, Entity entity, int par4, boolean par5) {
-		int meta = item.getItemDamage();
-		if (item.stackTagCompound == null) {
-			item.stackTagCompound = new NBTTagCompound();
-			createTagCompound(item, meta);
-		}
 	}
 	
     public ItemStack onItemRightClick(ItemStack item, World p_77659_2_, EntityPlayer p_77659_3_)
@@ -214,8 +163,24 @@ public abstract class ItemComponent extends Item {
     	System.out.println("Calling weird thing");
     	return new ItemStack(item.getItem(), item.stackSize, item.getItemDamage() + 1);
     }
-		
-	public void createTagCompound(ItemStack item, int meta) {
-		item.stackTagCompound.setString("partName", partName);
+	
+	public boolean tag(ItemStack item) {
+		if (item.stackTagCompound != null) {
+			return true;
+		}
+		return false;
 	}
+	
+	//Get stuff from NBT quickly and easily.
+	public String getComponentName(ItemStack item) 	{ return tag(item) ? item.stackTagCompound.getString("componentName") : null; }
+	public String getMaterial(ItemStack item) 		{ return tag(item) ? item.stackTagCompound.getString("materialName") : null; }
+	public double getDurability(ItemStack item) 	{ return tag(item) ? item.stackTagCompound.getDouble("durability") : null; }
+	public int getWeight(ItemStack item) 			{ return tag(item) ? item.stackTagCompound.getInteger("weight") : null; }
+	public float getAccuracy(ItemStack item) 		{ return tag(item) ? item.stackTagCompound.getFloat("accuracy") : null; }
+	public String getTextCol(ItemStack item) 		{ return tag(item) ? item.stackTagCompound.getString("textCol") : null; }
+	public int getItemCol(ItemStack item) 			{ return tag(item) ? item.stackTagCompound.getInteger("itemCol") : null; }
+	public int getFireRate(ItemStack item) 			{ return tag(item) ? item.stackTagCompound.getInteger("fireRate") : null; }
+	public String getOreDict(ItemStack item) 		{ return tag(item) ? item.stackTagCompound.getString("oreDict") : null; }
+	public int getPower(ItemStack item) 			{ return tag(item) ? item.stackTagCompound.getInteger("power") : null; }
+	public int getRange(ItemStack item) 			{ return tag(item) ? item.stackTagCompound.getInteger("range") : null; }
 }

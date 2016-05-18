@@ -2,9 +2,6 @@ package co.uk.silvania.advancedarmoury.network;
 
 import co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.assault.AssaultAssemblyTableContainer;
 import co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.assault.AssaultAssemblyTableEntity;
-import co.uk.silvania.advancedarmoury.blocks.machines.encasementtable.assault.AssaultEncasementTableContainer;
-import co.uk.silvania.advancedarmoury.blocks.machines.encasementtable.assault.AssaultEncasementTableEntity;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetReceiver;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -21,13 +18,15 @@ public class GunBuildPacket implements IMessage {
 	public static int y;
 	public static int z;
 	public static String name;
+	public static String tag;
 	public static String buildGun;
 	public static String userName;
 	
 	public GunBuildPacket() {}
 	
-	public GunBuildPacket(String gunName, String build, String username, int xPos, int yPos, int zPos) {
+	public GunBuildPacket(String gunName, String gunTag, String build, String username, int xPos, int yPos, int zPos) {
 		name = gunName;
+		tag = gunTag;
 		x = xPos;
 		y = yPos;
 		z = zPos;
@@ -37,12 +36,14 @@ public class GunBuildPacket implements IMessage {
 	
 	@Override public void fromBytes(ByteBuf buf) {
 		name = ByteBufUtils.readUTF8String(buf);
+		tag = ByteBufUtils.readUTF8String(buf);
 		buildGun = ByteBufUtils.readUTF8String(buf);
 		userName = ByteBufUtils.readUTF8String(buf);
 	}
 	
 	@Override public void toBytes(ByteBuf buf) {
 		ByteBufUtils.writeUTF8String(buf, name);
+		ByteBufUtils.writeUTF8String(buf, tag);
 		ByteBufUtils.writeUTF8String(buf, buildGun);
 		ByteBufUtils.writeUTF8String(buf, userName);
 	}
@@ -56,6 +57,7 @@ public class GunBuildPacket implements IMessage {
 			int z = message.z;
 			String buildGun = message.buildGun;
 			String name = message.name;
+			String tag = message.tag;
 			String userName = message.userName;
 			
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
@@ -76,33 +78,15 @@ public class GunBuildPacket implements IMessage {
 								gun.stackTagCompound = new NBTTagCompound();
 							}
 							gun.stackTagCompound.setString("name", name);
+							gun.stackTagCompound.setString("tag", tag);
 						}
 					} else {
 						tileEntity.gunName = name;
+						tileEntity.gunTag = tag;
 					}
 				}
 				tileEntity.getDescriptionPacket();
-			} else if (player.openContainer instanceof AssaultEncasementTableContainer) {
-				AssaultEncasementTableContainer container = (AssaultEncasementTableContainer) player.openContainer;
-				
-				AssaultEncasementTableEntity tileEntity = container.tileEntity;
-				
-				if (tileEntity != null) {
-					if (buildGun.equalsIgnoreCase("true")) {
-						tileEntity.building = true;
-						ItemStack gun = tileEntity.getStackInSlot(0);
-						if (gun != null) {
-							if (gun.stackTagCompound == null) {
-								gun.stackTagCompound = new NBTTagCompound();
-							}
-							gun.stackTagCompound.setString("tag", name);
-						}
-					} else {
-						tileEntity.gunTag = name;
-					}
-				}
-				tileEntity.getDescriptionPacket();
-			}
+			} 
 			return null;
 		}
 	}

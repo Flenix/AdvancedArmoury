@@ -32,7 +32,7 @@ public class ItemAsset extends ItemComponent {
 	double durability;
 	
 	public ItemAsset(String weaponType, String identColour, String identId, String componentName, double size, String material, String textColour) {
-		super(weaponType, "", componentName, material, size);
+		super(/*displayName*/"", componentName, /*identifier*/ "", size);
 		this.mat = material;
 		this.textCol = textColour;
 		this.identColour = identColour;
@@ -68,7 +68,7 @@ public class ItemAsset extends ItemComponent {
 	
 	public void createNBTData(ItemStack item) {
 		item.stackTagCompound = new NBTTagCompound();
-		item.stackTagCompound.setString("partName", partName);
+		item.stackTagCompound.setString("componentName", componentName);
 
 		item.stackTagCompound.setInteger("damage", 0);
 		item.stackTagCompound.setBoolean("broken", false);
@@ -79,11 +79,11 @@ public class ItemAsset extends ItemComponent {
 		item.stackTagCompound.setString("iconTexture", iconTexture);
 	}
 
-	@Override public double size(ItemStack item) { return size; }
-	@Override public int weight(ItemStack item) { return (int) (size*weight); }
-	@Override public double durability(ItemStack item) { return Math.round((size*durability)*100); }
-	@Override public float accuracy(ItemStack item) { return -1; }
-	@Override public int fireRate(ItemStack item) { return -1; }
-	@Override public int power(ItemStack item) { return -1; }
+	public double size(ItemStack item) { return size; }
+	public int weight(ItemStack item) { return (int) (size*weight); }
+	public double durability(ItemStack item) { return Math.round((size*durability)*100); }
+	public float accuracy(ItemStack item) { return -1; }
+	public int fireRate(ItemStack item) { return -1; }
+	public int power(ItemStack item) { return -1; }
 
 }

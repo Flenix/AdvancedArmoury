@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class ItemAssaultFiringPart extends ItemAssaultComponent {
+public class ItemAssaultFiringPart extends ItemAssaultComponent_OLD {
 	
 	String matName;
 	String col;

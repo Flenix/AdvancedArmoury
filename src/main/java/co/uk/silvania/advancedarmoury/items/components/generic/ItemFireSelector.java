@@ -21,7 +21,7 @@ public class ItemFireSelector extends ItemComponent {
 	int power;
 	
 	public ItemFireSelector(String componentName, double size, String materialName, double durability, int weight, float accuracy, String textCol, int rgb, int fireRate, String oreDict) {
-		super("", "Fire Selector", componentName, materialName, textCol, rgb, oreDict, "\u00A76", "B");
+		super("Fire Selector", componentName, materialName, textCol, rgb, oreDict, "\u00A76", "B");
 		this.material = materialName;
 		this.col = textCol;
 		
@@ -34,10 +34,10 @@ public class ItemFireSelector extends ItemComponent {
 		this.power = (int) Math.round(weight / size);
 	}
 
-	@Override public double size(ItemStack item) { return size; }
-	@Override public int weight(ItemStack item) { return (int) (size*stats.getWeight(material)); }
-	@Override public double durability(ItemStack item) { return Math.round((size*stats.getDurability(material))*100); }
-	@Override public float accuracy(ItemStack item) { return accuracy; }
-	@Override public int fireRate(ItemStack item) { return fireRate; }
-	@Override public int power(ItemStack item) { return power; }
+	public double size(ItemStack item) { return size; }
+	public int weight(ItemStack item) { return (int) (size*stats.getWeight(material)); }
+	public double durability(ItemStack item) { return Math.round((size*stats.getDurability(material))*100); }
+	public float accuracy(ItemStack item) { return accuracy; }
+	public int fireRate(ItemStack item) { return fireRate; }
+	public int power(ItemStack item) { return power; }
 }

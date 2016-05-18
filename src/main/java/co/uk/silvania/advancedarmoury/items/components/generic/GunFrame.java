@@ -99,8 +99,8 @@ public class GunFrame extends ItemInventory implements IGun {
 			if (inventory.getStackInSlot(i) != null) {
 				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
 					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
-					if (itemComp.power(item) > 0) {
-						power += itemComp.power(item);
+					if (itemComp.getPower(item) > 0) {
+						power += itemComp.getPower(item);
 					}
 				}
 			}
@@ -116,7 +116,7 @@ public class GunFrame extends ItemInventory implements IGun {
 			if (inventory.getStackInSlot(i) != null) {
 				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
 					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
-					weight += itemComp.weight(item);
+					weight += itemComp.getWeight(item);
 				}
 			}
 		}
@@ -131,7 +131,7 @@ public class GunFrame extends ItemInventory implements IGun {
 			if (inventory.getStackInSlot(i) != null) {
 				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
 					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
-					dura += itemComp.durability(item);
+					dura += itemComp.getDurability(item);
 				}
 			}
 		}
@@ -147,8 +147,8 @@ public class GunFrame extends ItemInventory implements IGun {
 			if (inventory.getStackInSlot(i) != null) {
 				if (inventory.getStackInSlot(i).getItem() instanceof ItemComponent) {
 					ItemComponent itemComp = (ItemComponent) inventory.getStackInSlot(i).getItem();
-					if (itemComp.fireRate(item) > 0) {
-						rate += itemComp.fireRate(item);
+					if (itemComp.getFireRate(item) > 0) {
+						rate += itemComp.getFireRate(item);
 						count++;
 					}
 				}
@@ -418,7 +418,7 @@ public class GunFrame extends ItemInventory implements IGun {
 							}
 							
 							//receiver.stackTagCompound.setString("boltMaterial", boltItem.material.getRawString());
-							receiver.stackTagCompound.setString("chargingHandleMaterial", chargingHandleItem.material);
+							receiver.stackTagCompound.setString("chargingHandleMaterial", chargingHandleItem.getMaterial(chargingHandle));
 							receiver.stackTagCompound.setString("fireSelectorMaterial", fireSelectorItem.material);
 							item.stackTagCompound.setInteger("weight", getWeight(item));
 						}

@@ -27,6 +27,7 @@ import net.minecraft.world.EnumSkyBlock;
 public class AssaultAssemblyTableEntity extends MachineEntity implements IInventory {
 	
 	public String gunName = "";
+	public String gunTag = "";
 	
 	public AssaultAssemblyTableEntity() {
 		super(17);
@@ -36,12 +37,14 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setString("gunName", gunName);
+		nbt.setString("gunTag", gunTag);
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		this.gunName = nbt.getString("gunName");
+		this.gunTag = nbt.getString("gunTag");
 	}
 	
 	@Override
@@ -50,6 +53,7 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 		nbt.setInteger("partsValue", partsValue);
 		nbt.setInteger("buildProgress", buildProgress);
 		nbt.setString("gunName", gunName);
+		nbt.setString("gunTag", gunTag);
 		
 		this.worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		markDirty();
@@ -64,6 +68,7 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 		this.partsValue = nbt.getInteger("partsValue");
 		this.buildProgress = nbt.getInteger("buildProgress");
 		this.gunName = nbt.getString("gunName");
+		this.gunTag = nbt.getString("gunTag");
 		
 		this.worldObj.updateLightByType(EnumSkyBlock.Block, this.xCoord, this.yCoord, this.zCoord);
 	}
@@ -108,6 +113,7 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 							buildGun(players.get(i));
 							buildProgress = 0;
 							gunName = "";
+							gunTag = "";
 							building = false;
 							return;
 						}

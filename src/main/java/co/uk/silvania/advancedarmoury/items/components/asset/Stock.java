@@ -10,7 +10,7 @@ public class Stock extends ItemAsset {
 		this.modelName = modelName;
 		this.modelTexture = modelTexture;
 		this.iconTexture = iconTexture;
-		this.material = material;
+		//this.material = material;
 		
 		this.xSize = xSize;
 		this.ySize = ySize;

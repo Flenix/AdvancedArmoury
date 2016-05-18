@@ -7,12 +7,11 @@ import net.minecraft.item.ItemStack;
 
 public class SlotComponent extends Slot {
 	
-	String partName;
-	
+	String componentName;
 	
 	public SlotComponent(IInventory inventory, int id, int x, int y, String name) {
 		super (inventory, id, x, y);
-		partName = name;
+		componentName = name;
 	}
 	
 	@Override
@@ -20,7 +19,7 @@ public class SlotComponent extends Slot {
 		if (item != null) {
 			if (item.getItem() instanceof ItemComponent) {
 				if (item.stackTagCompound != null) {
-					if (item.stackTagCompound.getString("partName").equalsIgnoreCase(partName)) {
+					if (item.stackTagCompound.getString("componentName").equalsIgnoreCase(componentName)) {
 						return true;
 					}
 				}

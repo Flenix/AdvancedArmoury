@@ -16,7 +16,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-public class ItemAssaultChamber extends ItemAssaultComponent {
+public class ItemAssaultChamber extends ItemAssaultComponent_OLD {
 	
 	String matName;
 	String col;
@@ -43,7 +43,7 @@ public class ItemAssaultChamber extends ItemAssaultComponent {
 			}
 			item.stackTagCompound.setInteger("length", 15);
 			item.stackTagCompound.setDouble("calibre", 5.56);
-			item.stackTagCompound.setString("partName", partName);
+			item.stackTagCompound.setString("componentName", componentName);
 		} else {
 			//setMaxDamage((int)Math.round(dura * (this.durability * Math.round(item.stackTagCompound.getDouble("size")))));
 		}
@@ -65,7 +65,7 @@ public class ItemAssaultChamber extends ItemAssaultComponent {
 			
 			itemChamber.stackTagCompound = new NBTTagCompound();
 			itemChamber.stackTagCompound.setDouble("calibre", cal[i]);
-			itemChamber.stackTagCompound.setString("partName", partName);
+			itemChamber.stackTagCompound.setString("componentName", componentName);
 			list.add(itemChamber);
 		}
 	}

@@ -33,7 +33,7 @@ public class ItemBarrel extends ItemComponent {
 	public static double[] cal = {5.56, 7.62, 9.00, 12.7};
 	
 	public ItemBarrel(String name, double size, String materialName, double durability, int weight, float accuracy, String textCol, int rgb, int fireRate, String oreDict, boolean rifled) {
-		super("", "Barrel", name, materialName, textCol, rgb, oreDict, "\u00A7b", "A");
+		super("Barrel", name, materialName, textCol, rgb, oreDict, "\u00A7b", "A");
 		this.material = materialName;
 		this.col = textCol;
 		
@@ -67,7 +67,7 @@ public class ItemBarrel extends ItemComponent {
 			}
 			item.stackTagCompound.setInteger("length", 15);
 			item.stackTagCompound.setDouble("calibre", 5.56);
-			item.stackTagCompound.setString("partName", partName);
+			item.stackTagCompound.setString("componentName", componentName);
 			item.stackTagCompound.setFloat("accuracy", accuracy);
 		} else {
 			setMaxDamage((int)Math.round(this.durability * Math.round(item.stackTagCompound.getDouble("size"))));
@@ -85,17 +85,17 @@ public class ItemBarrel extends ItemComponent {
 				itemBarrel.stackTagCompound.setInteger("length", length[j]);
 				itemBarrel.stackTagCompound.setDouble("calibre", cal[i]);
 				itemBarrel.stackTagCompound.setDouble("size", size * length[j]);
-				itemBarrel.stackTagCompound.setString("partName", partName);
+				itemBarrel.stackTagCompound.setString("componentName", componentName);
 				itemBarrel.stackTagCompound.setFloat("accuracy", accuracy);
 				list.add(itemBarrel);
 			}
 		}
 	}
 
-	@Override public double size(ItemStack item) { return size; }
-	@Override public int weight(ItemStack item) { return (int) (weight*(item.stackTagCompound.getInteger("length")*size)); }
-	@Override public double durability(ItemStack item) { return Math.round(((item.stackTagCompound.getInteger("length")*size)*stats.getDurability(material))*100); }
-	@Override public float accuracy(ItemStack item) { return accuracy; }
-	@Override public int fireRate(ItemStack item) { return fireRate; }
-	@Override public int power(ItemStack item) { return power; }
+	public double size(ItemStack item) { return size; }
+	public int weight(ItemStack item) { return (int) (weight*(item.stackTagCompound.getInteger("length")*size)); }
+	public double durability(ItemStack item) { return Math.round(((item.stackTagCompound.getInteger("length")*size)*stats.getDurability(material))*100); }
+	public float accuracy(ItemStack item) { return accuracy; }
+	public int fireRate(ItemStack item) { return fireRate; }
+	public int power(ItemStack item) { return power; }
 }

@@ -2,7 +2,7 @@ package co.uk.silvania.advancedarmoury.blocks.machines;
 
 import co.uk.silvania.advancedarmoury.items.components.cores.IModifierCore;
 import co.uk.silvania.advancedarmoury.items.components.generic.GunFrame;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultComponent;
+import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultComponent_OLD;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
