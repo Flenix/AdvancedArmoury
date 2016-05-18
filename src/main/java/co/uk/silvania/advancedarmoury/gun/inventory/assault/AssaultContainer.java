@@ -27,23 +27,23 @@ public class AssaultContainer extends ItemContainer {
 		this.addSlotToContainer(new SlotRound(this.inventory, 1, 132, 112));
 		
 
-		addSlotToContainer(new SlotComponent(this.inventory, 2, 214, 19, "bolt"));
-		addSlotToContainer(new SlotComponent(this.inventory, 3, 214, 37, "boltCarrier"));
-		addSlotToContainer(new SlotComponent(this.inventory, 4, 214, 55, "chargingHandle"));
-		addSlotToContainer(new SlotComponent(this.inventory, 5, 214, 73, "ejector"));
-		addSlotToContainer(new SlotComponent(this.inventory, 6, 214, 91, "extractor"));
-		addSlotToContainer(new SlotComponent(this.inventory, 7, 214, 109, "firingPin"));
-		addSlotToContainer(new SlotComponent(this.inventory, 8, 214, 127, "firingPinRetainerPin"));
+		addSlotToContainer(new SlotComponent(this.inventory, 2, 214, 19, "bolt")); //keeping
+		addSlotToContainer(new SlotComponent(this.inventory, 3, 214, 37, "boltCarrier")); //going
+		addSlotToContainer(new SlotComponent(this.inventory, 4, 214, 55, "chargingHandle")); //keeping
+		addSlotToContainer(new SlotComponent(this.inventory, 5, 214, 73, "ejector")); //going
+		addSlotToContainer(new SlotComponent(this.inventory, 6, 214, 91, "extractor")); //going
+		addSlotToContainer(new SlotComponent(this.inventory, 7, 214, 109, "firingPin")); //keeping
+		addSlotToContainer(new SlotComponent(this.inventory, 8, 214, 127, "firingPinRetainerPin")); //going
 		
-		addSlotToContainer(new SlotComponentOption(this.inventory, 9, 232, 37, "pistonChamber", "gasChamber"));
-		addSlotToContainer(new SlotComponentOption(this.inventory, 10, 232, 55, "spring", "gasFeed"));
-		addSlotToContainer(new SlotComponent(this.inventory, 11, 232, 73, "piston"));
+		addSlotToContainer(new SlotComponentOption(this.inventory, 9, 232, 37, "pistonChamber", "gasChamber")); //v
+		addSlotToContainer(new SlotComponentOption(this.inventory, 10, 232, 55, "spring", "gasFeed")); //v
+		addSlotToContainer(new SlotComponent(this.inventory, 11, 232, 73, "piston")); //Replace with "firing system", two options
 		
-		addSlotToContainer(new SlotComponent(this.inventory, 12, 232, 19, "chamber"));
-		addSlotToContainer(new SlotComponent(this.inventory, 13, 232, 91, "barrel"));
+		addSlotToContainer(new SlotComponent(this.inventory, 12, 232, 19, "chamber")); //Keeping
+		addSlotToContainer(new SlotComponent(this.inventory, 13, 232, 91, "barrel")); //keeping
 		
-		addSlotToContainer(new SlotComponent(this.inventory, 14, 232, 109, "trigger"));
-		addSlotToContainer(new SlotComponent(this.inventory, 15, 232, 127, "fireSelector"));
+		addSlotToContainer(new SlotComponent(this.inventory, 14, 232, 109, "trigger"));//keeping/RECEIVER
+		addSlotToContainer(new SlotComponent(this.inventory, 15, 232, 127, "fireSelector")); //keeping/RECEIVER
 		
 		addSlotToContainer(new SlotCore(this.inventory, 16, 174, 192));	//Modifier Core
 		
