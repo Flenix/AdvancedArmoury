@@ -1,4 +1,4 @@
-package co.uk.silvania.advancedarmoury.items.rounds;
+package co.uk.silvania.advancedarmoury.items_old.rounds;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import cpw.mods.fml.relauncher.Side;
@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 public class ItemBullet extends Item {
 	
 	public ItemBullet() {
-		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
+		this.setCreativeTab(AdvancedArmoury.tabRounds);
 	}
 	
 	@Override

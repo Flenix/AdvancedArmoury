@@ -1,4 +1,4 @@
-package co.uk.silvania.advancedarmoury.items;
+package co.uk.silvania.advancedarmoury.items_old;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class ItemParts extends Item {
 		super();
 		this.setHasSubtypes(true);
 		this.setMaxDamage(0);
-		this.setCreativeTab(AdvancedArmoury.tabParts);
+		this.setCreativeTab(AdvancedArmoury.tabGeneric);
 		this.baseValue = baseValue;
 	}
 	

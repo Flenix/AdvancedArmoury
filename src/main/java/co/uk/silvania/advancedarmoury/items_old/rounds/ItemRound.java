@@ -1,4 +1,4 @@
-package co.uk.silvania.advancedarmoury.items.rounds;
+package co.uk.silvania.advancedarmoury.items_old.rounds;
 
 import java.util.List;
 import java.util.Random;
@@ -29,7 +29,7 @@ public class ItemRound extends Item implements IRound {
 	
 	public ItemRound() {
 		super();
-		this.setCreativeTab(AdvancedArmoury.tabParts);
+		this.setCreativeTab(AdvancedArmoury.tabRounds);
 	}
 	
 	@Override

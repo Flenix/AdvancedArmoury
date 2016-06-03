@@ -1,4 +1,4 @@
-package co.uk.silvania.advancedarmoury.items.rounds;
+package co.uk.silvania.advancedarmoury.items_old.rounds;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class ItemCase extends Item {
 	double calibre;
 	
 	public ItemCase(double calibre) {
-		this.setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
+		this.setCreativeTab(AdvancedArmoury.tabRounds);
 		this.calibre = calibre;
 	}
 	

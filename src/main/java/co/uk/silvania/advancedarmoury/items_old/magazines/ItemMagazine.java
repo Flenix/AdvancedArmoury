@@ -1,4 +1,4 @@
-package co.uk.silvania.advancedarmoury.items.magazines;
+package co.uk.silvania.advancedarmoury.items_old.magazines;
 
 import java.util.List;
 
