@@ -10,26 +10,20 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemComponent;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultChamber;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultFiringPart;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultGasFeed;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultPiston;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultPistonChamber;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultSpring;
+import co.uk.silvania.advancedarmoury.blocks.machines.MachineGui;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultChamber;
 import co.uk.silvania.advancedarmoury.network.GunBuildPacket;
 import co.uk.silvania.rpgcore.client.skillgui.MultiLineButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
-public class AssaultAssemblyTableGui extends GuiContainer {
+public class AssaultAssemblyTableGui extends MachineGui {
 
 	private AssaultAssemblyTableEntity te;
 	public MultiLineButton button;
@@ -44,7 +38,6 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 	
 	public AssaultAssemblyTableGui(InventoryPlayer player, AssaultAssemblyTableEntity tile) {
 		super(new AssaultAssemblyTableContainer(player, tile));
-		
 		te = tile;
 		
 		xSize = 194;
@@ -170,7 +163,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 		
 		if (drawProgressTooltip) {
 			if (te.clientBuildProgress > 0) {
-				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + totalBuildTime());
+				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + totalBuildTime(2, 13, te));
 				drawHoveringText(progressList, mouseX, mouseZ, fontRendererObj);
 			}
 		}
@@ -183,14 +176,14 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 		int width = fontRendererObj.getStringWidth("Assault Rifle Assembly Table");
 		
 		String title = "Assault Rifle Assembly Table";
-		String bt = "Build Time: " + totalBuildTime();
-		String cost = "Cost: " + partsCost();
+		String bt = "Build Time: " + totalBuildTime(2, 13, te);
+		String cost = "Cost: " + partsCost(2, 13, te);
 		
-		String dura = "DUR: " + totalDurability();
-		String weight = "WGT: " + totalWeight();
-		String acc = "ACC: " + totalAccuracy();
-		String frate = "FRT: " + fireRate();
-		String power = "PWR: " + power();
+		String dura = "DUR: " + totalDurability(2, 13, te);
+		String weight = "WGT: " + totalWeight(2, 13, te);
+		String acc = "ACC: " + totalAccuracy(2, 13, te);
+		String frate = "FRT: " + fireRate(2, 13, te);
+		String power = "PWR: " + power(2, 13, te);
 		
 		fontRendererObj.drawString(title, pos(title), 6, 4210752);
 		fontRendererObj.drawString(bt, 89, 20, 4210752);
@@ -262,108 +255,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 			drawTexturedModalRect(guiLeft + 27, guiTop + 55, 194, 238, 18, 18);
 		}
 	}
-	
-	private int totalBuildTime() {
-		int total = 0;
-		for (int i = 2; i <= 13; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					total = total + component.buildTime(itemComponent);
-				}
-			}
-		}
-		return total;		
-	}
-	
-	private double totalDurability() {
-		double total = 0.0;
-		for (int i = 2; i <= 13; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					total = total + component.getDurability(itemComponent);
-				}
-			}
-		}
-		return total;
-	}
-	
-	private int totalWeight() {
-		int total = 0;
-		for (int i = 2; i <= 13; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					total = total + component.getWeight(itemComponent);
-				}
-			}
-		}
-		return total;
-	}
-	
-	private float totalAccuracy() {
-		float total = 0.0F;
-		for (int i = 2; i <= 13; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					total = total + component.getAccuracy(itemComponent);
-				}
-			}
-		}
-		return total;
-	}
-	
-	private int fireRate() {
-		int rate = 1;
-		for (int i = 2; i <= 13; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					rate = rate + component.getFireRate(itemComponent);
-				}
-			}
-		}
-		return rate;
-	}
-	
-	private int power() {
-		int power = 0;
-		for (int i = 2; i <= 13; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					power = power + component.getPower(itemComponent);
-				}
-			}
-		}
-		return power;
-	}
 
-	
-	private int partsCost() {
-		int cost = 0;
-		for (int i = 2; i <= 13; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					cost = cost + component.cost(itemComponent);
-				}
-			}
-		}
-		return cost;
-	}
-	
-	
-	
 	private boolean bolt() {
 		boolean bo1 = te.getStackInSlot(2) != null;
 		boolean bo2 = te.getStackInSlot(3) != null;
@@ -417,16 +309,8 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 	
 	private boolean isGunValid() {
 		boolean frame = te.getStackInSlot(0) != null;
-		
-		boolean afford = false;
-		if (te.partsValue >= partsCost()) {
-			afford = true;
-		}
-		
-		if (frame() && bolt() && barrel() && chamber() && trigger() && selector() && externals() && calibre() && firingSystem() && afford) {
-			return true;
-		}
-		return false;
+		boolean afford = te.partsValue >= partsCost(2, 13, te) ? true : false;
+		return frame() && bolt() && barrel() && chamber() && trigger() && selector() && externals() && calibre() && firingSystem() && afford;
 	}
 	
 	private List gunStatReport() {
@@ -448,7 +332,7 @@ public class AssaultAssemblyTableGui extends GuiContainer {
 				
 		boolean frame = te.getStackInSlot(0) != null;
 		boolean modifier = te.getStackInSlot(2) != null;
-		boolean afford = te.partsValue >= partsCost() ? true : false;
+		boolean afford = te.partsValue >= partsCost(2, 13, te) ? true : false;
 
 		List result = new ArrayList();
 

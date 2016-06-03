@@ -26,10 +26,10 @@ public class AssaultAssemblyTableContainer extends MachineContainer {
 		//Controls fire rate, power
 		//FRONT END. defines attachments, supports barrel.
 		//BARREL. Defines accuracy, range (TODO: flatten off model)
-		//STOCK. Defines recoil (TODO: recoil)
+		//STOCK. Lowers recoil (TODO: recoil)
 		
-		addSlotToContainer(new SlotFrame(tileEntity, 0, 18, 100)); //Assault Frame slot
-		addSlotToContainer(new SlotParts(tileEntity, 1, 8, 10)); //Insert parts slot
+		addSlotToContainer(new SlotParts(tileEntity, 0, 8, 10)); //Insert parts slot
+		addSlotToContainer(new SlotFrame(tileEntity, 1, 18, 100)); //Assault Frame slot
 		
 		//addSlotToContainer(new SlotComponent(tileEntity, 2, 8,  56, "barrel"));		//Cyan A
 		//addSlotToContainer(new SlotComponent(tileEntity, 3, 28, 76, "assaultReceiver"));	//Gold B
@@ -38,7 +38,7 @@ public class AssaultAssemblyTableContainer extends MachineContainer {
 
 		//addSlotToContainer(new SlotCore(tileEntity, 6, 68, 96)); //Modifier Core slot
 		
-		addSlotToContainer(new SlotComponent(tileEntity, 6, 8,  36, "assaultBolt"));		  //Green A
+		/*addSlotToContainer(new SlotComponent(tileEntity, 6, 8,  36, "assaultBolt"));		  //Green A
 		addSlotToContainer(new SlotComponent(tileEntity, 7, 48, 36, "assaultChargingHandle"));//Green B
 		addSlotToContainer(new SlotComponent(tileEntity, 8, 68, 36, "assaultFiringPin"));	  //Green C
 		addSlotToContainer(new SlotComponent(tileEntity, 9, 28, 56, "rifleChamber"));//Cyan B
@@ -48,7 +48,7 @@ public class AssaultAssemblyTableContainer extends MachineContainer {
 		
 		addSlotToContainer(new SlotComponent(tileEntity, 10, 28, 76, "assaultReceiver"));	//Gold B
 		addSlotToContainer(new SlotComponent(tileEntity, 11, 48, 76, "assaultStock"));		//Gold B
-		addSlotToContainer(new SlotComponent(tileEntity, 12, 68, 76, "assaultFrontEnd"));	//Gold B
+		addSlotToContainer(new SlotComponent(tileEntity, 12, 68, 76, "assaultFrontEnd"));	//Gold B*/
 		
 		addSlotToContainer(new SlotCore(tileEntity, 14, 68, 96)); //Modifier Core slot
 		

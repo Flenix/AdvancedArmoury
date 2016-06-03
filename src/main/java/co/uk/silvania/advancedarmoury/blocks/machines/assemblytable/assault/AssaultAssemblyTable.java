@@ -2,6 +2,7 @@ package co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.assault;
 
 import co.uk.silvania.advancedarmoury.AAUtils;
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
+import co.uk.silvania.advancedarmoury.GuiHandler;
 import co.uk.silvania.advancedarmoury.blocks.machines.BlockMachine;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,13 +28,13 @@ public class AssaultAssemblyTable extends BlockMachine {
 			return false;
 		}
 		if (world.getBlock(x + 1, y, z) == this) {
-			player.openGui(AdvancedArmoury.instance, 1, world, x, y, z);
+			player.openGui(AdvancedArmoury.instance, GuiHandler.assaultAssemblyGuiId, world, x, y, z);
 		} else if (world.getBlock(x - 1, y, z) == this) {
-			player.openGui(AdvancedArmoury.instance, 1, world, x - 1, y, z);
+			player.openGui(AdvancedArmoury.instance, GuiHandler.assaultAssemblyGuiId, world, x - 1, y, z);
 		} else if (world.getBlock(x, y, z + 1) == this) {
-			player.openGui(AdvancedArmoury.instance, 1, world, x, y, z);
+			player.openGui(AdvancedArmoury.instance, GuiHandler.assaultAssemblyGuiId, world, x, y, z);
 		} else if (world.getBlock(x, y, z - 1) == this) {
-			player.openGui(AdvancedArmoury.instance, 1, world, x, y, z - 1);
+			player.openGui(AdvancedArmoury.instance, GuiHandler.assaultAssemblyGuiId, world, x, y, z - 1);
 		} else {
 			if (!world.isRemote) {
 				player.addChatComponentMessage(new ChatComponentText("You must have two blocks side by side for this machine to function."));
