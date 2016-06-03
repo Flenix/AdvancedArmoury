@@ -1,7 +1,7 @@
 package co.uk.silvania.advancedarmoury;
 
-import co.uk.silvania.advancedarmoury.items.components.cores.EnumRarity;
-import co.uk.silvania.advancedarmoury.items.components.generic.GunFrame;
+import co.uk.silvania.advancedarmoury.items.EnumRarity;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.GunFrame;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 

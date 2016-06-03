@@ -1,19 +1,19 @@
 package co.uk.silvania.advancedarmoury;
 
-import co.uk.silvania.advancedarmoury.items.AAItemModifierCores;
-import co.uk.silvania.advancedarmoury.items.AAItemPrebuiltGuns;
-import co.uk.silvania.advancedarmoury.items.ItemParts;
-import co.uk.silvania.advancedarmoury.items.components.generic.GunFrame;
-import co.uk.silvania.advancedarmoury.items.magazines.ItemMagazine;
-import co.uk.silvania.advancedarmoury.items.rounds.ItemBullet;
-import co.uk.silvania.advancedarmoury.items.rounds.ItemCase;
-import co.uk.silvania.advancedarmoury.items.rounds.ItemRound;
+import co.uk.silvania.advancedarmoury.items.components.assault.AssaultReceiverFrame;
+import co.uk.silvania.advancedarmoury.items_old.AAItemModifierCores;
+import co.uk.silvania.advancedarmoury.items_old.AAItemPrebuiltGuns;
+import co.uk.silvania.advancedarmoury.items_old.ItemParts;
+import co.uk.silvania.advancedarmoury.items_old.magazines.ItemMagazine;
+import co.uk.silvania.advancedarmoury.items_old.rounds.ItemBullet;
+import co.uk.silvania.advancedarmoury.items_old.rounds.ItemCase;
+import co.uk.silvania.advancedarmoury.items_old.rounds.ItemRound;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 
 public class AAItems {
 
-	public static Item assaultFrame;
+	public static Item assaultReceiverFrame;
 	
 	public static Item itemPartGear;
 	public static Item itemPartScrew;
@@ -70,7 +70,7 @@ public class AAItems {
 	}
 
 	public static void items() {
-		assaultFrame = new GunFrame().setUnlocalizedName("assaultFrame");
+		assaultReceiverFrame = new AssaultReceiverFrame().setUnlocalizedName("assaultReceiverFrame");//GunFrame().setUnlocalizedName("assaultFrame");
 	}
 	
 	public static void magazines() {
@@ -122,7 +122,7 @@ public class AAItems {
 	}
 	
 	public static void registerItems() {
-    	GameRegistry.registerItem(assaultFrame, "assaultFrame");
+    	GameRegistry.registerItem(assaultReceiverFrame, "assaultReceiverFrame");
     	
     	GameRegistry.registerItem(m4mag, "m4mag");
     	

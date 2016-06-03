@@ -3,7 +3,7 @@ package co.uk.silvania.advancedarmoury.attachment.magazine;
 import co.uk.silvania.advancedarmoury.AAUtils;
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.TypeFile;
-import co.uk.silvania.advancedarmoury.items.components.ComponentType;
+import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
 
 public class PartMagazine extends ComponentType {
 	

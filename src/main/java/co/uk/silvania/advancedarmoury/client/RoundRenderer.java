@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.items.rounds.ItemRound;
+import co.uk.silvania.advancedarmoury.items_old.rounds.ItemRound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.Tessellator;

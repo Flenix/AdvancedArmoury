@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.config.MaterialStats;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
