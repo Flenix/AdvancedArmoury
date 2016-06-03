@@ -2,19 +2,19 @@ package co.uk.silvania.advancedarmoury;
 
 import java.util.ArrayList;
 
-import co.uk.silvania.advancedarmoury.items.components.cores.EnumRarity;
+import co.uk.silvania.advancedarmoury.items.EnumRarity;
 import net.minecraft.item.Item;
 
 public class RarityRegistry {
 	
-	public static ArrayList<Item> veryCommon = new ArrayList<Item>();
-	public static ArrayList<Item> common = new ArrayList<Item>();
-	public static ArrayList<Item> uncommon = new ArrayList<Item>();
-	public static ArrayList<Item> rare = new ArrayList<Item>();
-	public static ArrayList<Item> veryRare = new ArrayList<Item>();
-	public static ArrayList<Item> legendary = new ArrayList<Item>();
-	public static ArrayList<Item> mythic = new ArrayList<Item>();
-	public static ArrayList<Item> ultimate = new ArrayList<Item>();
+	public static ArrayList<String> veryCommon = new ArrayList<String>();
+	public static ArrayList<String> common = new ArrayList<String>();
+	public static ArrayList<String> uncommon = new ArrayList<String>();
+	public static ArrayList<String> rare = new ArrayList<String>();
+	public static ArrayList<String> veryRare = new ArrayList<String>();
+	public static ArrayList<String> legendary = new ArrayList<String>();
+	public static ArrayList<String> mythic = new ArrayList<String>();
+	public static ArrayList<String> ultimate = new ArrayList<String>();
 	
 	public static String veryCommon() 	{ return "\u00A7f"; }
 	public static String common() 		{ return "\u00A7a"; }
@@ -55,6 +55,42 @@ public class RarityRegistry {
 		if (rarity == EnumRarity.LEGENDARY)   { return legendaryTag(); }
 		if (rarity == EnumRarity.MYTHIC) 	  { return mythicTag(); }
 		if (rarity == EnumRarity.ULTIMATE)    { return ultimateTag(); }
+		return null;
+	}
+	
+	public static EnumRarity getEnumRarity(String str) {
+		if (str.equalsIgnoreCase("veryCommon") 	|| str.equalsIgnoreCase("very_common")) { return EnumRarity.VERY_COMMON; }
+		if (str.equalsIgnoreCase("common")) 	{ return EnumRarity.COMMON; }
+		if (str.equalsIgnoreCase("uncommon")) 	{ return EnumRarity.UNCOMMON; }
+		if (str.equalsIgnoreCase("rare")) 		{ return EnumRarity.RARE; }
+		if (str.equalsIgnoreCase("veryRare") 	|| str.equalsIgnoreCase("very_rare")) 	{ return EnumRarity.VERY_RARE; }
+		if (str.equalsIgnoreCase("legendary")) 	{ return EnumRarity.LEGENDARY; }
+		if (str.equalsIgnoreCase("mythic")) 	{ return EnumRarity.MYTHIC; }
+		if (str.equalsIgnoreCase("ultimate")) 	{ return EnumRarity.ULTIMATE; }
+		return null;
+	}
+	
+	public static void register(String name, EnumRarity rarity) {
+		System.out.println("Registering " + name + " with rarity " + rarity);
+		if (rarity == EnumRarity.VERY_COMMON) { veryCommon.add(name); }
+		if (rarity == EnumRarity.COMMON) 	  { common.add(name); }
+		if (rarity == EnumRarity.UNCOMMON)    { uncommon.add(name); }
+		if (rarity == EnumRarity.RARE) 		  { rare.add(name); }
+		if (rarity == EnumRarity.VERY_RARE)   { veryRare.add(name); }
+		if (rarity == EnumRarity.LEGENDARY)   { legendary.add(name); }
+		if (rarity == EnumRarity.MYTHIC) 	  { mythic.add(name); }
+		if (rarity == EnumRarity.ULTIMATE)    { ultimate.add(name); }
+	}
+	
+	public static ArrayList<String> getList(EnumRarity rarity) {
+		if (rarity == EnumRarity.VERY_COMMON) { return veryCommon; }
+		if (rarity == EnumRarity.COMMON) 	  { return common; }
+		if (rarity == EnumRarity.UNCOMMON)    { return uncommon; }
+		if (rarity == EnumRarity.RARE) 		  { return rare; }
+		if (rarity == EnumRarity.VERY_RARE)   { return veryRare; }
+		if (rarity == EnumRarity.LEGENDARY)   { return legendary; }
+		if (rarity == EnumRarity.MYTHIC) 	  { return mythic; }
+		if (rarity == EnumRarity.ULTIMATE)    { return ultimate; }
 		return null;
 	}
 
