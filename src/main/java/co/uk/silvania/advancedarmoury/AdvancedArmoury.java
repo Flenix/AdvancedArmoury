@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -15,15 +16,15 @@ import java.util.zip.ZipInputStream;
 import co.uk.silvania.advancedarmoury.config.AAConfig;
 import co.uk.silvania.advancedarmoury.config.ComponentGenerator;
 import co.uk.silvania.advancedarmoury.config.ComponentGeneratorConfig;
-import co.uk.silvania.advancedarmoury.items.AAItemModifierCores;
-import co.uk.silvania.advancedarmoury.items.AAItemPrebuiltGuns;
-import co.uk.silvania.advancedarmoury.items.components.ComponentType;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetFrontEnd;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetReceiver;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetStock;
-import co.uk.silvania.advancedarmoury.items.components.asset.ComponentFrontEnd;
-import co.uk.silvania.advancedarmoury.items.components.asset.ComponentReceiver;
-import co.uk.silvania.advancedarmoury.items.components.asset.ComponentStock;
+import co.uk.silvania.advancedarmoury.items_old.AAItemModifierCores;
+import co.uk.silvania.advancedarmoury.items_old.AAItemPrebuiltGuns;
+import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetFrontEnd;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetReceiver;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetStock;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentFrontEnd;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentReceiver;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentStock;
 import co.uk.silvania.advancedarmoury.network.GunBuildPacket;
 import co.uk.silvania.advancedarmoury.network.GunEventPacket;
 import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
@@ -68,6 +69,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -77,7 +79,7 @@ import net.minecraftforge.common.MinecraftForge;
 @Mod(modid = AdvancedArmoury.modid, version = AdvancedArmoury.version, dependencies="after:rpgcore")
 public class AdvancedArmoury
 {
-    public static final String modid = "advancedarmoury";
+    public static final String modid = "advancedarmoury-be";
     public static final String version = "Alpha-0.0.1";
     
     public static DamageSource damageShot;
@@ -94,63 +96,7 @@ public class AdvancedArmoury
     private static int modGuiIndex = 0;
     public static final int GunInventoryGuiIndex = modGuiIndex++;
     public static File assetDir;
-    
-    public static CreativeTabs tabComponentsGeneric = new CreativeTabs("tabComponentsGeneric") {
-    	@Override @SideOnly(Side.CLIENT)
-    	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemComponents.triggerGold);
-    		return stack.getItem();
-    	}
-    };
-    
-    public static CreativeTabs tabComponentsAssault = new CreativeTabs("tabComponentsAssault") {
-    	@Override @SideOnly(Side.CLIENT)
-    	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemAssaultComponents.assaultBoltSteel);
-    		return stack.getItem();
-    	}
-    };
-    
-    public static CreativeTabs tabComponentsCalibre = new CreativeTabs("tabComponentsCalibre") {
-    	@Override @SideOnly(Side.CLIENT)
-    	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(Items.apple);//new ItemStack(AAItemComponents.barrelIron);
-    		return stack.getItem();
-    	}
-    };
-    
-    public static CreativeTabs tabParts = new CreativeTabs("tabParts") {
-    	@Override @SideOnly(Side.CLIENT)
-    	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AAItems.itemPartGear);
-    		return stack.getItem();
-    	}
-    };
-    
-    public static CreativeTabs tabMachines = new CreativeTabs("tabMachines") {
-    	@Override @SideOnly(Side.CLIENT)
-    	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AABlocks.assaultRifleAssemblyTable);
-    		return stack.getItem();
-    	}
-    };
-    
-    public static CreativeTabs tabModifiers = new CreativeTabs("tabModifiers") {
-    	@Override @SideOnly(Side.CLIENT)
-    	public Item getTabIconItem() {
-    		ItemStack stack = new ItemStack(AAItemModifierCores.coreSimpleChamberNet);
-    		return stack.getItem();
-    	}
-    };
-    
-    public static CreativeTabs tabGuns = new CreativeTabs("tabGuns") {
-    	@Override @SideOnly(Side.CLIENT)
-    	public Item getTabIconItem() {
-    		ItemStack item = new ItemStack(AAItemPrebuiltGuns.m4CarbineBling);
-    		return item.getItem();
-    	}
-    };
-    
+        
     public static SimpleNetworkWrapper network;
     
     public static boolean rpgcore = false;
@@ -266,6 +212,7 @@ public class AdvancedArmoury
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
     	proxy.registerRenderers();
+    	DungeonLootRegistry.init();
     }
     
     public static void println(String str) {
@@ -352,19 +299,97 @@ public class AdvancedArmoury
     	}
     }
     
-	  public static boolean isZipFile(File file) throws IOException {
-	      if(file.isDirectory()) {
-	          return false;
-	      }
-	      if(!file.canRead()) {
-	          throw new IOException("Cannot read file " + file.getAbsolutePath());
-	      }
-	      if(file.length() < 4) {
-	          return false;
-	      }
-	      DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
-	      int test = in.readInt();
-	      in.close();
-	      return test == 0x504b0304;
-	  }
+  public static boolean isZipFile(File file) throws IOException {
+      if(file.isDirectory()) {
+          return false;
+      }
+      if(!file.canRead()) {
+          throw new IOException("Cannot read file " + file.getAbsolutePath());
+      }
+      if(file.length() < 4) {
+          return false;
+      }
+      DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
+      int test = in.readInt();
+      in.close();
+      return test == 0x504b0304;
+  }
+  
+    public static CreativeTabs tabComponentsGeneric = new CreativeTabs("tabComponentsGeneric") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		return getTabIcon(tabComponentsGeneric);
+    	}
+    };
+    
+    public static CreativeTabs tabComponentsAssault = new CreativeTabs("tabComponentsAssault") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		return getTabIcon(tabComponentsAssault);
+    	}
+    };
+    
+    public static CreativeTabs tabComponentsCalibre = new CreativeTabs("tabComponentsCalibre") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		return getTabIcon(tabComponentsCalibre);
+    	}
+    };
+    
+    public static CreativeTabs tabRounds = new CreativeTabs("tabRounds") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		ItemStack stack = new ItemStack(AAItems.itemRound);
+    		return stack.getItem();
+    	}
+    };
+    
+    public static CreativeTabs tabMachines = new CreativeTabs("tabMachines") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		ItemStack stack = new ItemStack(AABlocks.assaultRifleAssemblyTable);
+    		return stack.getItem();
+    	}
+    };
+    
+    public static CreativeTabs tabModifiers = new CreativeTabs("tabModifiers") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		ItemStack stack = new ItemStack(AAItemModifierCores.coreSimpleChamberNet);
+    		return stack.getItem();
+    	}
+    };
+    
+    public static CreativeTabs tabGuns = new CreativeTabs("tabGuns") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		ItemStack item = new ItemStack(AAItemPrebuiltGuns.m4CarbineBling);
+    		return item.getItem();
+    	}
+    };
+    
+    public static CreativeTabs tabGeneric = new CreativeTabs("tabGeneric") {
+    	@Override @SideOnly(Side.CLIENT)
+    	public Item getTabIconItem() {
+    		ItemStack item = new ItemStack(AAItemPrebuiltGuns.m4CarbineBling);
+    		return item.getItem();
+    	}
+    };
+    
+	public static Item getTabIcon(CreativeTabs tab) {
+		Iterator iterator = Item.itemRegistry.iterator();
+	
+	    while (iterator.hasNext()) {
+	    	Item item = (Item)iterator.next();
+	
+	        if (item == null) { continue; }
+	
+	        for (CreativeTabs itemTab : item.getCreativeTabs()) {
+	            if (itemTab == tab) {
+	            	return item;
+	            }
+	        }
+	    }
+		return Items.bone;
+	}
 }
