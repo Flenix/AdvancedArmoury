@@ -11,8 +11,8 @@ import co.uk.silvania.advancedarmoury.attachment.magazine.MagazineInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.ItemIInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultContainer;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
-import co.uk.silvania.advancedarmoury.items.components.asset.ComponentReceiver;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetReceiver;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetReceiver;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentReceiver;
 import co.uk.silvania.advancedarmoury.network.GunEventPacket;
 import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -42,7 +42,7 @@ public class AssaultInternal extends Item {
 	public AssaultInternal() {
 		maxStackSize = 1;
 		GameRegistry.registerItem(this, partType.unlocalizedName, AdvancedArmoury.modid);
-		setCreativeTab(AdvancedArmoury.tabParts);
+		setCreativeTab(AdvancedArmoury.tabGeneric);
 	}
 	
 	@Override

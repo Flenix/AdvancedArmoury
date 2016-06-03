@@ -7,10 +7,10 @@ import co.uk.silvania.advancedarmoury.AAItems;
 import co.uk.silvania.advancedarmoury.DamageSourceShot;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultContainer;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
-import co.uk.silvania.advancedarmoury.items.components.cores.IModifierCore;
-import co.uk.silvania.advancedarmoury.items.components.generic.GunFrame;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
-import co.uk.silvania.advancedarmoury.items.rounds.ItemRound;
+import co.uk.silvania.advancedarmoury.items.modifiers.IModifierCore;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.GunFrame;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
+import co.uk.silvania.advancedarmoury.items_old.rounds.ItemRound;
 import co.uk.silvania.advancedarmoury.skills.SkillAssaultRifles;
 import co.uk.silvania.rpgcore.skills.SkillLevelBase;
 import net.minecraft.block.Block;
@@ -306,7 +306,13 @@ public class FireAutomaticGun {
 		entity.attackEntityFrom(new DamageSourceShot(player), damage);
 		entity.hurtResistantTime = 0; //There is no immunity to rapidfire attacks from guns - else fast firing weapons are useless!
 		
-		if (mod != null) { mod.onEntityShot(gun, player, entity); }
+		if (mod != null) {
+			mod.onEntityShot(gun, player, entity);
+			if (entity.isDead) {
+				mod.onEntityKilled(gun, player, entity);
+			}
+		}
+		
         if (entity instanceof EntityLivingBase) {
         	rnd.onShotEntity(round, (EntityLivingBase) entity);
         }

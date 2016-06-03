@@ -15,7 +15,7 @@ public class ItemInventory extends Item {
 	
 	public ItemInventory() {
 		maxStackSize = 1;
-		setCreativeTab(AdvancedArmoury.tabComponentsGeneric);
+		setCreativeTab(AdvancedArmoury.tabGeneric);
 	}
 	
 	@Override

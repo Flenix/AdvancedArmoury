@@ -6,7 +6,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.config.AAConfig;
-import co.uk.silvania.advancedarmoury.items.components.generic.GunFrame;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.GunFrame;
 import co.uk.silvania.advancedarmoury.network.LocateDamagePacket;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;

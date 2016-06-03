@@ -26,7 +26,7 @@ public class AssaultContainer extends ItemContainer {
 		this.addSlotToContainer(new SlotMagazine(this.inventory, 0, 114, 112));
 		this.addSlotToContainer(new SlotRound(this.inventory, 1, 132, 112));
 		
-
+		/* TODO
 		addSlotToContainer(new SlotComponent(this.inventory, 2, 214, 19, "bolt")); //keeping
 		addSlotToContainer(new SlotComponent(this.inventory, 3, 214, 37, "boltCarrier")); //going
 		addSlotToContainer(new SlotComponent(this.inventory, 4, 214, 55, "chargingHandle")); //keeping
@@ -64,7 +64,7 @@ public class AssaultContainer extends ItemContainer {
 		addSlotToContainer(new SlotAttachment(this.inventory, 28, 114, 22, "rail")); //rec high front
 		addSlotToContainer(new SlotAttachment(this.inventory, 29, 132, 22, "rail")); //rec high rear
 		
-		addSlotToContainer(new SlotAttachment(this.inventory, 30, 172, 40, "stock")); //Stock
+		addSlotToContainer(new SlotAttachment(this.inventory, 30, 172, 40, "stock")); //Stock*/
 
 		bindPlayerInventory(invPlayer, 8, 192);
 	}
