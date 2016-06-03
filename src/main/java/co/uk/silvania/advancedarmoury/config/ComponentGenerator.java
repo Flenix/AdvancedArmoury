@@ -2,20 +2,28 @@ package co.uk.silvania.advancedarmoury.config;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.gun.prebuilt.M4Material;
-import co.uk.silvania.advancedarmoury.items.components.asset.internal.M4FrontEnd;
-import co.uk.silvania.advancedarmoury.items.components.asset.internal.M4Receiver;
-import co.uk.silvania.advancedarmoury.items.components.asset.internal.M4Stock;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemBarrel;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemFireSelector;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemFlashHider;
-import co.uk.silvania.advancedarmoury.items.components.generic.ItemTrigger;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultChamber;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultComponent;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultGasChamber;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultGasFeed;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultPiston;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultPistonChamber;
-import co.uk.silvania.advancedarmoury.items.components.generic.assault.ItemAssaultSpring;
+import co.uk.silvania.advancedarmoury.items.MaterialRegistry;
+import co.uk.silvania.advancedarmoury.items.components.assault.AssaultBolt;
+import co.uk.silvania.advancedarmoury.items.components.assault.AssaultReceiverCasing;
+import co.uk.silvania.advancedarmoury.items.components.assault.AssaultFiringPin;
+import co.uk.silvania.advancedarmoury.items.generic.Barrel;
+import co.uk.silvania.advancedarmoury.items.generic.Chamber;
+import co.uk.silvania.advancedarmoury.items.generic.ChargingHandle;
+import co.uk.silvania.advancedarmoury.items.generic.FireSelector;
+import co.uk.silvania.advancedarmoury.items.generic.Trigger;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.internal.M4FrontEnd;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.internal.M4Receiver;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.internal.M4Stock;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemFireSelector;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemFlashHider;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemTrigger;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultChamber;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultGasChamber;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultGasFeed;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultPiston;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultPistonChamber;
+import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultSpring;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 
@@ -25,16 +33,32 @@ public class ComponentGenerator {
 	
 	public static void init() {
 		double w = 0.75;
-		//acc firerate power range
-		Item itemAssaultBolt = new ItemAssaultComponent("assaultBolt", "Rifle Bolt", "\u00A72Part ID: A", (int)(7*w), false, true, true, false).setUnlocalizedName("assaultBolt");
-		Item itemAssaultBoltCarrier 	= new ItemAssaultComponent("assaultBoltCarrier", "Rifle Bolt Carrier", "\u00A72Part ID: B", 9 * w, false, true, true, false).setUnlocalizedName("assaultBoltCarrier");
-		Item itemAssaultChargingHandle 	= new ItemAssaultComponent("assaultChargingHandle", "Rifle Charging Handle", "\u00A72Part ID: C", 8.8 * w, false, false, false, false).setUnlocalizedName("assaultChargingHandle");
-		Item itemAssaultFiringPin 		= new ItemAssaultComponent("assaultFiringPin", "Rifle Firing Pin","\u00A72Part ID: D, ", 5.6 * w, false, false, true, false).setUnlocalizedName("assaultFiringPin");
+		for (int i = 0; i < config.materials.length; i++) {
+			MaterialRegistry.register(config.materials[i]);
+		}
+		
+		Item itemAssaultBolt = new AssaultBolt("assaultBolt", "Assault Rifle Bolt"/*"\u00A72Part ID: A", 7*w, false, true, true, false*/).setUnlocalizedName("assaultBolt");
+		Item itemAssaultFiringPin = new AssaultFiringPin("assaultFiringPin", "Assault Rifle Firing Pin").setUnlocalizedName("assaultFiringPin");
+		Item itemAssaultReceiverCasing = new AssaultReceiverCasing("assaultReceiverCasing", "Assault Receiver Casing").setUnlocalizedName("assaultReceiverCasing");
+		
+		Item itemChargingHandle = new ChargingHandle("chargingHandle", "Charging Handle").setUnlocalizedName("chargingHandle");
+		Item itemFireSelector = new FireSelector("fireSelector", "Fire Selector").setUnlocalizedName("fireSelector");
+		Item itemTrigger = new Trigger("trigger", "Trigger").setUnlocalizedName("trigger");
+		
+		Item itemChamber = new Chamber("chamber", "Chamber").setUnlocalizedName("chamber");
+		//mechanic
+		Item itemBarrel = new Barrel("barrel", "Barrel").setUnlocalizedName("barrel");
 		
 		GameRegistry.registerItem(itemAssaultBolt, "assaultBolt");
-		GameRegistry.registerItem(itemAssaultBoltCarrier, "assaultBoltCarrier");
-		GameRegistry.registerItem(itemAssaultChargingHandle, "assaultChargingHandle");
 		GameRegistry.registerItem(itemAssaultFiringPin, "assaultFiringPin");
+		GameRegistry.registerItem(itemAssaultReceiverCasing, "assaultReceiverCasing");
+		
+		GameRegistry.registerItem(itemChargingHandle, "chargingHandle");
+		GameRegistry.registerItem(itemFireSelector, "fireSelector");
+		GameRegistry.registerItem(itemTrigger, "trigger");
+		
+		GameRegistry.registerItem(itemChamber, "chamber");
+		GameRegistry.registerItem(itemBarrel, "barrel");
 		
 		
 		/*for (int i = 0; i < config.materials.length; i++) {
