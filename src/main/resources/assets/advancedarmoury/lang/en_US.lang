@@ -27,7 +27,8 @@ item.itemPartNut_1.name=Gold Nut
 item.itemPartNut_2.name=Promethium Nut
 item.itemPartNut_3.name=Rusty Nut
 
-item.coreSimpleChamberNet.name=Simple Chamber Net Modifier Core
+item.coreSimpleChamberNet.name=Simple Chamber Net
+item.coreWhatchaSay.name=Whatcha Say?
         
 item.coreVeryCommonBlank.name=Very Common Blank Modifier Core
 item.coreCommonBlank.name=Common Blank Modifier Core
@@ -37,6 +38,67 @@ item.coreVeryRareBlank.name=Very Rare Blank Modifier Core
 item.coreLegendaryBlank.name=Legendary Blank Modifier Core
 item.coreMythicBlank.name=Mythic Blank Modifier Core
 item.coreUltimateBlank.name=Ultimate Blank Modifier Core
+
+//Material and blockType combine to make the name of decorative blocks.
+//This allows easy addition of new materials later; just a name and a texture and it's all done.
+material.concrete=Concrete
+material.darkConcrete=Dark Concrete
+material.paleConcrete=Pale Concrete
+material.greenConcrete=Green Concrete
+material.redCement=Red Cement
+material.blueCement=Blue Cement
+material.blackCement=Black Cement
+material.sandyCement=Sandy Cement
+
+blockType.block=Block
+blockType.fence=Fence
+blockType.stairs=Stairs
+blockType.slab=Slab
+blockType.panel=Panel
+blockType.cover=Cover
+blockType.oneFence=Walkway Fence (One-Sided)
+blockType.rightAngleFence=Walkway Fence (Right Angle)
+blockType.threeFence=Walkway Fence (Three-Sided)
+blockType.parallelFence=Walkway Fence (Parallel)
+blockType.squareFence=Walkway Fence (Square)
+blockType.connectedFence=Walkway Fence (Connecting)
+blockType.oneFenceSnowy=Snowy Walkway Fence (One-Sided)
+blockType.rightAngleFenceSnowy=Snowy Walkway Fence (Right Angle)
+blockType.threeFenceSnowy=Snowy Walkway Fence (Three-Sided)
+blockType.parallelFenceSnowy=Snowy Walkway Fence (Parallel)
+blockType.squareFenceSnowy=Snowy Walkway Fence (Square)
+blockType.connectedFenceSnowy=Snowy Walkway Fence (Connecting)
+blockType.oneFenceJungle=Jungle Camo Walkway Fence (One-Sided)
+blockType.rightAngleFenceJungle=Jungle Camo Walkway Fence (Right Angle)
+blockType.threeFenceJungle=Jungle Camo Walkway Fence (Three-Sided)
+blockType.parallelFenceJungle=Jungle Camo Walkway Fence (Parallel)
+blockType.squareFenceJungle=Jungle Camo Walkway Fence (Square)
+blockType.connectedFenceJungle=Jungle Camo Walkway Fence (Connecting)
+blockType.oneRailing=Railing (One-Sided)
+blockType.rightAngleRailing=Railing (Right Angle)
+blockType.threeRailing=Railing (Three-Sided)
+blockType.parallelRailing=Railing (Parallel)
+blockType.squareRailing=Railing (Square)
+blockType.connectedRailing=Railing (Connecting)
+blockType.oneRailingSnowy=Snowy Railing (One-Sided)
+blockType.rightAngleRailingSnowy=Snowy Railing (Right Angle)
+blockType.threeRailingSnowy=Snowy Railing (Three-Sided)
+blockType.parallelRailingSnowy=Snowy Railing (Parallel)
+blockType.squareRailingSnowy=Snowy Railing (Square)
+blockType.connectedRailingSnowy=Snowy Railing (Connecting)
+blockType.oneRailingJungle=Camo Railing (One-Sided)
+blockType.rightAngleRailingJungle=Camo Railing (Right Angle)
+blockType.threeRailingJungle=Camo Railing (Three-Sided)
+blockType.parallelRailingJungle=Camo Railing (Parallel)
+blockType.squareRailingJungle=Camo Railing (Square)
+blockType.connectedRailingJungle=Camo Railing (Connecting)
+blockType.walkwayStairs=Walkway Stairs
+blockType.openStairs=Open Stairs
+blockType.railing=Railing
+blockType.slope45=45 Degree Slope
+blockType.slope225a=225 Degree Slope (Lower)
+blockType.slope225b=225 Degree Slope (Upper)
+blockType.cornerPost=Corner Post
 
 item.caseAluminium556.name=Aluminium Case
 item.caseSteel556.name=Steel Case
@@ -81,7 +143,8 @@ death.attack.advancedArmoury.event=%s was killed by an event modifier. This is a
 
 itemGroup.tabComponentsGeneric=[Adv. Armoury] Generic Components
 itemGroup.tabComponentsAssault=[Adv. Armoury] Assault Components
-itemGroup.tabComponentsGeneric=[Adv. Armoury] Calibre Components
+itemGroup.tabComponentsCalibre=[Adv. Armoury] Calibre Components
+itemGroup.tabGeneric=Advanced Armoury
 itemGroup.tabParts=[Adv. Armoury] Parts
 itemGroup.tabMachines=[Adv. Armoury] Machines
 itemGroup.tabModifiers=[Adv. Armoury] Modifier Cores

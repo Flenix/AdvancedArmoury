@@ -1,18 +1,12 @@
 package co.uk.silvania.advancedarmoury;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import co.uk.silvania.advancedarmoury.client.renderers.PartRenderBarrel;
-import co.uk.silvania.advancedarmoury.client.renderers.PartRenderBase;
-import co.uk.silvania.advancedarmoury.client.renderers.PartRenderComponent;
-import co.uk.silvania.advancedarmoury.client.renderers.assault.AssaultReceiverRenderer;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.MinecraftForgeClient;
 
 public class CommonProxy {
 	

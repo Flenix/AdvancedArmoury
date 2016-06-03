@@ -14,12 +14,17 @@ import co.uk.silvania.advancedarmoury.client.renderers.PartRenderBase;
 import co.uk.silvania.advancedarmoury.client.renderers.PartRenderComponent;
 import co.uk.silvania.advancedarmoury.client.renderers.assault.AssaultReceiverRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.assault.RenderAssaultRifle;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.OpenStairsRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.RailingRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope45Renderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.TinyLootCrateRenderer;
-import co.uk.silvania.advancedarmoury.items.AAItemPrebuiltGuns;
-import co.uk.silvania.advancedarmoury.items.components.ComponentType;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetFrontEnd;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetReceiver;
-import co.uk.silvania.advancedarmoury.items.components.asset.AssetStock;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.WalkwayFenceRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.WalkwayStairsRenderer;
+import co.uk.silvania.advancedarmoury.items_old.AAItemPrebuiltGuns;
+import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetFrontEnd;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetReceiver;
+import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetStock;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
@@ -33,7 +38,18 @@ import net.minecraftforge.client.MinecraftForgeClient;
 public class ClientProxy extends CommonProxy {
 	
 	public static int tinyLootCrateRenderID;
-
+	public static int walkwayFenceRenderID;
+	public static int walkwayFenceSnowyRenderID;
+	public static int walkwayFenceJungleRenderID;
+	public static int walkwayStairsRenderID;
+	public static int railingRenderID;
+	public static int railingSnowyRenderID;
+	public static int railingJungleRenderID;
+	public static int railingStairsRenderID;
+	public static int openStairsRenderID;
+	public static int slope45RenderID;
+	public static int cornerPostRenderID;
+	
 	@Override
 	public void registerRenderers() {		
 		for (ComponentType componentType : ComponentType.items.values()) {
@@ -51,7 +67,7 @@ public class ClientProxy extends CommonProxy {
 		}
 		
 		MinecraftForgeClient.registerItemRenderer(AAItems.m4mag, new PartRenderBase("m4mag", "m4mag", true));
-		MinecraftForgeClient.registerItemRenderer(AAItems.assaultFrame, new RenderAssaultRifle());
+		//MinecraftForgeClient.registerItemRenderer(AAItems.assaultFrame, new RenderAssaultRifle());
 		MinecraftForgeClient.registerItemRenderer(AAItems.itemRound, new RoundRenderer());
 		
 		renderBlocks();
@@ -60,9 +76,30 @@ public class ClientProxy extends CommonProxy {
 	
 	public static void renderBlocks() {
 		ClientRegistry.bindTileEntitySpecialRenderer(LootCrateEntity.class, new TinyLootCrateRenderer());
+		
 		tinyLootCrateRenderID = RenderingRegistry.getNextAvailableRenderId();
+		walkwayFenceRenderID = RenderingRegistry.getNextAvailableRenderId();
+		walkwayFenceSnowyRenderID = RenderingRegistry.getNextAvailableRenderId();
+		walkwayFenceJungleRenderID = RenderingRegistry.getNextAvailableRenderId();
+		walkwayStairsRenderID = RenderingRegistry.getNextAvailableRenderId();
+		railingRenderID = RenderingRegistry.getNextAvailableRenderId();
+		railingSnowyRenderID = RenderingRegistry.getNextAvailableRenderId();
+		railingJungleRenderID = RenderingRegistry.getNextAvailableRenderId();
+		railingStairsRenderID = RenderingRegistry.getNextAvailableRenderId();
+		openStairsRenderID = RenderingRegistry.getNextAvailableRenderId();
+		slope45RenderID = RenderingRegistry.getNextAvailableRenderId();
+		cornerPostRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
 		RenderingRegistry.registerBlockHandler(AABlocks.tinyLootCrate.getRenderType(), new TinyLootCrateRenderer());
+		RenderingRegistry.registerBlockHandler(walkwayFenceRenderID, new WalkwayFenceRenderer(false, false));
+		RenderingRegistry.registerBlockHandler(walkwayFenceSnowyRenderID, new WalkwayFenceRenderer(true, false));
+		RenderingRegistry.registerBlockHandler(walkwayFenceJungleRenderID, new WalkwayFenceRenderer(false, true));
+		RenderingRegistry.registerBlockHandler(walkwayStairsRenderID, new WalkwayStairsRenderer());
+		RenderingRegistry.registerBlockHandler(openStairsRenderID, new OpenStairsRenderer());
+		RenderingRegistry.registerBlockHandler(railingRenderID, new RailingRenderer(false, false));
+		RenderingRegistry.registerBlockHandler(railingSnowyRenderID, new RailingRenderer(true, false));
+		RenderingRegistry.registerBlockHandler(railingJungleRenderID, new RailingRenderer(false, true));
+		RenderingRegistry.registerBlockHandler(slope45RenderID, new Slope45Renderer(false));
 	}
 	
 	public static void renderPrebuiltGuns() {

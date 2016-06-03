@@ -1,4 +1,5 @@
 {
     "m4a1_shoot": {"category": "master","sounds": [{"name": "m4a1_shoot", "stream": false}]},
-    "dryfire": {"category": "master","sounds": [{"name": "dryfire", "stream": false}]}
+    "dryfire": {"category": "master","sounds": [{"name": "dryfire", "stream": false}]},
+    "whatcha_say": {"category": "master","sounds": [{"name": "whatcha_say", "stream": false}]}
 }
