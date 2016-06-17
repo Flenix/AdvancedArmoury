@@ -4,7 +4,8 @@ package co.uk.silvania.advancedarmoury.client.renderers.blocks;
 
 import org.lwjgl.opengl.GL11;
 
-import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayStairsMilitaryBase;
+import co.uk.silvania.advancedarmoury.blocks.decorative.CornerPost;
+import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayStairs;
 import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -16,6 +17,8 @@ import net.minecraft.world.IBlockAccess;
 public class OpenStairsRenderer implements ISimpleBlockRenderingHandler {
 	
 	Tessellator tess;
+	
+	CornerPostRenderer cornerPostRenderer = new CornerPostRenderer();
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
@@ -174,7 +177,8 @@ public class OpenStairsRenderer implements ISimpleBlockRenderingHandler {
 		double v1 = (double) icon.getMaxV();
 		//X/Z 0=NW, 1=SE
 
-		
+		if (world.getBlock(x, y+1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z,  1, renderer, world.getBlock(x, y+1, z), -1, true); }
+		if (world.getBlock(x, y-1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z, -1, renderer, world.getBlock(x, y-1, z), -1, true); }
 		
 		int meta = world.getBlockMetadata(x, y, z);
 		
@@ -183,8 +187,8 @@ public class OpenStairsRenderer implements ISimpleBlockRenderingHandler {
 		boolean connectSouth = checkConnections(world, x, y, z+1);
 		boolean connectWest =  checkConnections(world, x-1, y, z);
 		
-		boolean walkwayBelow = world.getBlock(x, y-1, z) instanceof WalkwayStairsMilitaryBase;
-		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof WalkwayStairsMilitaryBase;
+		boolean walkwayBelow = world.getBlock(x, y-1, z) instanceof WalkwayStairs;
+		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof WalkwayStairs;
 		
 
 		//Main Stairs
@@ -274,6 +278,7 @@ public class OpenStairsRenderer implements ISimpleBlockRenderingHandler {
 			}
 			if (!connectEast) {
 				if (!walkwayAbove) {
+					tess.draw();
 					//Left Support rail
 					//Top
 					tess.startDrawingQuads();
@@ -723,7 +728,7 @@ public class OpenStairsRenderer implements ISimpleBlockRenderingHandler {
 		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z)) {
 			return true;
 		}
-		if (world.getBlock(x, y, z) instanceof WalkwayStairsMilitaryBase) {
+		if (world.getBlock(x, y, z) instanceof WalkwayStairs) {
 			return true;
 		}
 		return false;

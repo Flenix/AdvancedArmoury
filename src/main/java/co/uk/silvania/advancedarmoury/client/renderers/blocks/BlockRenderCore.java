@@ -2,7 +2,7 @@ package co.uk.silvania.advancedarmoury.client.renderers.blocks;
 
 import org.lwjgl.opengl.GL11;
 
-import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayStairsMilitaryBase;
+import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayStairs;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -35,7 +35,7 @@ public class BlockRenderCore implements ISimpleBlockRenderingHandler {
 		
 		
 		if (targetMeta >= 0) {
-			if (world.getBlock(x, y - 1, z) instanceof WalkwayStairsMilitaryBase) {
+			if (world.getBlock(x, y - 1, z) instanceof WalkwayStairs) {
 				int metaBelow = world.getBlockMetadata(x, y - 1, z);
 				if (metaBelow == targetMeta || metaBelow == (targetMeta + 2)) {
 					return true;

@@ -15,7 +15,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRenderingHandler {
+public class Slope225HighRenderer extends BlockRenderCore implements ISimpleBlockRenderingHandler {
 	
 	CornerPostRenderer cornerPostRenderer = new CornerPostRenderer();
 
@@ -32,10 +32,10 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 		int x = 0, y = 0, z = 0;
 		tess.startDrawingQuads();
 		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-		tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v1);
-		tess.addVertexWithUV(x + 1, y + 1, z,     u1, v0);
-		tess.addVertexWithUV(x,     y + 1, z,     u0, v0);
-		tess.addVertexWithUV(x,     y + 0, z + 1, u0, v1);
+		tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u1, v1);
+		tess.addVertexWithUV(x + 1, y + 1,   z,     u1, v0);
+		tess.addVertexWithUV(x,     y + 1,   z,     u0, v0);
+		tess.addVertexWithUV(x,     y + 0.5, z + 1, u0, v1);
 		tess.draw();
 		
 		//Back
@@ -47,22 +47,31 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 		tess.addVertexWithUV(x + 1, y + 0, z, u0, v1);
 		tess.draw();
 		
+		//Back
+		tess.startDrawingQuads();
+		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tess.addVertexWithUV(x + 1, y + 0,   z + 1, u1, v1);
+		tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u1, v0);
+		tess.addVertexWithUV(x,     y + 0.5, z + 1, u0, v0);
+		tess.addVertexWithUV(x,     y + 0,   z + 1, u0, v1);
+		tess.draw();
+		
 		//Left
 		tess.startDrawingQuads();
 		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-		tess.addVertexWithUV(x, y + 0, z + 1, u1, v1);
-		tess.addVertexWithUV(x, y + 0, z + 1, u1, v0);
-		tess.addVertexWithUV(x, y + 1, z + 0, u0, v0);
-		tess.addVertexWithUV(x, y + 0, z + 0, u0, v1);
+		tess.addVertexWithUV(x, y + 0,   z + 1, u1, v1);
+		tess.addVertexWithUV(x, y + 0.5, z + 1, u1, v0);
+		tess.addVertexWithUV(x, y + 1,   z + 0, u0, v0);
+		tess.addVertexWithUV(x, y + 0,   z + 0, u0, v1);
 		tess.draw();
 		
 		//Right
 		tess.startDrawingQuads();
 		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-		tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v1);
-		tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v0);
-		tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
-		tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+		tess.addVertexWithUV(x + 1, y + 0,   z + 0, u1, v1);
+		tess.addVertexWithUV(x + 1, y + 1,   z + 0, u1, v0);
+		tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u0, v0);
+		tess.addVertexWithUV(x + 1, y + 0,   z + 1, u0, v1);
 		tess.draw();
 		
 		//Bottom
@@ -91,41 +100,50 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 		if (world.getBlock(x, y-1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z, -1, renderer, world.getBlock(x, y-1, z), -1, true); }
 		
 		tess.draw();
-		if (meta == 0) {
-			//Front
+		if (meta == 0)  { //Facing EAST
+			//Right (south)
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x,     y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x,     y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 1.0, z + 1, u1, v0);
+			tess.addVertexWithUV(x,     y + 0.5,   z + 1, u0, v0);
+			tess.addVertexWithUV(x,     y + 0,   z + 1, u0, v1);
 			tess.draw();
 			
-			//Back
+			//Left (north)
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x,     y + 0, z, u1, v1);
-			tess.addVertexWithUV(x,     y + 0, z, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z, u0, v1);
+			tess.addVertexWithUV(x,     y + 0,   z, u1, v1);
+			tess.addVertexWithUV(x,     y + 0.5,   z, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 1.0, z, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0,   z, u0, v1);
 			tess.draw();
 			
-			//Left
+			//Top
 			tess.startDrawingQuads();
-			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x,     y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v0);
-			tess.addVertexWithUV(x,     y + 0, z + 0, u0, v1);
+			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.addVertexWithUV(x,     y + 0.5,   z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 1.0, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 1.0, z + 0, u0, v0);
+			tess.addVertexWithUV(x,     y + 0.5,   z + 0, u0, v1);
 			tess.draw();
 			
-			//Right
+			//Back (east)
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.draw();
+			
+			//Front
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.addVertexWithUV(x, y + 0,   z + 1, u1, v1);
+			tess.addVertexWithUV(x, y + 0.5, z + 1, u1, v0);
+			tess.addVertexWithUV(x, y + 0.5, z + 0, u0, v0);
+			tess.addVertexWithUV(x, y + 0,   z + 0, u0, v1);
 			tess.draw();
 			
 			//Bottom
@@ -138,25 +156,24 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.draw();
 		}
 		if (meta == 1) {
-			//Front
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x,     y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x,     y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x,     y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u1, v1);
+			tess.addVertexWithUV(x,     y + 1,   z + 1, u1, v0);
+			tess.addVertexWithUV(x,     y + 0,   z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 1, u0, v1);
+			tess.draw();
+			
+			//
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.addVertexWithUV(x + 1, y + 0,   z, u1, v1);
+			tess.addVertexWithUV(x,     y + 0,   z, u1, v0);
+			tess.addVertexWithUV(x,     y + 1,   z, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0.5, z, u0, v1);
 			tess.draw();
 			
 			//Back
-			tess.startDrawingQuads();
-			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x,     y + 0, z, u1, v1);
-			tess.addVertexWithUV(x,     y + 1, z, u1, v0);
-			tess.addVertexWithUV(x,     y + 1, z, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z, u0, v1);
-			tess.draw();
-			
-			//Left
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
 			tess.addVertexWithUV(x, y + 0, z + 1, u1, v1);
@@ -165,13 +182,22 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.addVertexWithUV(x, y + 0, z + 0, u0, v1);
 			tess.draw();
 			
-			//Right
+			//Front
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v1);
-			tess.addVertexWithUV(x,     y + 1, z + 0, u1, v0);
-			tess.addVertexWithUV(x,     y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 0, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 1, u0, v1);
+			tess.draw();
+			
+			//Top
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 0, u1, v1);
+			tess.addVertexWithUV(x,     y + 1.0, z + 0, u1, v0);
+			tess.addVertexWithUV(x,     y + 1.0, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u0, v1);
 			tess.draw();
 			
 			//Bottom
@@ -184,40 +210,49 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.draw();
 		}
 		if (meta == 2) {
+			//Top
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.addVertexWithUV(x + 1, y + 1.0, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0.5, z,     u1, v0);
+			tess.addVertexWithUV(x,     y + 0.5, z,     u0, v0);
+			tess.addVertexWithUV(x,     y + 1.0, z + 1, u0, v1);
+			tess.draw();
+			
 			//Front
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z,     u1, v0);
-			tess.addVertexWithUV(x,     y + 0, z,     u0, v0);
-			tess.addVertexWithUV(x,     y + 1, z + 1, u0, v1);
+			tess.addVertexWithUV(x,     y + 0,   z, u1, v1);
+			tess.addVertexWithUV(x,     y + 0.5, z, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0.5, z, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0,   z, u0, v1);
 			tess.draw();
 			
 			//Back
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x,     y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x,     y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 1.0, z + 1, u1, v0);
+			tess.addVertexWithUV(x,     y + 1.0, z + 1, u0, v0);
+			tess.addVertexWithUV(x,     y + 0,   z + 1, u0, v1);
 			tess.draw();
 			
-			//Left
+			//
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x, y + 0, z + 0, u0, v1);
+			tess.addVertexWithUV(x, y + 0,   z + 1, u1, v1);
+			tess.addVertexWithUV(x, y + 1.0, z + 1, u1, v0);
+			tess.addVertexWithUV(x, y + 0.5, z + 0, u0, v0);
+			tess.addVertexWithUV(x, y + 0,   z + 0, u0, v1);
 			tess.draw();
 			
-			//Right
+			//
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 0, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 1.0, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 1, u0, v1);
 			tess.draw();
 			
 			//Bottom
@@ -230,13 +265,22 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.draw();
 		}
 		if (meta == 3) {
+			//Top
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 1,   z,     u1, v0);
+			tess.addVertexWithUV(x,     y + 1,   z,     u0, v0);
+			tess.addVertexWithUV(x,     y + 0.5, z + 1, u0, v1);
+			tess.draw();
+			
 			//Front
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 1, z,     u1, v0);
-			tess.addVertexWithUV(x,     y + 1, z,     u0, v0);
-			tess.addVertexWithUV(x,     y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u1, v0);
+			tess.addVertexWithUV(x,     y + 0.5, z + 1, u0, v0);
+			tess.addVertexWithUV(x,     y + 0,   z + 1, u0, v1);
 			tess.draw();
 			
 			//Back
@@ -248,22 +292,22 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.addVertexWithUV(x + 1, y + 0, z, u0, v1);
 			tess.draw();
 			
-			//Left
+			//
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x, y + 0, z + 1, u1, v0);
-			tess.addVertexWithUV(x, y + 1, z + 0, u0, v0);
-			tess.addVertexWithUV(x, y + 0, z + 0, u0, v1);
+			tess.addVertexWithUV(x, y + 0,   z + 1, u1, v1);
+			tess.addVertexWithUV(x, y + 0.5, z + 1, u1, v0);
+			tess.addVertexWithUV(x, y + 1.0, z + 0, u0, v0);
+			tess.addVertexWithUV(x, y + 0,   z + 0, u0, v1);
 			tess.draw();
 			
-			//Right
+			//
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 0, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 1.0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0,   z + 1, u0, v1);
 			tess.draw();
 			
 			//Bottom
@@ -472,28 +516,28 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u0, v1);
 			tess.draw();
 			
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u0, v1);
 			tess.draw();
 			
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v1);
 			tess.draw();
 			
 			//NORTH
@@ -504,15 +548,24 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u0, v1);
 			tess.draw();
+			
+			//SOUTH
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u0, v1);
+			tess.draw();
 		}
 		if (meta == 9) {
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u0, v1);
 			tess.draw();
 			
 			//WEST
@@ -527,19 +580,28 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u0, v1);
 			tess.draw();
 			
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v1);
+			tess.draw();
+			
+			//NORTH
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u0, v1);
 			tess.draw();
 			
 			//SOUTH
@@ -561,22 +623,31 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
 			tess.draw();
 			
+			//WEST
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
+			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u0, v0);
+			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u0, v1);
+			tess.draw();
+			
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0,   u0, v1);
 			tess.draw();
 			
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u0, v1);
 			tess.draw();
 			
 			//SOUTH
@@ -591,10 +662,10 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0,   u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u1, v0);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u0, v0);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u0, v1);
 			tess.draw();
 		}
 		if (meta == 11) {			
@@ -607,31 +678,40 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u0, v1);
 			tess.draw();
 			
+			//EAST
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0,   u0, v1);
+			tess.draw();
+			
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0,   u0, v1);
 			tess.draw();
 			
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v1);
 			tess.draw();
 			
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u0, v1);
 			tess.draw();
 			
 			//NORTH
@@ -656,28 +736,28 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u0, v1);
 			tess.draw();
 			
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u0, v1);
 			tess.draw();
 			
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v1);
 			tess.draw();
 			
 			//SOUTH
@@ -688,45 +768,26 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v1);
 			tess.draw();
+			
+			//NORTH
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u0, v1);
+			tess.draw();
 		}
 		if (meta == 13) {
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u0, v1);
 			tess.draw();
 			
-			//Top
-			tess.startDrawingQuads();
-			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
-			tess.draw();
-			
-			//BOTTOM
-			tess.startDrawingQuads();
-			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v1);
-			tess.draw();
-			
-			//NORTH
-			tess.startDrawingQuads();
-			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u0, v1);
-			tess.draw();
-		}
-		if (meta == 14) {
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
@@ -739,19 +800,74 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u0, v1);
 			tess.draw();
 			
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u0, v1);
+			tess.draw();
+			
+			//NORTH
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0, u0, v1);
+			tess.draw();
+			
+			//SOUTH
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u0, v1);
+			tess.draw();
+		}
+		if (meta == 14) {
+			//EAST
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u0, v1);
+			tess.draw();
+			
+			//WEST
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v0);
+			tess.addVertexWithUV(x + 0, y + 1, z + 1, u0, v1);
+			tess.draw();
+			
+			//Top
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u0, v1);
+			tess.draw();
+			
+			//BOTTOM
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u0, v1);
 			tess.draw();
 			
 			//SOUTH
@@ -766,47 +882,56 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v0);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u1, v0);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u0, v0);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u0, v1);
 			tess.draw();
 		}
-		if (meta == 15)  {
+		if (meta == 15) {
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
+			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.draw();
+			
+			//WEST
+			tess.startDrawingQuads();
+			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u0, v0);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u0, v1);
 			tess.draw();
 			
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 0, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 0,   u0, v1);
 			tess.draw();
 			
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u0, v1);
 			tess.draw();
 			
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
-			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
-			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
-			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
-			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v1);
+			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
+			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
+			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u0, v0);
+			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u0, v1);
 			tess.draw();
 			
 			//NORTH
@@ -819,6 +944,7 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 			tess.draw();
 		}
 		tess.startDrawingQuads();
+
 		return true;
 	}
 

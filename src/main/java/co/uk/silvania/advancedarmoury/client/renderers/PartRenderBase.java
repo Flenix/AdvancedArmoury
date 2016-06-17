@@ -24,6 +24,7 @@ public class PartRenderBase implements IItemRenderer {
 	
 	public PartRenderBase(String modelName, String modelTexture, boolean customTexture) {
 		modelLoc = new ResourceLocation(AdvancedArmoury.modid, "models/" + modelName + ".obj");
+		System.out.println("model: " + AdvancedArmoury.modid + "/models/" + modelName + ".obj");
 		if (customTexture) {
 			texture = new ResourceLocation(AdvancedArmoury.modid, "models/" + modelTexture + ".png");
 		} else {

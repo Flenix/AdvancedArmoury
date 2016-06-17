@@ -2,16 +2,13 @@
 //Taken with permission, as it's my own damn mod. :D
 package co.uk.silvania.advancedarmoury.client.renderers.blocks;
 
-import org.lwjgl.opengl.GL11;
-
-import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayFenceMilitaryBase;
-import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayStairsMilitaryBase;
+import co.uk.silvania.advancedarmoury.blocks.decorative.CornerPost;
+import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayFence;
+import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayStairs;
 import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -19,6 +16,8 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 	
 	boolean renderSnow;
 	boolean renderLeaves;
+	
+	CornerPostRenderer cornerPostRenderer = new CornerPostRenderer();
 	
 	public WalkwayFenceRenderer(boolean snowy, boolean leaves) {
 		renderSnow = snowy;
@@ -190,17 +189,22 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
 		
-		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
-		boolean connectEast =  checkConnections(world, x+1, y, z, 1, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
-		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
-		boolean connectWest =  checkConnections(world, x-1, y, z, 1, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
+		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta, WalkwayFence.class, WalkwayStairs.class);
+		boolean connectEast =  checkConnections(world, x+1, y, z, 1, meta, WalkwayFence.class, WalkwayStairs.class);
+		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta, WalkwayFence.class, WalkwayStairs.class);
+		boolean connectWest =  checkConnections(world, x-1, y, z, 1, meta, WalkwayFence.class, WalkwayStairs.class);
 		
-		boolean connectNorthEast = checkConnections(world, x+1, y, z-1, -1, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
-		boolean connectNorthWest = checkConnections(world, x-1, y, z-1, -1, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
-		boolean connectSouthEast = checkConnections(world, x+1, y, z+1, -1, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
-		boolean connectSouthWest = checkConnections(world, x-1, y, z+1, -1, meta, WalkwayFenceMilitaryBase.class, WalkwayStairsMilitaryBase.class);
+		boolean connectNorthEast = checkConnections(world, x+1, y, z-1, -1, meta, WalkwayFence.class, WalkwayStairs.class);
+		boolean connectNorthWest = checkConnections(world, x-1, y, z-1, -1, meta, WalkwayFence.class, WalkwayStairs.class);
+		boolean connectSouthEast = checkConnections(world, x+1, y, z+1, -1, meta, WalkwayFence.class, WalkwayStairs.class);
+		boolean connectSouthWest = checkConnections(world, x-1, y, z+1, -1, meta, WalkwayFence.class, WalkwayStairs.class);
 		
-		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof WalkwayFenceMilitaryBase;
+		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof WalkwayFence;
+		boolean cornerPostAbove = world.getBlock(x, y+1, z) instanceof CornerPost;
+		boolean cornerPostBelow = world.getBlock(x, y-1, z) instanceof CornerPost;
+		
+		if (world.getBlock(x, y+1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z,  1, renderer, world.getBlock(x, y+1, z), -1, true); }
+		if (world.getBlock(x, y-1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z, -1, renderer, world.getBlock(x, y-1, z), -1, true); }
 		
 		if (renderSnow) {
 			if (world.getBlock(x, y-1, z).isSideSolid(world, x, y-1, z, ForgeDirection.UP)) {
@@ -239,6 +243,8 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 		boolean renderNorthWest = (renderNorth && renderWest) ? true : false;
 		boolean renderSouthEast = (renderSouth && renderEast) ? true : false;
 		boolean renderSouthWest = (renderSouth && renderWest) ? true : false;
+		
+		double barHeight = walkwayAbove ? 1.0D : 0.9325D;
 
 		if (renderNorth) {
 			if (!walkwayAbove) {
@@ -260,10 +266,10 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 				}
 			}
 			
-			renderBlock(0.09375D, 0.0D, 0.03175D, 0.15625D, 0.9325D, 0.09325D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.34375D, 0.0D, 0.03175D, 0.40625D, 0.9325D, 0.09325D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.59375D, 0.0D, 0.03175D, 0.65625D, 0.9325D, 0.09325D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.84375D, 0.0D, 0.03175D, 0.90625D, 0.9325D, 0.09325D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.09375D, 0.0D, 0.03175D, 0.15625D, barHeight, 0.09325D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.34375D, 0.0D, 0.03175D, 0.40625D, barHeight, 0.09325D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.59375D, 0.0D, 0.03175D, 0.65625D, barHeight, 0.09325D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.84375D, 0.0D, 0.03175D, 0.90625D, barHeight, 0.09325D, true, renderer, block, x, y, z, meta);
 		}
 		
 		if (renderSouth) {
@@ -284,10 +290,10 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 					renderLeavesBlock(1, 1, 0, 0, 1.05, 1.05, 1.05, 1.05, 1.05, 0.875, 0.875, 1.05, true, renderer, block, x, y, z, meta); //Top
 				}
 			}
-			renderBlock(0.09375D, 0.0D, 0.90675D, 0.15625D, 0.9325D, 0.96825D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.34375D, 0.0D, 0.90675D, 0.40625D, 0.9325D, 0.96825D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.59375D, 0.0D, 0.90675D, 0.65625D, 0.9325D, 0.96825D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.84375D, 0.0D, 0.90675D, 0.90625D, 0.9325D, 0.96825D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.09375D, 0.0D, 0.90675D, 0.15625D, barHeight, 0.96825D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.34375D, 0.0D, 0.90675D, 0.40625D, barHeight, 0.96825D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.59375D, 0.0D, 0.90675D, 0.65625D, barHeight, 0.96825D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.84375D, 0.0D, 0.90675D, 0.90625D, barHeight, 0.96825D, true, renderer, block, x, y, z, meta);
 		}
 		
 		if (renderEast) {
@@ -308,10 +314,10 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 					renderLeavesBlock(1.05, 1.05, 0.875, 0.875, 1.05, 1.05, 1.05, 1.05, 1, 0, 0, 1, true, renderer, block, x, y, z, meta); //Top
 				}
 			}
-			renderBlock(0.90675D, 0.0D, 0.09375D, 0.96825D, 0.9325D, 0.15625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.90675D, 0.0D, 0.34375D, 0.96825D, 0.9325D, 0.40625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.90675D, 0.0D, 0.59375D, 0.96825D, 0.9325D, 0.65625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.90675D, 0.0D, 0.84375D, 0.96825D, 0.9325D, 0.90625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.90675D, 0.0D, 0.09375D, 0.96825D, barHeight, 0.15625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.90675D, 0.0D, 0.34375D, 0.96825D, barHeight, 0.40625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.90675D, 0.0D, 0.59375D, 0.96825D, barHeight, 0.65625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.90675D, 0.0D, 0.84375D, 0.96825D, barHeight, 0.90625D, true, renderer, block, x, y, z, meta);
 		}
 		
 		if (renderWest) { //-0.625D 1.0625D
@@ -333,10 +339,10 @@ public class WalkwayFenceRenderer extends BlockRenderCore implements ISimpleBloc
 					renderLeavesBlock(0.125, 0.125, -0.05, -0.05, 1.05, 1.05, 1.05, 1.05, 1, 0, 0, 1, true, renderer, block, x, y, z, meta); //Top
 				}
 			}
-			renderBlock(0.03175D, 0.0D, 0.09375D, 0.09325D, 0.9325D, 0.15625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.03175D, 0.0D, 0.34375D, 0.09325D, 0.9325D, 0.40625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.03175D, 0.0D, 0.59375D, 0.09325D, 0.9325D, 0.65625D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.03175D, 0.0D, 0.84375D, 0.09325D, 0.9325D, 0.90625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.03175D, 0.0D, 0.09375D, 0.09325D, barHeight, 0.15625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.03175D, 0.0D, 0.34375D, 0.09325D, barHeight, 0.40625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.03175D, 0.0D, 0.59375D, 0.09325D, barHeight, 0.65625D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.03175D, 0.0D, 0.84375D, 0.09325D, barHeight, 0.90625D, true, renderer, block, x, y, z, meta);
 		}
 		
 		//Notches in the corners.

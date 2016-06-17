@@ -14,8 +14,13 @@ import co.uk.silvania.advancedarmoury.client.renderers.PartRenderBase;
 import co.uk.silvania.advancedarmoury.client.renderers.PartRenderComponent;
 import co.uk.silvania.advancedarmoury.client.renderers.assault.AssaultReceiverRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.assault.RenderAssaultRifle;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.BlockRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.CornerPostRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.OpenStairsRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.RailingRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope225HighRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope225LowRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope225VerticalRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope45Renderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.TinyLootCrateRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.WalkwayFenceRenderer;
@@ -38,6 +43,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 public class ClientProxy extends CommonProxy {
 	
 	public static int tinyLootCrateRenderID;
+	
+	public static int aaBlockRenderID;
 	public static int walkwayFenceRenderID;
 	public static int walkwayFenceSnowyRenderID;
 	public static int walkwayFenceJungleRenderID;
@@ -48,6 +55,9 @@ public class ClientProxy extends CommonProxy {
 	public static int railingStairsRenderID;
 	public static int openStairsRenderID;
 	public static int slope45RenderID;
+	public static int slope225LowRenderID;
+	public static int slope225HighRenderID;
+	public static int slope225VerticalRenderID;
 	public static int cornerPostRenderID;
 	
 	@Override
@@ -55,14 +65,14 @@ public class ClientProxy extends CommonProxy {
 		for (ComponentType componentType : ComponentType.items.values()) {
 			Item item = GameRegistry.findItem(AdvancedArmoury.modid, componentType.unlocalizedName);
 			if (item instanceof AssetFrontEnd) {
-				MinecraftForgeClient.registerItemRenderer(item, new PartRenderBase(componentType.modelName, componentType.modelTexture, true));
+				//MinecraftForgeClient.registerItemRenderer(item, new PartRenderBase(componentType.modelName, componentType.modelTexture, true));
 			}
 			if (item instanceof AssetReceiver) {
-				MinecraftForgeClient.registerItemRenderer(item, new AssaultReceiverRenderer(componentType.modelName, componentType.modelTexture, true, 0));
+				//MinecraftForgeClient.registerItemRenderer(item, new AssaultReceiverRenderer(componentType.modelName, componentType.modelTexture, true, 0));
 				
 			}
 			if (item instanceof AssetStock) {
-				MinecraftForgeClient.registerItemRenderer(item, new PartRenderBase(componentType.modelName, componentType.modelTexture, true));
+				//MinecraftForgeClient.registerItemRenderer(item, new PartRenderBase(componentType.modelName, componentType.modelTexture, true));
 			}
 		}
 		
@@ -78,6 +88,8 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(LootCrateEntity.class, new TinyLootCrateRenderer());
 		
 		tinyLootCrateRenderID = RenderingRegistry.getNextAvailableRenderId();
+		
+		aaBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
 		walkwayFenceRenderID = RenderingRegistry.getNextAvailableRenderId();
 		walkwayFenceSnowyRenderID = RenderingRegistry.getNextAvailableRenderId();
 		walkwayFenceJungleRenderID = RenderingRegistry.getNextAvailableRenderId();
@@ -88,9 +100,14 @@ public class ClientProxy extends CommonProxy {
 		railingStairsRenderID = RenderingRegistry.getNextAvailableRenderId();
 		openStairsRenderID = RenderingRegistry.getNextAvailableRenderId();
 		slope45RenderID = RenderingRegistry.getNextAvailableRenderId();
+		slope225LowRenderID = RenderingRegistry.getNextAvailableRenderId();
+		slope225HighRenderID = RenderingRegistry.getNextAvailableRenderId();
+		slope225VerticalRenderID = RenderingRegistry.getNextAvailableRenderId();
 		cornerPostRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
 		RenderingRegistry.registerBlockHandler(AABlocks.tinyLootCrate.getRenderType(), new TinyLootCrateRenderer());
+		
+		RenderingRegistry.registerBlockHandler(aaBlockRenderID, new BlockRenderer());
 		RenderingRegistry.registerBlockHandler(walkwayFenceRenderID, new WalkwayFenceRenderer(false, false));
 		RenderingRegistry.registerBlockHandler(walkwayFenceSnowyRenderID, new WalkwayFenceRenderer(true, false));
 		RenderingRegistry.registerBlockHandler(walkwayFenceJungleRenderID, new WalkwayFenceRenderer(false, true));
@@ -99,7 +116,11 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerBlockHandler(railingRenderID, new RailingRenderer(false, false));
 		RenderingRegistry.registerBlockHandler(railingSnowyRenderID, new RailingRenderer(true, false));
 		RenderingRegistry.registerBlockHandler(railingJungleRenderID, new RailingRenderer(false, true));
-		RenderingRegistry.registerBlockHandler(slope45RenderID, new Slope45Renderer(false));
+		RenderingRegistry.registerBlockHandler(slope45RenderID, new Slope45Renderer());
+		RenderingRegistry.registerBlockHandler(slope225LowRenderID, new Slope225LowRenderer());
+		RenderingRegistry.registerBlockHandler(slope225HighRenderID, new Slope225HighRenderer());
+		RenderingRegistry.registerBlockHandler(slope225VerticalRenderID, new Slope225VerticalRenderer());
+		RenderingRegistry.registerBlockHandler(cornerPostRenderID, new CornerPostRenderer());
 	}
 	
 	public static void renderPrebuiltGuns() {

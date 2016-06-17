@@ -2,8 +2,9 @@
 //Taken with permission, as it's my own damn mod. :D
 package co.uk.silvania.advancedarmoury.client.renderers.blocks;
 
-import co.uk.silvania.advancedarmoury.blocks.decorative.RailingMilitaryBase;
-import co.uk.silvania.advancedarmoury.blocks.decorative.RailingStairsMilitaryBase;
+import co.uk.silvania.advancedarmoury.blocks.decorative.CornerPost;
+import co.uk.silvania.advancedarmoury.blocks.decorative.Railing;
+import co.uk.silvania.advancedarmoury.blocks.decorative.RailingStairs;
 import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -12,6 +13,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRenderingHandler {
+	
+	CornerPostRenderer cornerPostRenderer = new CornerPostRenderer();
 	
 	boolean renderSnow;
 	boolean renderLeaves;
@@ -173,17 +176,17 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
 		
-		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
-		boolean connectEast =  checkConnections(world, x+1, y, z, 1, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
-		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
-		boolean connectWest =  checkConnections(world, x-1, y, z, 1, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
+		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta, Railing.class, RailingStairs.class);
+		boolean connectEast =  checkConnections(world, x+1, y, z, 1, meta, Railing.class, RailingStairs.class);
+		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta, Railing.class, RailingStairs.class);
+		boolean connectWest =  checkConnections(world, x-1, y, z, 1, meta, Railing.class, RailingStairs.class);
 		
-		boolean connectNorthEast = checkConnections(world, x+1, y, z-1, -1, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
-		boolean connectNorthWest = checkConnections(world, x-1, y, z-1, -1, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
-		boolean connectSouthEast = checkConnections(world, x+1, y, z+1, -1, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
-		boolean connectSouthWest = checkConnections(world, x-1, y, z+1, -1, meta, RailingMilitaryBase.class, RailingStairsMilitaryBase.class);
+		boolean connectNorthEast = checkConnections(world, x+1, y, z-1, -1, meta, Railing.class, RailingStairs.class);
+		boolean connectNorthWest = checkConnections(world, x-1, y, z-1, -1, meta, Railing.class, RailingStairs.class);
+		boolean connectSouthEast = checkConnections(world, x+1, y, z+1, -1, meta, Railing.class, RailingStairs.class);
+		boolean connectSouthWest = checkConnections(world, x-1, y, z+1, -1, meta, Railing.class, RailingStairs.class);
 		
-		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof RailingMilitaryBase;
+		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof Railing;
 		
 		if (renderSnow) {
 			if (world.getBlock(x, y-1, z).isSideSolid(world, x, y-1, z, ForgeDirection.UP)) {
@@ -195,6 +198,9 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 		boolean renderEast  = false; //X 1,    Z 0-1
 		boolean renderSouth = false; //X 0-1,  Z 1
 		boolean renderWest  = false; //X 0,    Z 0-1
+		
+		if (world.getBlock(x, y+1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z,  1, renderer, world.getBlock(x, y+1, z), -1, true); }
+		if (world.getBlock(x, y-1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z, -1, renderer, world.getBlock(x, y-1, z), -1, true); }
 		
 		if (meta == 0)  { renderNorth = true; }
 		if (meta == 1)  { renderEast  = true; }
@@ -222,6 +228,8 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 		boolean renderNorthWest = (renderNorth && renderWest) ? true : false;
 		boolean renderSouthEast = (renderSouth && renderEast) ? true : false;
 		boolean renderSouthWest = (renderSouth && renderWest) ? true : false;
+		
+		double barHeight = walkwayAbove ? 1.0D : 0.9325D;
 
 		if (renderNorth) {
 			if (!walkwayAbove) {
@@ -242,8 +250,8 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 					renderLeavesBlock(1, 1, 0, 0, 1.05, 1.05, 1.05, 1.05, 0.125, -0.05, -0.05, 0.125, true, renderer, block, x, y, z, meta); //Top
 				}
 			}
-			renderBlock(0.0D,    0.0D, 0.03175D, 0.0625D, 0.9325D, 0.09325D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.9375D, 0.0D, 0.03175D, 1.0D,    0.9325D, 0.09325D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D,    0.0D, 0.03175D, 0.0625D, barHeight, 0.09325D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.9375D, 0.0D, 0.03175D, 1.0D,    barHeight, 0.09325D, true, renderer, block, x, y, z, meta);
 			
 			renderBlock(0.0625D, 0.46875D, 0.03175D, 0.9375D, 0.53125D, 0.09325D, true, renderer, block, x, y, z, meta); //Middle bar
 		}
@@ -267,8 +275,8 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 				}
 			}
 			
-			renderBlock(0.0D,    0.0D, 0.90675D, 0.0625D, 0.9325D, 0.96825D, true, renderer, block, x, y, z, meta);
-			renderBlock(0.9375D, 0.0D, 0.90675D, 1.0D,    0.9325D, 0.96825D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.0D,    0.0D, 0.90675D, 0.0625D, barHeight, 0.96825D, true, renderer, block, x, y, z, meta);
+			renderBlock(0.9375D, 0.0D, 0.90675D, 1.0D,    barHeight, 0.96825D, true, renderer, block, x, y, z, meta);
 			
 			renderBlock(0.0625D, 0.46875D, 0.90675D, 0.9375D, 0.53125D, 0.96825D, true, renderer, block, x, y, z, meta); //Middle bar
 		}
@@ -291,8 +299,8 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 					renderLeavesBlock(1.05, 1.05, 0.875, 0.875, 1.05, 1.05, 1.05, 1.05, 1, 0, 0, 1, true, renderer, block, x, y, z, meta); //Top
 				}
 			}			
-			renderBlock(0.90675D, 0.0D, 0.0D,    0.96825D, 0.9325D, 0.0625, true, renderer, block, x, y, z, meta);
-			renderBlock(0.90675D, 0.0D, 0.9375D, 0.96825D, 0.9325D, 1.0D,   true, renderer, block, x, y, z, meta);
+			renderBlock(0.90675D, 0.0D, 0.0D,    0.96825D, barHeight, 0.0625, true, renderer, block, x, y, z, meta);
+			renderBlock(0.90675D, 0.0D, 0.9375D, 0.96825D, barHeight, 1.0D,   true, renderer, block, x, y, z, meta);
 			
 			renderBlock(0.90675D, 0.46875D, 0.0625D, 0.96825D, 0.53125D, 0.9375D, true, renderer, block, x, y, z, meta); //Middle bar
 		}
@@ -316,8 +324,8 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 					renderLeavesBlock(0.125, 0.125, -0.05, -0.05, 1.05, 1.05, 1.05, 1.05, 1, 0, 0, 1, true, renderer, block, x, y, z, meta); //Top
 				}
 			}
-			renderBlock(0.03175D, 0.0D, 0.0D,    0.09325D, 0.9325D, 0.0625, true, renderer, block, x, y, z, meta);
-			renderBlock(0.03175D, 0.0D, 0.9375D, 0.09325D, 0.9325D, 1.0D,   true, renderer, block, x, y, z, meta);
+			renderBlock(0.03175D, 0.0D, 0.0D,    0.09325D, barHeight, 0.0625, true, renderer, block, x, y, z, meta);
+			renderBlock(0.03175D, 0.0D, 0.9375D, 0.09325D, barHeight, 1.0D,   true, renderer, block, x, y, z, meta);
 			
 			renderBlock(0.03175D, 0.46875D, 0.0625D, 0.09325D, 0.53125D, 0.9375D, true, renderer, block, x, y, z, meta); //Middle bar
 		}
