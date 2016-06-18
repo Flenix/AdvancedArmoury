@@ -54,12 +54,12 @@ public class BlockAA extends Block {
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		list.add(new ItemStack(item, 1, 0));
 		list.add(new ItemStack(item, 1, 1));
-		list.add(new ItemStack(item, 1, 2));
+		list.add(new ItemStack(item, 1, 3));
 	}
     
     public void onBlockPlacedBy(World block, int x, int y, int z, EntityLivingBase entity, ItemStack item) {
         int rot = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        int meta = block.getBlockMetadata(x, y, z);
+        int meta = item.getItemDamage();
     	if (meta == 1 || meta == 2) {
     		return;
     	}
@@ -86,6 +86,12 @@ public class BlockAA extends Block {
     }
 	
     public int onBlockPlaced(World world, int x, int y, int z, int side, float xHit, float yHit, float zHit, int meta) {
+    	/*if (side == 0 && world.getBlock(x, y, z) instanceof BlockAA && world.getBlockMetadata(x, y+1, z) == 2) {
+    		world.setBlock(x, y, z, this);
+    	}
+    	if (side == 1 && world.getBlock(x, y-1, z) instanceof BlockAA && world.getBlockMetadata(x, y-1, z) == 1) {
+    		world.setBlock(x, y, z, this);
+    	}*/
 		if (side != 0 && (side == 1 || (double)yHit <= 0.5D)) {
 			return 1;
 		} else {
