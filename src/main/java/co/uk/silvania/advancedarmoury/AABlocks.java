@@ -111,6 +111,14 @@ public class AABlocks {
 			GameRegistry.registerBlock(slope225Vertical, ItemBlockAA.class, mat + "Slope225Vertical");
 			GameRegistry.registerBlock(cornerPost, ItemBlockAA.class, mat + "CornerPost");
 		}
+		
+		//Block standardDecoratives = new Block().setBlockName("decorativeBlock");
+		//Block hescoBarriers = new HescoBlock().setBlockName("hescoBlock"); //Dirt, sand, gravel, snowy
+		//Block plywoodBarrier = new BlockSimpleBarrier().setBlockName("plywoodBarrier");
+		//Block chainFence = new BlockChainFence().setBlockName("chainFence");
+		
+		//Sand bags
+		
 	}
 	
 	public static void registerBlocks() {
