@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class Slope225Vertical extends Block {
@@ -29,8 +30,19 @@ public class Slope225Vertical extends Block {
 		this.setHardness(1.0F);
 		this.setCreativeTab(AdvancedArmoury.tabGeneric);
 		this.useNeighborBrightness = true;
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
+		this.opaque = true;
+        this.lightOpacity = 255;
 	}
+	
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+    	int meta = world.getBlockMetadata(x, y, z);
+    	
+    	if (meta == 0 || meta == 4) { setBlockBounds(0.5F, 0.0F,  0.0F,  1.0F, 1.0F, 1.0F); }
+    	if (meta == 1 || meta == 5) { setBlockBounds(0.0F, 0.0F,  0.0F,  0.5F, 1.0F, 1.0F); }
+    	if (meta == 2 || meta == 6) { setBlockBounds(0.0F, 0.0F,  0.5F,  1.0F, 1.0F, 1.0F); }
+    	if (meta == 3 || meta == 7) { setBlockBounds(0.0F, 0.0F,  0.0F,  1.0F, 1.0F, 0.5F); }
+    	if (meta > 7) { setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F); }
+    }
 	
 	@Override
 	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB bb, List list, Entity entity) {

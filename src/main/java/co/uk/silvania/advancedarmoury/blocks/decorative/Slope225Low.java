@@ -1,5 +1,7 @@
 package co.uk.silvania.advancedarmoury.blocks.decorative;
 
+import java.util.List;
+
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
@@ -10,8 +12,10 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class Slope225Low extends Block {
@@ -24,7 +28,6 @@ public class Slope225Low extends Block {
 		this.setHardness(1.0F);
 		this.setCreativeTab(AdvancedArmoury.tabGeneric);
 		this.useNeighborBrightness = true;
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
 	}
 	
 	@Override
@@ -35,6 +38,43 @@ public class Slope225Low extends Block {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+	
+	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+    	int meta = world.getBlockMetadata(x, y, z);
+    	
+    	if (meta <= 3) { setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F); }
+    	else if (meta <= 7) { setBlockBounds(0.0F, 0.5F, 0.0F, 1.0F, 1.0F, 1.0F); }
+    	else if (meta == 8 || meta == 12) { setBlockBounds(0.5F, 0.0F,  0.0F,  1.0F, 1.0F, 1.0F); }
+    	else if (meta == 9 || meta == 13) { setBlockBounds(0.0F, 0.0F,  0.0F,  0.5F, 1.0F, 1.0F); }
+    	else if (meta == 10 || meta == 14) { setBlockBounds(0.0F, 0.0F,  0.5F,  1.0F, 1.0F, 1.0F); }
+    	else if (meta == 11 || meta == 15) { setBlockBounds(0.0F, 0.0F,  0.0F,  1.0F, 1.0F, 0.5F); }
+    }
+	
+	@Override
+	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB bb, List list, Entity entity) {
+		boolean hasCollision = false;
+		int meta = world.getBlockMetadata(x, y, z);
+
+		if (meta <= 3) {
+			setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta <= 7) {
+			setBlockBounds(0.0F, 0.5F, 0.0F, 1.0F, 1.0F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta == 8 || meta == 12) {
+			setBlockBounds(0.5F, 0.0F,  0.0F,  1.0F, 1.0F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta == 9 || meta == 13) {
+			setBlockBounds(0.0F, 0.0F,  0.0F,  0.5F, 1.0F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta == 10 || meta == 14) {
+			setBlockBounds(0.0F, 0.0F,  0.5F,  1.0F, 1.0F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta == 11 || meta == 15) {
+			setBlockBounds(0.0F, 0.0F,  0.0F,  1.0F, 1.0F, 0.5F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

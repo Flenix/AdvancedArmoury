@@ -29,59 +29,62 @@ public class Slope45 extends StairsAA {
 	public void onBlockPlacedBy(World block, int x, int y, int z, EntityLivingBase entity, ItemStack item) {
         int rot = MathHelper.floor_double((double)(entity.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
         int meta = block.getBlockMetadata(x, y, z);
-        
+        System.out.println("META PRE: " + meta);
         if (rot == 0) {
-        	block.setBlockMetadataWithNotify(x, y, z, 2 | meta, 2); 
+        	block.setBlockMetadataWithNotify(x, y, z, 2 + meta, 2); 
         }
 
         if (rot == 1) {
-        	block.setBlockMetadataWithNotify(x, y, z, 1 | meta, 2);
+        	block.setBlockMetadataWithNotify(x, y, z, 1 + meta, 2);
         }
 
         if (rot == 2) {
-        	block.setBlockMetadataWithNotify(x, y, z, 3 | meta, 2);
+        	block.setBlockMetadataWithNotify(x, y, z, 3 + meta, 2);
         }
 
         if (rot == 3) {
-        	block.setBlockMetadataWithNotify(x, y, z, 0 | meta, 2);
+        	block.setBlockMetadataWithNotify(x, y, z, 0 + meta, 2);
         }
     }
 	
 	@Override
 	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
 		if (side != 0 && side != 1) {
+			System.out.println("Side: " + side + ", Meta: " + meta);
 			//If they hit the lower or upper quarters, place as lower or upper.
 			if ((double)hitY <= 0.3D) {
-				return meta;
+				return 0;
 			} else if ((double) hitY >= 0.7D) {
-				return meta + 4;
+				return 4;
 			}
 			if (side == 2) {
 				if ((double)hitX <= 0.3D) {
-					return meta + 12;
+					return 7;
 				} else if ((double)hitX >= 0.7D) {
-					return meta + 8;
+					return 8;
 				}
 			}
 			if (side == 3) {
 				if ((double)hitX <= 0.3D) {
-					return meta + 8;
+					System.out.println("8");
+					return 8;
 				} else if ((double)hitX >= 0.7D) {
-					return meta + 12;
+					System.out.println("5");
+					return 5;
 				}
 			}
 			if (side == 4) {
 				if ((double)hitZ <= 0.3D) {
-					return meta + 8;
+					return 8;
 				} else if ((double)hitZ >= 0.7D) {
-					return meta + 12;
+					return 10;
 				}
 			}
 			if (side == 5) {
 				if ((double)hitZ <= 0.3D) {
-					return meta + 12;
+					return 10;
 				} else if ((double)hitZ >= 0.7D) {
-					return meta + 8;
+					return 8;
 				}
 			}
 		}

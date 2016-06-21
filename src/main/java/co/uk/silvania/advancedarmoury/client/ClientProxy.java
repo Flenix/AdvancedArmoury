@@ -14,10 +14,12 @@ import co.uk.silvania.advancedarmoury.client.renderers.PartRenderBase;
 import co.uk.silvania.advancedarmoury.client.renderers.PartRenderComponent;
 import co.uk.silvania.advancedarmoury.client.renderers.assault.AssaultReceiverRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.assault.RenderAssaultRifle;
-import co.uk.silvania.advancedarmoury.client.renderers.blocks.BlockRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.ChainFenceRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.CornerPostRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.ItemBlockRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.OpenStairsRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.RailingRenderer;
+import co.uk.silvania.advancedarmoury.client.renderers.blocks.SimpleBarrierRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope225HighRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope225LowRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope225VerticalRenderer;
@@ -34,6 +36,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.FileResourcePack;
 import net.minecraft.client.resources.IResourcePack;
@@ -44,7 +47,6 @@ public class ClientProxy extends CommonProxy {
 	
 	public static int tinyLootCrateRenderID;
 	
-	public static int aaBlockRenderID;
 	public static int walkwayFenceRenderID;
 	public static int walkwayFenceSnowyRenderID;
 	public static int walkwayFenceJungleRenderID;
@@ -59,6 +61,9 @@ public class ClientProxy extends CommonProxy {
 	public static int slope225HighRenderID;
 	public static int slope225VerticalRenderID;
 	public static int cornerPostRenderID;
+	
+	public static int simpleBarrierRenderID;
+	public static int chainFenceRenderID;
 	
 	@Override
 	public void registerRenderers() {		
@@ -89,7 +94,6 @@ public class ClientProxy extends CommonProxy {
 		
 		tinyLootCrateRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
-		aaBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
 		walkwayFenceRenderID = RenderingRegistry.getNextAvailableRenderId();
 		walkwayFenceSnowyRenderID = RenderingRegistry.getNextAvailableRenderId();
 		walkwayFenceJungleRenderID = RenderingRegistry.getNextAvailableRenderId();
@@ -105,9 +109,11 @@ public class ClientProxy extends CommonProxy {
 		slope225VerticalRenderID = RenderingRegistry.getNextAvailableRenderId();
 		cornerPostRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
-		RenderingRegistry.registerBlockHandler(AABlocks.tinyLootCrate.getRenderType(), new TinyLootCrateRenderer());
+		simpleBarrierRenderID = RenderingRegistry.getNextAvailableRenderId();
+		chainFenceRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
-		RenderingRegistry.registerBlockHandler(aaBlockRenderID, new BlockRenderer());
+		RenderingRegistry.registerBlockHandler(AABlocks.tinyLootCrate.getRenderType(), new TinyLootCrateRenderer());
+
 		RenderingRegistry.registerBlockHandler(walkwayFenceRenderID, new WalkwayFenceRenderer(false, false));
 		RenderingRegistry.registerBlockHandler(walkwayFenceSnowyRenderID, new WalkwayFenceRenderer(true, false));
 		RenderingRegistry.registerBlockHandler(walkwayFenceJungleRenderID, new WalkwayFenceRenderer(false, true));
@@ -121,6 +127,14 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerBlockHandler(slope225HighRenderID, new Slope225HighRenderer());
 		RenderingRegistry.registerBlockHandler(slope225VerticalRenderID, new Slope225VerticalRenderer());
 		RenderingRegistry.registerBlockHandler(cornerPostRenderID, new CornerPostRenderer());
+		
+		RenderingRegistry.registerBlockHandler(simpleBarrierRenderID, new SimpleBarrierRenderer());
+		RenderingRegistry.registerBlockHandler(chainFenceRenderID, new ChainFenceRenderer());
+	}
+	
+	@Override
+	public void renderItemBlock(Block block) {
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(block), new ItemBlockRenderer());
 	}
 	
 	public static void renderPrebuiltGuns() {

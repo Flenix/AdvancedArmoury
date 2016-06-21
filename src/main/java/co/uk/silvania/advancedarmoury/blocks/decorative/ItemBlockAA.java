@@ -54,12 +54,25 @@ public class ItemBlockAA extends ItemBlock {
 		
 		if (block instanceof Slope225Low)      { return StatCollector.translateToLocal("material." + ((Slope225Low)  block).texture) + " " +  StatCollector.translateToLocal("blockType.slope225a"); }
 		if (block instanceof Slope225High)     { return StatCollector.translateToLocal("material." + ((Slope225High) block).texture) + " " +  StatCollector.translateToLocal("blockType.slope225b"); }
-		if (block instanceof Slope225Vertical) { return StatCollector.translateToLocal("material." + ((Slope225Vertical) block).texture) + " " +  StatCollector.translateToLocal("blockType.slope225Vertical"); }
-		
+		if (block instanceof Slope225Vertical) {
+			if (item.getItemDamage() <= 7) {
+				return StatCollector.translateToLocal("material." + ((Slope225Vertical) block).texture) + " " +  StatCollector.translateToLocal("blockType.slope225Verticala");
+			} else {
+				return StatCollector.translateToLocal("material." + ((Slope225Vertical) block).texture) + " " +  StatCollector.translateToLocal("blockType.slope225Verticalb");
+			}
+		}
 		if (block instanceof DecorativeBlockAA) { return StatCollector.translateToLocal("material." + ((DecorativeBlockAA) block).texture) + " " + StatCollector.translateToLocal("blockType." + ((DecorativeBlockAA) block).blockType); }
 		
 		//Check these last, as other stuff extends these.
-		if (block instanceof  BlockAA) { return StatCollector.translateToLocal("material." + ((BlockAA) block).texture) + " " + StatCollector.translateToLocal("blockType.block"); }
+		if (block instanceof  BlockAA) {
+			if (item.getItemDamage() == 1 || item.getItemDamage() == 2) {
+				return StatCollector.translateToLocal("material." + ((BlockAA) block).texture) + " " + StatCollector.translateToLocal("blockType.slab");
+			} else if (item.getItemDamage() == 3) {
+				return StatCollector.translateToLocal("material." + ((BlockAA) block).texture) + " " + StatCollector.translateToLocal("blockType.pillar");
+			} else {
+				return StatCollector.translateToLocal("material." + ((BlockAA) block).texture) + " " + StatCollector.translateToLocal("blockType.block");
+			}
+		}
 		
 		if (block instanceof WalkwayFence) {
 			((WalkwayFence) block).getBlockNameFromMeta(item.getItemDamage());

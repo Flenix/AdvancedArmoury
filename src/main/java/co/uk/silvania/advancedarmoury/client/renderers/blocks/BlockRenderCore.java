@@ -2,33 +2,31 @@ package co.uk.silvania.advancedarmoury.client.renderers.blocks;
 
 import org.lwjgl.opengl.GL11;
 
+import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayFence;
 import co.uk.silvania.advancedarmoury.blocks.decorative.WalkwayStairs;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 public class BlockRenderCore implements ISimpleBlockRenderingHandler {
 	
 	Tessellator tess = Tessellator.instance;
 	
-	public boolean checkConnections(IBlockAccess world, int x, int y, int z, int targetMeta, int meta, Class block1, Class block2) {	
+	public boolean checkConnections(IBlockAccess world, int x, int y, int z, int targetMeta, int meta, boolean checkBelow) {	
 		if (world.getBlock(x, y, z).isNormalCube(world, x, y, z)) {
 			return true;
 		}
-		if (meta <= 1 || meta == 4 || meta == 5 || meta == 8 || meta == 9) {
+		if ((meta <= 1 || meta == 4 || meta == 5 || meta == 8 || meta == 9) && checkBelow) {
 			if (world.getBlock(x, y-1, z).isNormalCube(world, x, y, z)) {
 				return true;
 			}
 		}
 		
-		if (world.getBlock(x, y, z).getClass() == block1 || world.getBlock(x, y, z).getClass() == block2) {
+		if (world.getBlock(x, y, z) instanceof WalkwayFence || world.getBlock(x, y, z) instanceof WalkwayStairs) {
 			return true;
 		}
 		
@@ -87,9 +85,9 @@ public class BlockRenderCore implements ISimpleBlockRenderingHandler {
 		}
 	}
 	
-	public void renderSnowBlock(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, boolean existsInWorld, RenderBlocks renderer, Block block, int x, int y, int z, int meta) {
+	public void renderOtherBlock(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, boolean existsInWorld, RenderBlocks renderer, Block block, int x, int y, int z, int meta, IIcon icon) {
 		renderer.setRenderBounds(minX, minY, minZ, maxX, maxY, maxZ);
-		renderer.setOverrideBlockTexture(Blocks.snow.getIcon(0, 0));
+		renderer.setOverrideBlockTexture(icon);
 		if (existsInWorld) {
 			renderer.renderStandardBlock(block, x, y, z);
 		} else {

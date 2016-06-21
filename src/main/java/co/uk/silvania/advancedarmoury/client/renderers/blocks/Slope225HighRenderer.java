@@ -29,9 +29,12 @@ public class Slope225HighRenderer extends BlockRenderCore implements ISimpleBloc
 		double v0 = (double) icon.getMinV();
 		double v1 = (double) icon.getMaxV();
 		
+		final float FACE_XZ_NORMAL = 0.8944F;
+		final float FACE_Y_NORMAL  = 0.4472F;
+		
 		int x = 0, y = 0, z = 0;
 		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tess.setNormal(0.0F, FACE_Y_NORMAL, -FACE_XZ_NORMAL);
 		tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u1, v1);
 		tess.addVertexWithUV(x + 1, y + 1,   z,     u1, v0);
 		tess.addVertexWithUV(x,     y + 1,   z,     u0, v0);
@@ -40,7 +43,7 @@ public class Slope225HighRenderer extends BlockRenderCore implements ISimpleBloc
 		
 		//Back
 		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+		tess.setNormal(FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
 		tess.addVertexWithUV(x,     y + 0, z, u1, v1);
 		tess.addVertexWithUV(x,     y + 1, z, u1, v0);
 		tess.addVertexWithUV(x + 1, y + 1, z, u0, v0);
@@ -58,7 +61,7 @@ public class Slope225HighRenderer extends BlockRenderCore implements ISimpleBloc
 		
 		//Left
 		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tess.setNormal(0.0F, FACE_Y_NORMAL, FACE_XZ_NORMAL);
 		tess.addVertexWithUV(x, y + 0,   z + 1, u1, v1);
 		tess.addVertexWithUV(x, y + 0.5, z + 1, u1, v0);
 		tess.addVertexWithUV(x, y + 1,   z + 0, u0, v0);
@@ -67,7 +70,7 @@ public class Slope225HighRenderer extends BlockRenderCore implements ISimpleBloc
 		
 		//Right
 		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+		tess.setNormal(-FACE_XZ_NORMAL, FACE_Y_NORMAL, 0.0F);
 		tess.addVertexWithUV(x + 1, y + 0,   z + 0, u1, v1);
 		tess.addVertexWithUV(x + 1, y + 1,   z + 0, u1, v0);
 		tess.addVertexWithUV(x + 1, y + 0.5, z + 1, u0, v0);
@@ -76,7 +79,7 @@ public class Slope225HighRenderer extends BlockRenderCore implements ISimpleBloc
 		
 		//Bottom
 		tess.startDrawingQuads();
-		tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+		tess.setNormal(0.0F, -1.0F, 0.0F);
 		tess.addVertexWithUV(x + 1, y, z + 0, u1, v1);
 		tess.addVertexWithUV(x + 1, y, z + 1, u1, v0);
 		tess.addVertexWithUV(x,     y, z + 1, u0, v0);

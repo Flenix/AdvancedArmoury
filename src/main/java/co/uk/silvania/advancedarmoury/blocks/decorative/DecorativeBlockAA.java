@@ -3,19 +3,26 @@ package co.uk.silvania.advancedarmoury.blocks.decorative;
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.IBlockAccess;
 
-public class DecorativeBlockAA extends BlockAA {
+public class DecorativeBlockAA extends Block {
 	
 	String blockType;
 	String texture;
 
 	public DecorativeBlockAA(String textureName, String blockType) {
-		super(textureName);
+		super(Material.rock);
 		this.blockType = blockType;
 		this.texture = textureName;
+		this.setHardness(1.0F);
+		this.setCreativeTab(AdvancedArmoury.tabGeneric);
+		this.useNeighborBrightness = true;
+		this.opaque = true;
+        this.lightOpacity = 255;
 	}
 	
 	@Override public boolean renderAsNormalBlock() { return false; }

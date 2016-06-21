@@ -27,6 +27,7 @@ public class CommonProxy {
 		return assetPacks;
 	}
 	
+	public void renderItemBlock(Block block) {}
 	public void renderTriggers(Item itemTrigger, String materialName) {}
 	public void renderBarrels(Item item, String material) {}
 	public void renderFlashHiders(Item item, String material) {}

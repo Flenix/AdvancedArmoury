@@ -7,6 +7,7 @@ import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -14,9 +15,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockAA extends Block {
@@ -29,6 +32,28 @@ public class BlockAA extends Block {
 		this.setHardness(1.0F);
 		this.setCreativeTab(AdvancedArmoury.tabGeneric);
 		this.useNeighborBrightness = true;
+		this.opaque = true;
+        this.lightOpacity = 255;
+	}
+	
+	@Override
+	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB bb, List list, Entity entity) {
+		int meta = world.getBlockMetadata(x, y, z);
+
+		if (meta == 0) {
+			this.setBlockBounds(0.0F,  0.0F, 0.0F,  1.0F,  1.0F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta == 1) {
+			this.setBlockBounds(0.0F,  0.0F, 0.0F,  1.0F,  0.5F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta == 2) {
+			this.setBlockBounds(0.0F,  0.5F, 0.0F,  1.0F,  1.0F, 1.0F);
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		} else if (meta == 3) {
+			if (meta == 3) { this.setBlockBounds(0.25F, 0.0F, 0.25F, 0.75F, 1.0F, 0.75F); }
+			super.addCollisionBoxesToList(world, x, y, z, bb, list, entity);
+		}
+		setBlockBoundsForItemRender();
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -37,18 +62,26 @@ public class BlockAA extends Block {
 		blockIcon = iconRegister.registerIcon(AdvancedArmoury.modid + ":" + this.texture);
 	}
 	
+    public boolean isOpaqueCube(){
+        return false;
+    }
+	
+    public boolean shouldSideBeRendered() {
+    	return true;
+    }
+    
     public float getExplosionResistance(Entity p_149638_1_) {
         return 50F;
     }
     
-    @Override public boolean renderAsNormalBlock() { return false; }
-	@Override public boolean isOpaqueCube() { return false; }
-    
-    @SideOnly(Side.CLIENT)
-	@Override
-	public int getRenderType() {
-		return ClientProxy.aaBlockRenderID;
-	}
+    public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
+    	int meta = world.getBlockMetadata(x, y, z);
+    	
+    	if (meta == 0) { this.setBlockBounds(0.0F,  0.0F, 0.0F,  1.0F,  1.0F, 1.0F);  }
+    	if (meta == 1) { this.setBlockBounds(0.0F,  0.0F, 0.0F,  1.0F,  0.5F, 1.0F);  }
+    	if (meta == 2) { this.setBlockBounds(0.0F,  0.5F, 0.0F,  1.0F,  1.0F, 1.0F);  }
+    	if (meta == 3) { this.setBlockBounds(0.25F, 0.0F, 0.25F, 0.75F, 1.0F, 0.75F); }
+    }
     
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
@@ -82,7 +115,6 @@ public class BlockAA extends Block {
         } else {
         	block.setBlockMetadataWithNotify(x, y, z, item.getItemDamage(), 2);
         }
-        System.out.println("Final after placing: " + block.getBlockMetadata(x, y, z));
     }
 	
     public int onBlockPlaced(World world, int x, int y, int z, int side, float xHit, float yHit, float zHit, int meta) {

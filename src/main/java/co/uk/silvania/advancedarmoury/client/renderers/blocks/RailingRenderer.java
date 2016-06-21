@@ -9,6 +9,7 @@ import co.uk.silvania.advancedarmoury.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -35,7 +36,7 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 			renderBlock(0.03175D, 0.46875D, 0.0675D, 0.09325D, 0.53125D, 0.9375D, false, renderer, block, 0, 0, 0, 0); //Left Middle bar
 			
 			if (renderSnow) {
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Left
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Left
 			}
 			if (renderLeaves) {
 				renderLeavesBlock(-0.05, -0.05, -0.05, -0.05,  1,    0,    0,    1,     1, 1, 0, 0, false, renderer, block, 0, 0, 0, 0); //Left Outer
@@ -55,8 +56,8 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 			renderBlock(0.0675D,  0.46875D, 0.03175D, 0.9375D,  0.53125D, 0.09325D, false, renderer, block, 0, 0, 0, 0); //Back Middle bar
 			
 			if (renderSnow) {
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   1.0D,   1.0625D, 0.125D, false, renderer, block, 0, 0, 0, 0); //Back
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Left
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   1.0D,   1.0625D, 0.125D, false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Back
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Left
 			}
 			if (renderLeaves) {
 				renderLeavesBlock(-0.05, -0.05, -0.05, -0.05,  1,    0,    0,    1,     1, 1, 0, 0, false, renderer, block, 0, 0, 0, 0); //Left Outer
@@ -84,9 +85,9 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 			renderBlock(0.90675D, 0.46875D, 0.0675D,  0.96825D, 0.53125D, 0.9375D,  false, renderer, block, 0, 0, 0, 0); //Right Middle bar
 			
 			if (renderSnow) {
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   1.0D,   1.0625D, 0.125D, false, renderer, block, 0, 0, 0, 0); //Back
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Left
-				renderSnowBlock(0.875D, 1.0D, 0.0D,   1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Right
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   1.0D,   1.0625D, 0.125D, false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Back
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Left
+				renderOtherBlock(0.875D, 1.0D, 0.0D,   1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Right
 			}
 			if (renderLeaves) {
 				renderLeavesBlock(-0.05, -0.05, -0.05, -0.05,  1,    0,    0,    1,     1, 1, 0, 0, false, renderer, block, 0, 0, 0, 0); //Left Outer
@@ -114,8 +115,8 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 			renderBlock(0.90675D, 0.46875D, 0.0675D, 0.96825D, 0.53125D, 0.9375D, false, renderer, block, 0, 0, 0, 0); //Right Middle bar
 			
 			if (renderSnow) {
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Left
-				renderSnowBlock(0.875D, 1.0D, 0.0D,   1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Right
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Left
+				renderOtherBlock(0.875D, 1.0D, 0.0D,   1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Right
 			}
 			if (renderLeaves) {
 				renderLeavesBlock(-0.05, -0.05, -0.05, -0.05,  1,    0,    0,    1,     1, 1, 0, 0, false, renderer, block, 0, 0, 0, 0); //Left Outer
@@ -147,10 +148,10 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 			renderBlock(0.0675D,  0.46875D, 0.96825D, 0.9375D,  0.53125D, 0.90675D, false, renderer, block, 0, 0, 0, 0); //Front Middle bar
 			
 			if (renderSnow) {
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   1.0D,   1.0625D, 0.125D, false, renderer, block, 0, 0, 0, 0); //Back
-				renderSnowBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Left
-				renderSnowBlock(0.875D, 1.0D, 0.0D,   1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Right
-				renderSnowBlock(0.0D,   1.0D, 0.875D, 1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0); //Front
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   1.0D,   1.0625D, 0.125D, false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Back
+				renderOtherBlock(0.0D,   1.0D, 0.0D,   0.125D, 1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Left
+				renderOtherBlock(0.875D, 1.0D, 0.0D,   1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Right
+				renderOtherBlock(0.0D,   1.0D, 0.875D, 1.0D,   1.0625D, 1.0D,   false, renderer, block, 0, 0, 0, 0, Blocks.snow.getIcon(0, 0)); //Front
 			}
 			if (renderLeaves) {
 				renderLeavesBlock(-0.05, -0.05, -0.05, -0.05,  1,    0,    0,    1,     1, 1, 0, 0, false, renderer, block, 0, 0, 0, 0); //Left Outer
@@ -176,21 +177,16 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
 		
-		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta, Railing.class, RailingStairs.class);
-		boolean connectEast =  checkConnections(world, x+1, y, z, 1, meta, Railing.class, RailingStairs.class);
-		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta, Railing.class, RailingStairs.class);
-		boolean connectWest =  checkConnections(world, x-1, y, z, 1, meta, Railing.class, RailingStairs.class);
-		
-		boolean connectNorthEast = checkConnections(world, x+1, y, z-1, -1, meta, Railing.class, RailingStairs.class);
-		boolean connectNorthWest = checkConnections(world, x-1, y, z-1, -1, meta, Railing.class, RailingStairs.class);
-		boolean connectSouthEast = checkConnections(world, x+1, y, z+1, -1, meta, Railing.class, RailingStairs.class);
-		boolean connectSouthWest = checkConnections(world, x-1, y, z+1, -1, meta, Railing.class, RailingStairs.class);
+		boolean connectNorth = checkConnections(world, x, y, z-1, 0, meta, true);
+		boolean connectEast =  checkConnections(world, x+1, y, z, 1, meta, true);
+		boolean connectSouth = checkConnections(world, x, y, z+1, 0, meta, true);
+		boolean connectWest =  checkConnections(world, x-1, y, z, 1, meta, true);
 		
 		boolean walkwayAbove = world.getBlock(x, y+1, z) instanceof Railing;
 		
 		if (renderSnow) {
 			if (world.getBlock(x, y-1, z).isSideSolid(world, x, y-1, z, ForgeDirection.UP)) {
-				renderSnowBlock(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D, true, renderer, block, x, y, z, meta);
+				renderOtherBlock(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 			}
 		}
 		
@@ -242,7 +238,7 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 				renderBlock(0.0D + cnct2, 0.875D, 0.0D, 1.0D - cnct1, 1.0D, 0.125D, true, renderer, block, x, y, z, meta);
 				
 				if (renderSnow) {
-					renderSnowBlock(0.0D + cnct2, 1.0D, 0.0D, 1.0D - cnct1, 1.0625D, 0.125D, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.0D + cnct2, 1.0D, 0.0D, 1.0D - cnct1, 1.0625D, 0.125D, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 				if (renderLeaves) {
 					renderLeavesBlock(1, 1, 0, 0, 1, 0, 0, 1, -0.05, -0.05, -0.05, -0.05, true, renderer, block, x, y, z, meta); //Outer
@@ -266,7 +262,7 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 				renderBlock(0.0D + cnct2, 0.875D, 0.875D, 1.0D - cnct1, 1.0D, 1.0D, true, renderer, block, x, y, z, meta);
 				
 				if (renderSnow) {
-					renderSnowBlock(0.0D + cnct2, 1.0D, 0.875D, 1.0D - cnct1, 1.0625D, 1.0D, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.0D + cnct2, 1.0D, 0.875D, 1.0D - cnct1, 1.0625D, 1.0D, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 				if (renderLeaves) {
 					renderLeavesBlock(0, 0, 1, 1, 1, 0, 0, 1, 1.05, 1.05, 1.05, 1.05, true, renderer, block, x, y, z, meta); //Outer
@@ -291,7 +287,7 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 				renderBlock(0.875D, 0.875D, 0.0D + cnct1, 1.0D, 1.0D, 1.0D - cnct2, true, renderer, block, x, y, z, meta);
 				
 				if (renderSnow) {
-					renderSnowBlock(0.875D, 1.0D, 0.0D + cnct1, 1.0D, 1.0625D, 1.0D - cnct2, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.875D, 1.0D, 0.0D + cnct1, 1.0D, 1.0625D, 1.0D - cnct2, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 				if (renderLeaves) {
 					renderLeavesBlock(1.05, 1.05, 1.05, 1.05, 0, 1, 1, 0, 0, 0, 1, 1, true, renderer, block, x, y, z, meta); //Outer
@@ -315,7 +311,7 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 				renderBlock(0.0D, 0.875D, 0.0D + cnct1, 0.125D, 1.0D, 1.0D - cnct2, true, renderer, block, x, y, z, meta);
 				
 				if (renderSnow) {
-					renderSnowBlock(0.0D, 1.0D, 0.0D + cnct1, 0.125D, 1.0625D, 1.0D - cnct2, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.0D, 1.0D, 0.0D + cnct1, 0.125D, 1.0625D, 1.0D - cnct2, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 				
 				if (renderLeaves) {
@@ -335,28 +331,28 @@ public class RailingRenderer extends BlockRenderCore implements ISimpleBlockRend
 			if (renderNorthEast) {
 				renderBlock(0.875D, 0.875D, 0.0D, 1.0D, 1.0D, 0.125D, true, renderer, block, x, y, z, meta);
 				if (renderSnow) {
-					renderSnowBlock(0.875D, 1.0D, 0.0D, 1.0D, 1.0625D,  0.125D, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.875D, 1.0D, 0.0D, 1.0D, 1.0625D,  0.125D, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 			}
 			
 			if (renderNorthWest) {
 				renderBlock(0.0D, 0.875D, 0.0D, 0.125D, 1.0D, 0.125D, true, renderer, block, x, y, z, meta);
 				if (renderSnow) {
-					renderSnowBlock(0.0D, 1.0D, 0.0D, 0.125D, 1.0625D,  0.125D, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.0D, 1.0D, 0.0D, 0.125D, 1.0625D,  0.125D, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 			}
 			
 			if (renderSouthEast) {
 				renderBlock(0.875D, 0.875D, 0.875D, 1.0D, 1.0D, 1.0D, true, renderer, block, x, y, z, meta);
 				if (renderSnow) {
-					renderSnowBlock(0.875D, 1.0D, 0.875D, 1.0D, 1.0625D,  1.0D, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.875D, 1.0D, 0.875D, 1.0D, 1.0625D,  1.0D, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 			}
 			
 			if (renderSouthWest) {
 				renderBlock(0.0D, 0.875D, 0.875D, 0.125D, 1.0D, 1.0D, true, renderer, block, x, y, z, meta);
 				if (renderSnow) {
-					renderSnowBlock(0.0D, 1.0D, 0.875D, 0.125D, 1.0625D,  1.0D, true, renderer, block, x, y, z, meta);
+					renderOtherBlock(0.0D, 1.0D, 0.875D, 0.125D, 1.0625D,  1.0D, true, renderer, block, x, y, z, meta, Blocks.snow.getIcon(0, 0));
 				}
 			}
 		}

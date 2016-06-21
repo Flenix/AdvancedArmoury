@@ -3,6 +3,9 @@ package co.uk.silvania.advancedarmoury;
 import java.util.ArrayList;
 
 import co.uk.silvania.advancedarmoury.blocks.decorative.BlockAA;
+import co.uk.silvania.advancedarmoury.blocks.decorative.BlockDecorations;
+import co.uk.silvania.advancedarmoury.blocks.decorative.BlockHesco;
+import co.uk.silvania.advancedarmoury.blocks.decorative.ChainFence;
 import co.uk.silvania.advancedarmoury.blocks.decorative.CornerPost;
 import co.uk.silvania.advancedarmoury.blocks.decorative.Cover;
 import co.uk.silvania.advancedarmoury.blocks.decorative.FenceAA;
@@ -13,6 +16,7 @@ import co.uk.silvania.advancedarmoury.blocks.decorative.Railing;
 import co.uk.silvania.advancedarmoury.blocks.decorative.RailingJungle;
 import co.uk.silvania.advancedarmoury.blocks.decorative.RailingSnowy;
 import co.uk.silvania.advancedarmoury.blocks.decorative.RailingStairs;
+import co.uk.silvania.advancedarmoury.blocks.decorative.SimpleBarrier;
 import co.uk.silvania.advancedarmoury.blocks.decorative.Slope225High;
 import co.uk.silvania.advancedarmoury.blocks.decorative.Slope225Low;
 import co.uk.silvania.advancedarmoury.blocks.decorative.Slope225Vertical;
@@ -67,6 +71,7 @@ public class AABlocks {
 		materials.add("blueCement");
 		materials.add("blackCement");
 		materials.add("sandyCement");
+		materials.add("lightGreyConcrete");
 		
 		for (int i = 0; i < materials.size(); i++) {
 			String mat = materials.get(i);
@@ -110,15 +115,23 @@ public class AABlocks {
 			GameRegistry.registerBlock(slope225High, ItemBlockAA.class, mat + "Slope225High");
 			GameRegistry.registerBlock(slope225Vertical, ItemBlockAA.class, mat + "Slope225Vertical");
 			GameRegistry.registerBlock(cornerPost, ItemBlockAA.class, mat + "CornerPost");
+			
+			AdvancedArmoury.proxy.renderItemBlock(block);
 		}
 		
-		//Block standardDecoratives = new Block().setBlockName("decorativeBlock");
-		//Block hescoBarriers = new HescoBlock().setBlockName("hescoBlock"); //Dirt, sand, gravel, snowy
-		//Block plywoodBarrier = new BlockSimpleBarrier().setBlockName("plywoodBarrier");
-		//Block chainFence = new BlockChainFence().setBlockName("chainFence");
-		
+		Block standardDecoratives = new BlockDecorations().setBlockName("decorativeBlock1");
+		Block hescoBlock100 = new BlockHesco("hesco").setBlockName("hescoBlock100");
+		Block plywoodBarrier = new SimpleBarrier("plywood").setBlockName("plywoodBarrier");
+		Block chainFence = new ChainFence("chainFence").setBlockName("chainFence");
+
 		//Sand bags
 		
+		GameRegistry.registerBlock(standardDecoratives, ItemBlockAA.class, "decorativeBlock1");
+		GameRegistry.registerBlock(hescoBlock100, ItemBlockAA.class, "hescoBlock100");
+		GameRegistry.registerBlock(plywoodBarrier, ItemBlockAA.class, "plywoodBarrier");
+		GameRegistry.registerBlock(chainFence, ItemBlockAA.class, "chainFence");
+		
+		AdvancedArmoury.proxy.renderItemBlock(hescoBlock100);
 	}
 	
 	public static void registerBlocks() {

@@ -49,57 +49,82 @@ material.redCement=Red Concrete
 material.blueCement=Blue Concrete
 material.blackCement=Black Concrete
 material.sandyCement=Sandy Concrete
+material.hesco=Hesco
+material.plywood=Plywood
+material.chainFence=Chain Fence
 
 blockType.block=Block
+blockType.pillar=Pillar
 blockType.fence=Fence
 blockType.stairs=Stairs
 blockType.slab=Slab
 blockType.panel=Panel
 blockType.cover=Cover
+blockType.walkwayStairs=Walkway Stairs
+blockType.openStairs=Open Stairs
+blockType.railing=Railing
+blockType.slope45=45 Degree Slope
+blockType.slope225a=22.5 Degree Slope (Horizontal Thin)
+blockType.slope225b=22.5 Degree Slope (Horizontal Thick)
+blockType.slope225Verticala=22.5 Degree Slope (Vertical Thin)
+blockType.slope225Verticalb=22.5 Degree Slope (Vertical Thick)
+blockType.cornerPost=Corner Post
+
 blockType.oneFence=Walkway Fence (One-Sided)
 blockType.rightAngleFence=Walkway Fence (Right Angle)
 blockType.threeFence=Walkway Fence (Three-Sided)
 blockType.parallelFence=Walkway Fence (Parallel)
 blockType.squareFence=Walkway Fence (Square)
 blockType.connectedFence=Walkway Fence (Connecting)
+
 blockType.oneFenceSnowy=Snowy Walkway Fence (One-Sided)
 blockType.rightAngleFenceSnowy=Snowy Walkway Fence (Right Angle)
 blockType.threeFenceSnowy=Snowy Walkway Fence (Three-Sided)
 blockType.parallelFenceSnowy=Snowy Walkway Fence (Parallel)
 blockType.squareFenceSnowy=Snowy Walkway Fence (Square)
 blockType.connectedFenceSnowy=Snowy Walkway Fence (Connecting)
+
 blockType.oneFenceJungle=Jungle Camo Walkway Fence (One-Sided)
 blockType.rightAngleFenceJungle=Jungle Camo Walkway Fence (Right Angle)
 blockType.threeFenceJungle=Jungle Camo Walkway Fence (Three-Sided)
 blockType.parallelFenceJungle=Jungle Camo Walkway Fence (Parallel)
 blockType.squareFenceJungle=Jungle Camo Walkway Fence (Square)
 blockType.connectedFenceJungle=Jungle Camo Walkway Fence (Connecting)
+
 blockType.oneRailing=Railing (One-Sided)
 blockType.rightAngleRailing=Railing (Right Angle)
 blockType.threeRailing=Railing (Three-Sided)
 blockType.parallelRailing=Railing (Parallel)
 blockType.squareRailing=Railing (Square)
 blockType.connectedRailing=Railing (Connecting)
+
 blockType.oneRailingSnowy=Snowy Railing (One-Sided)
 blockType.rightAngleRailingSnowy=Snowy Railing (Right Angle)
 blockType.threeRailingSnowy=Snowy Railing (Three-Sided)
 blockType.parallelRailingSnowy=Snowy Railing (Parallel)
 blockType.squareRailingSnowy=Snowy Railing (Square)
 blockType.connectedRailingSnowy=Snowy Railing (Connecting)
+
 blockType.oneRailingJungle=Camo Railing (One-Sided)
 blockType.rightAngleRailingJungle=Camo Railing (Right Angle)
 blockType.threeRailingJungle=Camo Railing (Three-Sided)
 blockType.parallelRailingJungle=Camo Railing (Parallel)
 blockType.squareRailingJungle=Camo Railing (Square)
 blockType.connectedRailingJungle=Camo Railing (Connecting)
-blockType.walkwayStairs=Walkway Stairs
-blockType.openStairs=Open Stairs
-blockType.railing=Railing
-blockType.slope45=45 Degree Slope
-blockType.slope225a=22.5 Degree Slope (Lower)
-blockType.slope225b=22.5 Degree Slope (Upper)
-blockType.slope225Vertical=22.5 Degree Slope (Vertical)
-blockType.cornerPost=Corner Post
+
+blockType.oneBarrier=Barrier (One-Sided)
+blockType.rightAngleBarrier=Barrier (Right Angle)
+blockType.threeBarrier=Barrier (Three-Sided)
+blockType.parallelBarrier=Barrier (Parallel)
+blockType.squareBarrier=Barrier (Square)
+blockType.connectedBarrier=Barrier (Connecting)
+
+blockType.oneChainFence= (One-Sided)
+blockType.rightAngleChainFence= (Right Angle)
+blockType.threeChainFence= (Three-Sided)
+blockType.parallelChainFence= (Parallel)
+blockType.squareChainFence= (Square)
+blockType.connectedChainFence= (Connecting)
 
 item.caseAluminium556.name=Aluminium Case
 item.caseSteel556.name=Steel Case
