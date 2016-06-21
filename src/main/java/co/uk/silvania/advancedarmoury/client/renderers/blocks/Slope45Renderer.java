@@ -82,6 +82,16 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
 		
+		tess.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
+        
+        float f = 0.8F;
+        int c = block.colorMultiplier(world, x, y, z);
+        float f1 = (float)(c >> 16 & 255) / 255.0F;
+        float f2 = (float)(c >> 8 & 255) / 255.0F;
+        float f3 = (float)(c & 255) / 255.0F;
+
+        tess.setColorOpaque_F(f * f1, f * f2, f * f3);
+		
 		IIcon icon = prepBlockAndGetIcon(block, world, x, y, z, renderer);
 		
 		double u0 = (double) icon.getMinU();
@@ -92,6 +102,108 @@ public class Slope45Renderer extends BlockRenderCore implements ISimpleBlockRend
 		
 		if (world.getBlock(x, y+1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z,  1, renderer, world.getBlock(x, y+1, z), -1, true); }
 		if (world.getBlock(x, y-1, z) instanceof CornerPost) { cornerPostRenderer.renderCornerPosts(world, x, y, z, -1, renderer, world.getBlock(x, y-1, z), -1, true); }
+		
+		/*
+    	 *   AO code shamelessly taken directly from RenderBlocks with a few cleanups.
+    	 */
+    	
+    	/*renderer.enableAO = true;
+        boolean flag = false;
+        float f3_2 = 0.0F;
+        float f4 = 0.0F;
+        float f5 = 0.0F;
+        float f6 = 0.0F;
+        boolean flag1 = true;
+    	
+    	boolean flag2;
+        boolean flag3;
+        boolean flag4;
+        boolean flag5;
+        int i1;
+        float f7;
+        
+        int l = block.getMixedBrightnessForBlock(world, x, y, z);
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.setBrightness(983055);
+
+        renderer.aoBrightnessXYNP = block.getMixedBrightnessForBlock(world, x - 1, y, z);
+        renderer.aoBrightnessXYPP = block.getMixedBrightnessForBlock(world, x + 1, y, z);
+        renderer.aoBrightnessYZPN = block.getMixedBrightnessForBlock(world, x, y, z - 1);
+        renderer.aoBrightnessYZPP = block.getMixedBrightnessForBlock(world, x, y, z + 1);
+        renderer.aoLightValueScratchXYNP = world.getBlock(x - 1, y, z).getAmbientOcclusionLightValue();
+        renderer.aoLightValueScratchXYPP = world.getBlock(x + 1, y, z).getAmbientOcclusionLightValue();
+        renderer.aoLightValueScratchYZPN = world.getBlock(x, y, z - 1).getAmbientOcclusionLightValue();
+        renderer.aoLightValueScratchYZPP = world.getBlock(x, y, z + 1).getAmbientOcclusionLightValue();
+        flag2 = world.getBlock(x + 1, y + 1, z).getCanBlockGrass();
+        flag3 = world.getBlock(x - 1, y + 1, z).getCanBlockGrass();
+        flag4 = world.getBlock(x, y + 1, z + 1).getCanBlockGrass();
+        flag5 = world.getBlock(x, y + 1, z - 1).getCanBlockGrass();
+
+        if (!flag5 && !flag3) {
+        	renderer.aoLightValueScratchXYZNPN = renderer.aoLightValueScratchXYNP;
+        	renderer.aoBrightnessXYZNPN = renderer.aoBrightnessXYNP;
+        } else {
+        	renderer.aoLightValueScratchXYZNPN = world.getBlock(x - 1, y, z - 1).getAmbientOcclusionLightValue();
+        	renderer.aoBrightnessXYZNPN = block.getMixedBrightnessForBlock(world, x - 1, y, z - 1);
+        }
+
+        if (!flag5 && !flag2) {
+        	renderer.aoLightValueScratchXYZPPN = renderer.aoLightValueScratchXYPP;
+        	renderer.aoBrightnessXYZPPN = renderer.aoBrightnessXYPP;
+        } else {
+        	renderer.aoLightValueScratchXYZPPN = world.getBlock(x + 1, y, z - 1).getAmbientOcclusionLightValue();
+        	renderer.aoBrightnessXYZPPN = block.getMixedBrightnessForBlock(world, x + 1, y, z - 1);
+        }
+
+        if (!flag4 && !flag3) {
+        	renderer.aoLightValueScratchXYZNPP = renderer.aoLightValueScratchXYNP;
+        	renderer.aoBrightnessXYZNPP = renderer.aoBrightnessXYNP;
+        } else {
+        	renderer.aoLightValueScratchXYZNPP = world.getBlock(x - 1, y, z + 1).getAmbientOcclusionLightValue();
+        	renderer.aoBrightnessXYZNPP = block.getMixedBrightnessForBlock(world, x - 1, y, z + 1);
+        }
+
+        if (!flag4 && !flag2) {
+        	renderer.aoLightValueScratchXYZPPP = renderer.aoLightValueScratchXYPP;
+        	renderer.aoBrightnessXYZPPP = renderer.aoBrightnessXYPP;
+        } else {
+        	renderer.aoLightValueScratchXYZPPP = world.getBlock(x + 1, y, z + 1).getAmbientOcclusionLightValue();
+        	renderer.aoBrightnessXYZPPP = block.getMixedBrightnessForBlock(world, x + 1, y, z + 1);
+        }
+
+
+        i1 = l;
+
+        f7 = world.getBlock(x, y + 1, z).getAmbientOcclusionLightValue();
+        f6 = (renderer.aoLightValueScratchXYZNPP + renderer.aoLightValueScratchXYNP + renderer.aoLightValueScratchYZPP + f7) / 4.0F;
+        f3_2 = (renderer.aoLightValueScratchYZPP + f7 + renderer.aoLightValueScratchXYZPPP + renderer.aoLightValueScratchXYPP) / 4.0F;
+        f4 = (f7 + renderer.aoLightValueScratchYZPN + renderer.aoLightValueScratchXYPP + renderer.aoLightValueScratchXYZPPN) / 4.0F;
+        f5 = (renderer.aoLightValueScratchXYNP + renderer.aoLightValueScratchXYZNPN + f7 + renderer.aoLightValueScratchYZPN) / 4.0F;
+        renderer.brightnessTopRight = renderer.getAoBrightness(renderer.aoBrightnessXYZNPP, renderer.aoBrightnessXYNP, renderer.aoBrightnessYZPP, i1);
+        renderer.brightnessTopLeft = renderer.getAoBrightness(renderer.aoBrightnessYZPP, renderer.aoBrightnessXYZPPP, renderer.aoBrightnessXYPP, i1);
+        renderer.brightnessBottomLeft = renderer.getAoBrightness(renderer.aoBrightnessYZPN, renderer.aoBrightnessXYPP, renderer.aoBrightnessXYZPPN, i1);
+        renderer.brightnessBottomRight = renderer.getAoBrightness(renderer.aoBrightnessXYNP, renderer.aoBrightnessXYZNPN, renderer.aoBrightnessYZPN, i1);
+        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = f1;
+        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = f2;
+        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = f3;
+        renderer.colorRedTopLeft *= f3_2;
+        renderer.colorGreenTopLeft *= f3_2;
+        renderer.colorBlueTopLeft *= f3_2;
+        renderer.colorRedBottomLeft *= f4;
+        renderer.colorGreenBottomLeft *= f4;
+        renderer.colorBlueBottomLeft *= f4;
+        renderer.colorRedBottomRight *= f5;
+        renderer.colorGreenBottomRight *= f5;
+        renderer.colorBlueBottomRight *= f5;
+        renderer.colorRedTopRight *= f6;
+        renderer.colorGreenTopRight *= f6;
+        renderer.colorBlueTopRight *= f6;
+        renderer.renderFaceYPos(block, (double)x, (double)y, (double)z, renderer.getBlockIcon(block, world, x, y, z, 1));
+        flag = true;*/
+        
+        /*
+         *   End AO code
+         */
 		
 		tess.draw();
 		if (meta == 0) {
