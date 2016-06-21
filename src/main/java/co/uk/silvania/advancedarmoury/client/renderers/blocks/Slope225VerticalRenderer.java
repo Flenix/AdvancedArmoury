@@ -139,6 +139,17 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		int meta = world.getBlockMetadata(x, y, z);
 		
+		int light = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z);
+		tess.setBrightness(light);
+        
+        float f = 0.8F;
+        int c = block.colorMultiplier(world, x, y, z);
+        float f1 = (float)(c >> 16 & 255) / 255.0F;
+        float f2 = (float)(c >> 8 & 255) / 255.0F;
+        float f3 = (float)(c & 255) / 255.0F;
+
+        tess.setColorOpaque_F(f * f1, f * f2, f * f3);
+		
 		IIcon icon = prepBlockAndGetIcon(block, world, x, y, z, renderer);
 		
 		double u0 = (double) icon.getMinU();
@@ -155,6 +166,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -164,6 +176,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u0, v0);
@@ -173,6 +186,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
@@ -182,6 +196,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v0);
@@ -191,6 +206,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
@@ -201,6 +217,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
@@ -210,6 +227,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v0);
@@ -219,6 +237,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
@@ -228,6 +247,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u0, v0);
@@ -237,6 +257,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u0, v0);
@@ -247,6 +268,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
@@ -256,6 +278,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u0, v0);
@@ -265,6 +288,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
@@ -274,6 +298,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
@@ -283,6 +308,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u0, v0);
@@ -293,6 +319,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -302,6 +329,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u0, v0);
@@ -311,6 +339,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -320,6 +349,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
@@ -329,6 +359,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
@@ -339,6 +370,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -348,6 +380,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v0);
@@ -357,6 +390,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u0, v0);
@@ -366,6 +400,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v0);
@@ -375,6 +410,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
@@ -385,6 +421,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u0, v0);
@@ -394,6 +431,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v0);
@@ -403,6 +441,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u0, v0);
@@ -412,6 +451,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u0, v0);
@@ -421,6 +461,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u0, v0);
@@ -431,6 +472,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u0, v0);
@@ -440,6 +482,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u0, v0);
@@ -449,6 +492,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u0, v0);
@@ -458,6 +502,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
@@ -467,6 +512,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u0, v0);
@@ -477,6 +523,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -486,6 +533,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u0, v0);
@@ -495,6 +543,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u0, v0);
@@ -504,6 +553,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -513,6 +563,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
@@ -523,6 +574,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -532,6 +584,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u0, v0);
@@ -541,6 +594,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u0, v0);
@@ -550,6 +604,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -559,6 +614,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v0);
@@ -568,6 +624,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u0, v0);
@@ -578,6 +635,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
@@ -587,6 +645,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v0);
@@ -596,6 +655,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 1, u0, v0);
@@ -605,6 +665,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -614,6 +675,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
@@ -623,6 +685,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
@@ -633,6 +696,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -642,6 +706,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u0, v0);
@@ -651,6 +716,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u0, v0);
@@ -660,6 +726,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -669,6 +736,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
@@ -678,6 +746,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u0, v0);
@@ -688,6 +757,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -697,6 +767,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u0, v0);
@@ -706,6 +777,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0.5, u0, v0);
@@ -715,6 +787,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -724,6 +797,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u0, v0);
@@ -733,6 +807,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
@@ -743,6 +818,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u0, v0);
@@ -752,6 +828,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u0, v0);
@@ -761,6 +838,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
@@ -770,6 +848,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u0, v0);
@@ -779,6 +858,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 1, u0, v0);
@@ -788,6 +868,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1,   y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
@@ -798,6 +879,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u0, v0);
@@ -807,6 +889,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u0, v0);
@@ -816,6 +899,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
@@ -825,6 +909,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0.5,   y + 0, z + 0, u0, v0);
@@ -834,6 +919,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0,   y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 1, u0, v0);
@@ -843,6 +929,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1,   y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0.5, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0,   y + 0, z + 0, u0, v0);
@@ -853,6 +940,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
@@ -862,6 +950,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u0, v0);
@@ -871,6 +960,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
@@ -880,6 +970,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
@@ -889,6 +980,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 1, u0, v0);
@@ -898,6 +990,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u0, v0);
@@ -908,6 +1001,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//EAST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1,   u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -917,6 +1011,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//WEST
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.6F, 0.6F, 0.6F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0,   u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u0, v0);
@@ -926,6 +1021,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//Top
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 1, z + 1, u0, v0);
@@ -935,6 +1031,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//BOTTOM
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.5F, 0.5F, 0.5F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0,   u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0,   u0, v0);
@@ -944,6 +1041,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//SOUTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 0, y + 1, z + 1, u1, v1);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0.5, u1, v0);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0.5, u0, v0);
@@ -953,6 +1051,7 @@ public class Slope225VerticalRenderer extends BlockRenderCore implements ISimple
 			//NORTH
 			tess.startDrawingQuads();
 			tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
+			tess.setBrightness(light);
 			tess.addVertexWithUV(x + 1, y + 1, z + 0, u1, v1);
 			tess.addVertexWithUV(x + 1, y + 0, z + 0, u1, v0);
 			tess.addVertexWithUV(x + 0, y + 0, z + 0, u0, v0);
