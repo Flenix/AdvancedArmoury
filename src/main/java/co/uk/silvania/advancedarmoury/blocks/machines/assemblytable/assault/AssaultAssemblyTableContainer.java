@@ -31,6 +31,13 @@ public class AssaultAssemblyTableContainer extends MachineContainer {
 		addSlotToContainer(new SlotParts(tileEntity, 0, 8, 10)); //Insert parts slot
 		addSlotToContainer(new SlotFrame(tileEntity, 1, 18, 100)); //Assault Frame slot
 		
+		addSlotToContainer(new SlotAssaultComponent(tileEntity, 2, 8,  76, "barrel"));
+		addSlotToContainer(new SlotAssaultComponent(tileEntity, 3, 28, 76, "frontEnd"));
+		addSlotToContainer(new SlotAssaultComponent(tileEntity, 4, 48, 76, "casing"));//Receiver
+		addSlotToContainer(new SlotAssaultComponent(tileEntity, 5, 68, 76, "stock"));
+		
+		addSlotToContainer(new SlotCore(tileEntity, 6, 68, 96)); //Modifier Core slot
+		
 		//addSlotToContainer(new SlotComponent(tileEntity, 2, 8,  56, "barrel"));		//Cyan A
 		//addSlotToContainer(new SlotComponent(tileEntity, 3, 28, 76, "assaultReceiver"));	//Gold B
 		//addSlotToContainer(new SlotComponent(tileEntity, 4, 48, 76, "assaultStock"));		//Gold B
@@ -50,7 +57,7 @@ public class AssaultAssemblyTableContainer extends MachineContainer {
 		addSlotToContainer(new SlotComponent(tileEntity, 11, 48, 76, "assaultStock"));		//Gold B
 		addSlotToContainer(new SlotComponent(tileEntity, 12, 68, 76, "assaultFrontEnd"));	//Gold B*/
 		
-		addSlotToContainer(new SlotCore(tileEntity, 14, 68, 96)); //Modifier Core slot
+		
 		
 		//addSlotToContainer(new SlotComponentOption(tileEntity, 11, 28, 88, "pistonChamber", "gasChamber"));//Red A
 		//addSlotToContainer(new SlotComponentOption(tileEntity, 12, 48, 88, "spring", "gasFeed"));			//Red B

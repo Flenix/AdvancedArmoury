@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.blocks.machines.MachineGui;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.assault.ItemAssaultChamber;
+import co.uk.silvania.advancedarmoury.items.generic.Barrel;
+import co.uk.silvania.advancedarmoury.items.generic.ReceiverCasing;
 import co.uk.silvania.advancedarmoury.network.GunBuildPacket;
 import co.uk.silvania.rpgcore.client.skillgui.MultiLineButton;
 import net.minecraft.client.Minecraft;
@@ -49,7 +49,7 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		buildProgress = te.buildProgress;
 	}
 	
-	private static final ResourceLocation texture = new ResourceLocation("advancedarmoury", "textures/gui/assemblytable.png");
+	private static final ResourceLocation texture = new ResourceLocation(AdvancedArmoury.modid, "textures/gui/assemblytable.png");
 	
 	@Override
 	public void initGui() {
@@ -120,21 +120,27 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		super.drawScreen(mouseX, mouseZ, par3);
 
 		if (button.func_146115_a()) {
-			drawHoveringText(gunStatReport(), mouseX, mouseZ, fontRendererObj);
+			Integer[] check = {2, 3, 7, 8, 9, 10};
+			drawCustomHoveringText(gunStatReportA(), gunStatReportB(), mouseX, mouseZ, fontRendererObj, check);
 		}
 		
 		boolean drawProgressTooltip = false;
 		
 		if (mouseX >= guiLeft + 7 && mouseZ >= guiTop + 127 && mouseX <= guiLeft + 186 && mouseZ <= guiTop + 139) {
-			String[] text = {"Rename your gun here!", 
-					"Supports colour formatting via the & symbol.", 
-					"\u00A70&0   \u00A71&1   \u00A72&2   \u00A73&3   \u00A74&4   \u00A75&5   \u00A76&6   \u00A77&7", 
-					"\u00A78&8   \u00A79&9   \u00A7a&a   \u00A7b&b   \u00A7c&c   \u00A7d&d   \u00A7e&e   \u00A7f&f",
-					"\u00A7r&k (\u00A7kKKK\u00A7r)   \u00A7l&l (Bold)\u00A7r   \u00A7m&m (Strike)",
-					"\u00A7r\u00A7n&n (Underlined)\u00A7r   \u00A7o&o (Italics)",
-					"Formats should go \u00A7oafter\u00A7r colours. &r will reset."};
-			List temp = Arrays.asList(text);
-			drawHoveringText(temp, mouseX, mouseZ, fontRendererObj);
+			List text = new ArrayList();
+			text.add("Rename your gun here!");
+			
+			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+				text.add("Supports colour formatting via the & symbol.");
+				text.add("\u00A70&0   \u00A71&1   \u00A72&2   \u00A73&3   \u00A74&4   \u00A75&5   \u00A76&6   \u00A77&7");
+				text.add("\u00A78&8   \u00A79&9   \u00A7a&a   \u00A7b&b   \u00A7c&c   \u00A7d&d   \u00A7e&e   \u00A7f&f");
+				text.add("\u00A7r&k (\u00A7kKKK\u00A7r)   \u00A7l&l (Bold)\u00A7r   \u00A7m&m (Strike)");
+				text.add("\u00A7r\u00A7n&n (Underlined)\u00A7r   \u00A7o&o (Italics)");
+				text.add("Formats should go \u00A7oafter\u00A7r colours. &r will reset.");
+			} else {
+				text.add("\u00A7oHold Shift to see formatting help!");
+			}
+			drawHoveringText(text, mouseX, mouseZ, fontRendererObj);
 			if (Mouse.isButtonDown(0)) {
 				name.setFocused(true);
 				tag.setFocused(false);
@@ -142,15 +148,20 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		}
 		
 		if (mouseX >= guiLeft + 7 && mouseZ >= guiTop + 142 && mouseX <= guiLeft + 186 && mouseZ <= guiTop + 154) {
-			String[] text = {"Add a custom tagline to your gun here!", 
-					"Supports colour formatting via the & symbol.", 
-					"\u00A70&0   \u00A71&1   \u00A72&2   \u00A73&3   \u00A74&4   \u00A75&5   \u00A76&6   \u00A77&7", 
-					"\u00A78&8   \u00A79&9   \u00A7a&a   \u00A7b&b   \u00A7c&c   \u00A7d&d   \u00A7e&e   \u00A7f&f",
-					"\u00A7r&k (\u00A7kKKK\u00A7r)   \u00A7l&l (Bold)\u00A7r   \u00A7m&m (Strike)",
-					"\u00A7r\u00A7n&n (Underlined)\u00A7r   \u00A7o&o (Italics)",
-					"Formats should go \u00A7oafter\u00A7r colours. &r will reset."};
-			List temp = Arrays.asList(text);
-			drawHoveringText(temp, mouseX, mouseZ, fontRendererObj);
+			List text = new ArrayList();
+			text.add("Add a custom tagline to your gun here!");
+			
+			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+				text.add("Supports colour formatting via the & symbol.");
+				text.add("\u00A70&0   \u00A71&1   \u00A72&2   \u00A73&3   \u00A74&4   \u00A75&5   \u00A76&6   \u00A77&7");
+				text.add("\u00A78&8   \u00A79&9   \u00A7a&a   \u00A7b&b   \u00A7c&c   \u00A7d&d   \u00A7e&e   \u00A7f&f");
+				text.add("\u00A7r&k (\u00A7kKKK\u00A7r)   \u00A7l&l (Bold)\u00A7r   \u00A7m&m (Strike)");
+				text.add("\u00A7r\u00A7n&n (Underlined)\u00A7r   \u00A7o&o (Italics)");
+				text.add("Formats should go \u00A7oafter\u00A7r colours. &r will reset.");
+			} else {
+				text.add("\u00A7oHold Shift to see formatting help!");
+			}
+			drawHoveringText(text, mouseX, mouseZ, fontRendererObj);
 			if (Mouse.isButtonDown(0)) {
 				name.setFocused(false);
 				tag.setFocused(true);
@@ -163,7 +174,7 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		
 		if (drawProgressTooltip) {
 			if (te.clientBuildProgress > 0) {
-				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + totalBuildTime(2, 13, te));
+				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + totalBuildTime(2, 5, te));
 				drawHoveringText(progressList, mouseX, mouseZ, fontRendererObj);
 			}
 		}
@@ -176,14 +187,14 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		int width = fontRendererObj.getStringWidth("Assault Rifle Assembly Table");
 		
 		String title = "Assault Rifle Assembly Table";
-		String bt = "Build Time: " + totalBuildTime(2, 13, te);
-		String cost = "Cost: " + partsCost(2, 13, te);
+		String bt = "Build Time: " + totalBuildTime(2, 5, te);
+		String cost = "Cost: " + partsCost(2, 5, te);
 		
-		String dura = "DUR: " + totalDurability(2, 13, te);
-		String weight = "WGT: " + totalWeight(2, 13, te);
-		String acc = "ACC: " + totalAccuracy(2, 13, te);
-		String frate = "FRT: " + fireRate(2, 13, te);
-		String power = "PWR: " + power(2, 13, te);
+		String dura = "DUR: " + totalDurability(2, 5, te);
+		String weight = "WGT: " + totalWeight(2, 5, te);
+		String acc = "ACC: " + totalAccuracy(2, 5, te);
+		String frate = "FRT: " + fireRate(2, 5, te);
+		String power = "PWR: " + power(2, 5, te);
 		
 		fontRendererObj.drawString(title, pos(title), 6, 4210752);
 		fontRendererObj.drawString(bt, 89, 20, 4210752);
@@ -208,7 +219,7 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		if (buildTime == 0) { buildTime = 1; } //Prevent crashes when build time is zero.
 		int val = (int) Math.round((progress / buildTime) * 140);
 		if (val > 140) { val = 140; }
-		drawTexturedModalRect(8, 128, 0, 241, val, 8);
+		drawTexturedModalRect(8, 116, 0, 241, val, 8);
 		GL11.glPopMatrix();
 		
 		if (isGunValid()) {
@@ -230,73 +241,55 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		drawTexturedModalRect(guiLeft+xSize, guiTop, 194, 0, 62, 111);
 		
 		//Mask letters when items are in the slots
-		if (te.getStackInSlot(0) != null) { drawTexturedModalRect(guiLeft + 13, guiTop + 95, 230, 230, 26, 26); }
+		if (te.getStackInSlot(1) != null) { drawTexturedModalRect(guiLeft + 13, guiTop + 95, 230, 230, 26, 26); }
 		
-		if (te.getStackInSlot(2) != null) { drawTexturedModalRect(guiLeft + 7,  guiTop + 35, 212, 238, 18, 18); }
-		if (te.getStackInSlot(3) != null) { drawTexturedModalRect(guiLeft + 27, guiTop + 35, 212, 238, 18, 18); }
-		if (te.getStackInSlot(4) != null) { drawTexturedModalRect(guiLeft + 47, guiTop + 35, 212, 238, 18, 18); }
-		if (te.getStackInSlot(5) != null) { drawTexturedModalRect(guiLeft + 67, guiTop + 35, 212, 238, 18, 18); }
-		if (te.getStackInSlot(6) != null) { drawTexturedModalRect(guiLeft + 7,  guiTop + 55, 212, 238, 18, 18); }
-		if (te.getStackInSlot(7) != null) { drawTexturedModalRect(guiLeft + 27, guiTop + 55, 212, 238, 18, 18); }
-		if (te.getStackInSlot(8) != null) { drawTexturedModalRect(guiLeft + 47, guiTop + 55, 212, 238, 18, 18); }
-		if (te.getStackInSlot(9) != null) { drawTexturedModalRect(guiLeft + 67, guiTop + 55, 212, 238, 18, 18); }
-		
-		if (te.getStackInSlot(10) != null) { drawTexturedModalRect(guiLeft + 27, guiTop + 75, 212, 238, 18, 18); }
-		if (te.getStackInSlot(11) != null) { drawTexturedModalRect(guiLeft + 47, guiTop + 75, 212, 238, 18, 18); }
-		if (te.getStackInSlot(12) != null) { drawTexturedModalRect(guiLeft + 67, guiTop + 75, 212, 238, 18, 18); }
-		if (te.getStackInSlot(13) != null) { drawTexturedModalRect(guiLeft + 7,  guiTop + 75, 212, 238, 18, 18); }
+		if (te.getStackInSlot(2) != null) { drawTexturedModalRect(guiLeft + 7,  guiTop + 75, 212, 238, 18, 18); }
+		if (te.getStackInSlot(3) != null) { drawTexturedModalRect(guiLeft + 27, guiTop + 75, 212, 238, 18, 18); }
+		if (te.getStackInSlot(4) != null) { drawTexturedModalRect(guiLeft + 47, guiTop + 75, 212, 238, 18, 18); }
+		if (te.getStackInSlot(5) != null) { drawTexturedModalRect(guiLeft + 67, guiTop + 75, 212, 238, 18, 18); }
 
 		//Check barrel and chamber match on calibre.
-		ItemStack chamberStack = te.getStackInSlot(6);
-		ItemStack barrelStack = te.getStackInSlot(7);
+		ItemStack chamberStack = te.getStackInSlot(4);
+		ItemStack barrelStack = te.getStackInSlot(2);
 		
 		if (chamberStack != null && barrelStack != null && !calibre()) {
-			drawTexturedModalRect(guiLeft + 7,  guiTop + 55, 194, 238, 18, 18);
-			drawTexturedModalRect(guiLeft + 27, guiTop + 55, 194, 238, 18, 18);
+			drawTexturedModalRect(guiLeft + 7,  guiTop + 75, 194, 238, 18, 18);
+			drawTexturedModalRect(guiLeft + 47, guiTop + 75, 194, 238, 18, 18);
 		}
 	}
-
-	private boolean bolt() {
-		boolean bo1 = te.getStackInSlot(2) != null;
-		boolean bo2 = te.getStackInSlot(3) != null;
-		boolean bo3 = te.getStackInSlot(4) != null;
-		boolean bo4 = te.getStackInSlot(5) != null;
-		return (bo1 && bo2 && bo3 && bo4);
-	}
 	
-	private boolean externals() {
-		boolean ex1 = te.getStackInSlot(11) != null;
-		boolean ex2 = te.getStackInSlot(12) != null;
-		boolean ex3 = te.getStackInSlot(13) != null;
-		return (ex1 && ex2 && ex3);
-	}
-	
-	private boolean frame()   { return te.getStackInSlot(0) != null; }
-	private boolean chamber() { return te.getStackInSlot(7) != null; }
-	private boolean trigger() { return te.getStackInSlot(8) != null; }
-	private boolean selector(){ return te.getStackInSlot(9) != null; }
-	private boolean firingSystem() { return te.getStackInSlot(10) != null; }
+	private boolean frame()    { return te.getStackInSlot(1) != null; }
+	private boolean frontEnd() { return te.getStackInSlot(3) != null; }
+	private boolean stock()    { return te.getStackInSlot(5) != null; }
 	
 	private boolean barrel() {
-		boolean ba1 = te.getStackInSlot(6) != null;
-		
-		if (ba1) {
-			if (te.getStackInSlot(14).stackTagCompound != null) {
-				int length = te.getStackInSlot(14).stackTagCompound.getInteger("length");
+		if (te.getStackInSlot(2) != null) {
+			if (te.getStackInSlot(2).stackTagCompound != null) {
+				int length = te.getStackInSlot(2).stackTagCompound.getInteger("length");
 				if (length >= 8 && length <= 22) {
 					return true;
 				}
 			}
 		}
-		
 		return false;
 	}
 	
+	private boolean receiver() {
+		if (te.getStackInSlot(4) != null && te.getStackInSlot(4).stackTagCompound != null) {
+			if (te.getStackInSlot(4).stackTagCompound.getBoolean("hasInternals")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	private boolean calibre() {
-		if (te.getStackInSlot(6) != null && te.getStackInSlot(7) != null) {
-			ItemStack barrel = te.getStackInSlot(6);
-			ItemStack chamber = te.getStackInSlot(7);
-			if (chamber.getItem() instanceof ItemAssaultChamber && barrel.getItem() instanceof ItemBarrel) {				
+		if (te.getStackInSlot(2) != null && te.getStackInSlot(4) != null) {
+			ItemStack barrel = te.getStackInSlot(2);
+			ItemStack chamber = te.getStackInSlot(4);
+			if (chamber.getItem() instanceof ReceiverCasing && barrel.getItem() instanceof Barrel) {
 				if (chamber != null && barrel.stackTagCompound != null) {
 					if (chamber.stackTagCompound.getDouble("calibre") == barrel.stackTagCompound.getDouble("calibre")) {
 						return true;
@@ -308,18 +301,18 @@ public class AssaultAssemblyTableGui extends MachineGui {
 	}
 	
 	private boolean isGunValid() {
-		boolean frame = te.getStackInSlot(0) != null;
-		boolean afford = te.partsValue >= partsCost(2, 13, te) ? true : false;
-		return frame() && bolt() && barrel() && chamber() && trigger() && selector() && externals() && calibre() && firingSystem() && afford;
+		boolean frame = te.getStackInSlot(1) != null;
+		boolean afford = te.partsValue >= partsCost(2, 5, te) ? true : false;
+		return frame() && barrel() && frontEnd() && receiver() && stock() && calibre() && afford;
 	}
 	
-	private List gunStatReport() {
+	private List gunStatReportA() {
 		boolean validLength = true;
 		String lengthError = "";
 		
-		if (te.getStackInSlot(6) != null) {
-			if (te.getStackInSlot(6).stackTagCompound != null) {
-				int length = te.getStackInSlot(6).stackTagCompound.getInteger("length");
+		if (te.getStackInSlot(2) != null) {
+			if (te.getStackInSlot(2).stackTagCompound != null) {
+				int length = te.getStackInSlot(2).stackTagCompound.getInteger("length");
 				if (length < 8) {
 					lengthError = "Configured barrel is too short.";
 					validLength = false;
@@ -330,56 +323,69 @@ public class AssaultAssemblyTableGui extends MachineGui {
 			}
 		}
 				
-		boolean frame = te.getStackInSlot(0) != null;
-		boolean modifier = te.getStackInSlot(2) != null;
-		boolean afford = te.partsValue >= partsCost(2, 13, te) ? true : false;
+		boolean frame = te.getStackInSlot(1) != null;
+		boolean modifier = te.getStackInSlot(6) != null;
+		boolean afford = te.partsValue >= partsCost(2, 5, te) ? true : false;
 
 		List result = new ArrayList();
 
 		EnumChatFormatting b = EnumChatFormatting.BLACK;
 		result.add("Listing Weapon Report:");
 		result.add("");
-		result.add("Bolt Status:             " + b + ":l" + parseBool(bolt()));
-		result.add("Barrel Status:          " + b + "l" + parseBool(barrel()));
-		if (!barrel() || !validLength || !calibre()) {
-			boolean barrelIssue = false;
-			if (!calibre() && barrel()) {
-				result.add(EnumChatFormatting.AQUA + "Barrel and Chamber calibre does not match.");
-				barrelIssue = true;
-			}
-			if (!validLength) {
-				result.add(EnumChatFormatting.AQUA + lengthError);
-				barrelIssue = true;
-			}
-			if (barrelIssue) {
-				result.add("");
-			}
-		}
-		
-		result.add("Firing Systems Status: " + parseBool(firingSystem()));
-		result.add("Frame Status:           " + b + ":" + parseBool(frame));
-		
-		if (!afford) {
-			result.add("");
-			result.add(EnumChatFormatting.DARK_RED + "You need more Parts to build this weapon.");
-		}
-		
-		if (!modifier) {
-			result.add("");
-			result.add(EnumChatFormatting.ITALIC + "There is no Modifier Core installed.");
-			result.add(EnumChatFormatting.ITALIC + "This is informational only; Cores are not required.");
+		result.add("Frame Status:");
+		result.add("Barrel Status:");
+		if (!calibre() && barrel()) {
+			result.add(EnumChatFormatting.DARK_RED + "Barrel and Chamber calibre does not match.");
 		} else {
-			result.add("");
-			result.add(EnumChatFormatting.ITALIC + "Modifier Core ready to install.");
+			result.add(EnumChatFormatting.AQUA + "Calibres match.");
+		}
+		if (!validLength) {
+			result.add(EnumChatFormatting.DARK_RED + lengthError);
+		} else {
+			result.add(EnumChatFormatting.AQUA + "Barrel length OK.");
+		}
+		result.add("");
+		
+		result.add("Front End Status:");
+		result.add("Receiver Status:");
+		result.add("Stock Status:");
+		result.add("Modifier Core:");
+		
+		result.add("");
+		if (!afford) {
+			result.add(EnumChatFormatting.DARK_RED + "You need more Parts to build this weapon.");
+		} else {
+			result.add(EnumChatFormatting.DARK_GREEN + "You have enough Parts to build this weapon.");
 		}
 
 		return result;
 	}
 	
-	private String parseBool(boolean bool) {
-		if (bool) {
-			return EnumChatFormatting.DARK_GREEN + "Ready to Install";
-		} else 
-			return EnumChatFormatting.DARK_RED + "Missing";
+	private List gunStatReportB() {
+		boolean validLength = true;
+		String lengthError = "";
+				
+		boolean frame = te.getStackInSlot(1) != null;
+		boolean modifier = te.getStackInSlot(6) != null;
+		boolean afford = te.partsValue >= partsCost(2, 5, te) ? true : false;
+
+		List result = new ArrayList();
+
+		EnumChatFormatting b = EnumChatFormatting.BLACK;
+		result.add("");
+		result.add("");
+		result.add(parseBool(frame()));
+		result.add(parseBool(barrel()));
+		result.add("");
+		result.add("");
+		result.add("");
+		
+		result.add(parseBool(frontEnd()));
+		result.add(parseBool(receiver()));
+		result.add(parseBool(stock()));
+		result.add(parseBool(modifier) + " \u00A77(Optional)");
+		result.add("");
+
+		return result;
 	}
 }
