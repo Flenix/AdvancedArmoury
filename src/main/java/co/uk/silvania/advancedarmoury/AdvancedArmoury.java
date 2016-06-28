@@ -16,15 +16,15 @@ import java.util.zip.ZipInputStream;
 import co.uk.silvania.advancedarmoury.config.AAConfig;
 import co.uk.silvania.advancedarmoury.config.ComponentGenerator;
 import co.uk.silvania.advancedarmoury.config.ComponentGeneratorConfig;
+import co.uk.silvania.advancedarmoury.items.assets.AssetFrontEnd;
+import co.uk.silvania.advancedarmoury.items.assets.AssetReceiver;
+import co.uk.silvania.advancedarmoury.items.assets.AssetStock;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentFrontEnd;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentReceiver;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentStock;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentType;
 import co.uk.silvania.advancedarmoury.items_old.AAItemModifierCores;
 import co.uk.silvania.advancedarmoury.items_old.AAItemPrebuiltGuns;
-import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetFrontEnd;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetReceiver;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetStock;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentFrontEnd;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentReceiver;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentStock;
 import co.uk.silvania.advancedarmoury.network.GunBuildPacket;
 import co.uk.silvania.advancedarmoury.network.GunEventPacket;
 import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
@@ -80,7 +80,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class AdvancedArmoury
 {
     public static final String modid = "advancedarmoury-be";
-    public static final String version = "Alpha-0.0.1";
+    public static final String version = "Alpha-0.0.2";
     
     public static DamageSource damageShot;
     public static DamageSource damageMelee;
