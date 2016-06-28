@@ -29,7 +29,7 @@ public class AAConfig {
 			
 			hardMode = config.getBoolean("Hard Mode", Configuration.CATEGORY_GENERAL, false, "Hide GUI elements until you use HUD devices/augments");
 			debugMode = config.getBoolean("Debug Mode", Configuration.CATEGORY_GENERAL, false, "Extra console output to find errors etc");
-			levelling = config.getBoolean("Level System", Configuration.CATEGORY_GENERAL, true, "Enable/Disable the levelling system. ONCE DISABLED IT CANNOT BE EASILY RE-ENABLED FOR THAT WORLD.");
+			levelling = config.getBoolean("Level System", Configuration.CATEGORY_GENERAL, true, "Enable/Disable the levelling system.");
 			renderHealthText = config.getBoolean("Render Health Text", Configuration.CATEGORY_GENERAL, true, "Display text on the health bar");
 			
 		} catch (Exception e) {
