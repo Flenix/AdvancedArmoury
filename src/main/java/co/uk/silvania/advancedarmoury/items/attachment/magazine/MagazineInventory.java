@@ -1,4 +1,4 @@
-package co.uk.silvania.advancedarmoury.attachment.magazine;
+package co.uk.silvania.advancedarmoury.items.attachment.magazine;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
