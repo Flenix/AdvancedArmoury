@@ -52,6 +52,8 @@ material.sandyCement=Sandy Concrete
 material.hesco=Hesco
 material.plywood=Plywood
 material.chainFence=Chain Fence
+material.metalPlate=Metal Plate
+material.hazard=Hazard
 
 blockType.block=Block
 blockType.pillar=Pillar
