@@ -2,7 +2,6 @@ package co.uk.silvania.advancedarmoury.blocks.machines.assemblytable;
 
 import co.uk.silvania.advancedarmoury.blocks.machines.MachineContainer;
 import co.uk.silvania.advancedarmoury.blocks.machines.SlotComponent;
-import co.uk.silvania.advancedarmoury.blocks.machines.SlotFiringMechanic;
 import co.uk.silvania.advancedarmoury.blocks.machines.SlotParts;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -21,7 +20,7 @@ public class ComponentAssemblyTableContainer extends MachineContainer {
 		addSlotToContainer(new SlotComponent(tileEntity, 2,  8, 50, "bolt", true)); 			//Bolt			ALL
 		addSlotToContainer(new SlotComponent(tileEntity, 3,  8, 72, "chamber", false)); 		//Chamber		ALL
 		addSlotToContainer(new SlotComponent(tileEntity, 4,  8, 94, "firingPin", true));		//Firing Pin	ALL
-		addSlotToContainer(new SlotFiringMechanic(tileEntity, 5, 30, 94)); 						//Firing Mechanic	ASS/LMG/SMG/PSTL
+		addSlotToContainer(new SlotComponent(tileEntity, 5, 30, 94, "firingMechanism", true));	//Firing Mechanic	ASS/LMG/SMG/PSTL
 		addSlotToContainer(new SlotComponent(tileEntity, 6, 52, 94, "fireSelector", false)); 	//Fire Selector		ASS/SMG/PSTL
 		addSlotToContainer(new SlotComponent(tileEntity, 7, 74, 94, "chargingHandle", false)); 	//Charging Handle	ASS/LMG/SMG
 		addSlotToContainer(new SlotComponent(tileEntity, 8, 74, 72, "trigger", false)); 		//Trigger		ALL

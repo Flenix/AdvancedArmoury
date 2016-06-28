@@ -1,6 +1,6 @@
 package co.uk.silvania.advancedarmoury.blocks.machines;
 
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemComponent;
+import co.uk.silvania.advancedarmoury.items.generic.ItemComponent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -100,15 +100,29 @@ public class MachineEntity extends TileEntity implements IInventory {
 	public int gunCost(int slotLow, int slotHigh) {
 		int cost = 0;
 		for (int i = slotLow; i <= slotHigh; i++) {
-			ItemStack itemPart = this.getStackInSlot(i);
-			if (itemPart != null) {
-				if (itemPart.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemPart.getItem();
-					cost = cost + component.cost(itemPart);
+			ItemStack itemComponent = this.getStackInSlot(i);
+			if (itemComponent != null) {
+				if (itemComponent.getItem() instanceof ItemComponent) {
+					ItemComponent component = (ItemComponent) itemComponent.getItem();
+					cost += component.getCost(itemComponent);
 				}
 			}
 		}
 		return cost;
+	}
+	
+	public int gunBuildTime(int slotLow, int slotHigh) {
+		int time = 0;
+		for (int i = slotLow; i <= slotHigh; i++) {
+			ItemStack itemComponent = this.getStackInSlot(i);
+			if (itemComponent != null) {
+				if (itemComponent.getItem() instanceof ItemComponent) {
+					ItemComponent component = (ItemComponent) itemComponent.getItem();
+					time += component.getBuildTime(itemComponent);
+				}
+			}
+		}
+		return time;
 	}
 
 	@Override

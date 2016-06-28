@@ -1,6 +1,6 @@
 package co.uk.silvania.advancedarmoury.blocks.machines;
 
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemComponent;
+import co.uk.silvania.advancedarmoury.items.generic.ItemComponent;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
