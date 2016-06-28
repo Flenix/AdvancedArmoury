@@ -1,6 +1,6 @@
 package co.uk.silvania.advancedarmoury;
 
-import co.uk.silvania.advancedarmoury.items_old.components.generic.GunFrame;
+import co.uk.silvania.advancedarmoury.items.generic.GunFrame;
 import co.uk.silvania.advancedarmoury.network.LocateDamagePacket;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
