@@ -1,10 +1,11 @@
 package co.uk.silvania.advancedarmoury;
 
+import co.uk.silvania.advancedarmoury.items.ItemParts;
+import co.uk.silvania.advancedarmoury.items.attachment.magazine.Magazine;
 import co.uk.silvania.advancedarmoury.items.components.assault.AssaultReceiverFrame;
+import co.uk.silvania.advancedarmoury.items.generic.GunFrame;
 import co.uk.silvania.advancedarmoury.items_old.AAItemModifierCores;
 import co.uk.silvania.advancedarmoury.items_old.AAItemPrebuiltGuns;
-import co.uk.silvania.advancedarmoury.items_old.ItemParts;
-import co.uk.silvania.advancedarmoury.items_old.magazines.ItemMagazine;
 import co.uk.silvania.advancedarmoury.items_old.rounds.ItemBullet;
 import co.uk.silvania.advancedarmoury.items_old.rounds.ItemCase;
 import co.uk.silvania.advancedarmoury.items_old.rounds.ItemRound;
@@ -14,6 +15,7 @@ import net.minecraft.item.Item;
 public class AAItems {
 
 	public static Item assaultReceiverFrame;
+	public static Item gunFrame;
 	
 	public static Item itemPartGear;
 	public static Item itemPartScrew;
@@ -70,11 +72,12 @@ public class AAItems {
 	}
 
 	public static void items() {
-		assaultReceiverFrame = new AssaultReceiverFrame().setUnlocalizedName("assaultReceiverFrame");//GunFrame().setUnlocalizedName("assaultFrame");
+		assaultReceiverFrame = new AssaultReceiverFrame().setUnlocalizedName("assaultReceiverFrame");
+		gunFrame = new GunFrame().setUnlocalizedName("gunFrame");
 	}
 	
 	public static void magazines() {
-		m4mag = new ItemMagazine("assault", 0, 30).setUnlocalizedName("m4mag");
+		m4mag = new Magazine(0, 30).setUnlocalizedName("m4mag");
 	}
 	
 	public static void rounds() {
@@ -114,15 +117,16 @@ public class AAItems {
 	}
 
 	public static void parts() {
-		itemPartGear = new ItemParts(4).setUnlocalizedName("itemPartGear");
-		itemPartScrew = new ItemParts(2).setUnlocalizedName("itemPartScrew");
-		itemPartWasher = new ItemParts(1).setUnlocalizedName("itemPartWasher");
-		itemPartBolt = new ItemParts(3).setUnlocalizedName("itemPartBolt");
-		itemPartNut = new ItemParts(2).setUnlocalizedName("itemPartNut");
+		itemPartGear = new ItemParts(40).setUnlocalizedName("itemPartGear");
+		itemPartScrew = new ItemParts(20).setUnlocalizedName("itemPartScrew");
+		itemPartWasher = new ItemParts(10).setUnlocalizedName("itemPartWasher");
+		itemPartBolt = new ItemParts(30).setUnlocalizedName("itemPartBolt");
+		itemPartNut = new ItemParts(20).setUnlocalizedName("itemPartNut");
 	}
 	
 	public static void registerItems() {
     	GameRegistry.registerItem(assaultReceiverFrame, "assaultReceiverFrame");
+    	GameRegistry.registerItem(gunFrame, "gunFrame");
     	
     	GameRegistry.registerItem(m4mag, "m4mag");
     	

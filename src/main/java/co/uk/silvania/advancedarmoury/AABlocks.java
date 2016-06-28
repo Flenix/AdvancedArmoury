@@ -72,6 +72,7 @@ public class AABlocks {
 		materials.add("blackCement");
 		materials.add("sandyCement");
 		materials.add("lightGreyConcrete");
+		materials.add("metalPlate");
 		
 		for (int i = 0; i < materials.size(); i++) {
 			String mat = materials.get(i);
@@ -118,6 +119,37 @@ public class AABlocks {
 			
 			AdvancedArmoury.proxy.renderItemBlock(block);
 		}
+		
+		ArrayList<String> simpleMaterials = new ArrayList<String>();
+		
+		simpleMaterials.add("hazard");
+		
+		for (int i = 0; i < simpleMaterials.size(); i++) {
+			String mat = simpleMaterials.get(i);
+			
+			Block block = new BlockAA(mat).setBlockName(mat + "Block");
+			Block fence = new FenceAA(mat).setBlockName(mat + "Fence");
+			Block stairs = new StairsAA(block, mat).setBlockName(mat + "Stairs");
+			Block panel = new Panel(mat).setBlockName(mat + "Panel");
+			Block cover = new Cover(mat).setBlockName(mat + "Cover");
+			Block slope45 = new Slope45(block, mat).setBlockName(mat + "Slope45");
+			Block slope225Low = new Slope225Low(mat).setBlockName(mat + "Slope225Low");
+			Block slope225High = new Slope225High(mat).setBlockName(mat + "Slope225High");
+			Block slope225Vertical = new Slope225Vertical(mat).setBlockName(mat + "Slope225Vertical");
+			Block cornerPost = new CornerPost(mat, "cornerPost").setBlockName(mat + "CornerPost");
+			
+			GameRegistry.registerBlock(block, ItemBlockAA.class, mat + "Block");
+			GameRegistry.registerBlock(fence, ItemBlockAA.class, mat + "Fence");
+			GameRegistry.registerBlock(stairs, ItemBlockAA.class, mat + "Stairs");
+			GameRegistry.registerBlock(panel, ItemBlockAA.class, mat + "Panel");
+			GameRegistry.registerBlock(cover, ItemBlockAA.class, mat + "Cover");
+			GameRegistry.registerBlock(slope45, ItemBlockAA.class, mat + "Slope45");
+			GameRegistry.registerBlock(slope225Low, ItemBlockAA.class, mat + "Slope225Low");
+			GameRegistry.registerBlock(slope225High, ItemBlockAA.class, mat + "Slope225High");
+			GameRegistry.registerBlock(slope225Vertical, ItemBlockAA.class, mat + "Slope225Vertical");
+			GameRegistry.registerBlock(cornerPost, ItemBlockAA.class, mat + "CornerPost");
+		}
+		
 		
 		Block standardDecoratives = new BlockDecorations().setBlockName("decorativeBlock1");
 		Block hescoBlock100 = new BlockHesco("hesco").setBlockName("hescoBlock100");
