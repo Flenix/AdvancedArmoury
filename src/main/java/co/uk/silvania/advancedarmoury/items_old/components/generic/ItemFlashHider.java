@@ -1,4 +1,4 @@
-package co.uk.silvania.advancedarmoury.items_old.components.generic;
+/*package co.uk.silvania.advancedarmoury.items_old.components.generic;
 
 import java.util.List;
 
@@ -42,4 +42,4 @@ public class ItemFlashHider extends ItemComponent implements IAttachment {
 	public int fireRate(ItemStack item) { return fireRate; }
 	public int power(ItemStack item) { return power; }
 
-}
+}*/

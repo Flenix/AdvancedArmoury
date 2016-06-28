@@ -15,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-public class ItemComponent extends Item {
+public class ItemOLDComponent extends Item {
 
 	MaterialStats stats = new MaterialStats();
 	
@@ -27,12 +27,12 @@ public class ItemComponent extends Item {
 	public String displayName;
 	public String identifier;
 	
-	public ItemComponent(String componentName, String displayName, String materialName, String textCol, int rgb, String oreDict, String identCol, String identId) {
+	public ItemOLDComponent(String componentName, String displayName, String materialName, String textCol, int rgb, String oreDict, String identCol, String identId) {
 		super();
 		this.displayName = displayName;
 	}
 	
-	public ItemComponent(String componentName, String displayName, String identifier, double size) {
+	public ItemOLDComponent(String componentName, String displayName, String identifier, double size) {
 		this.identifier = identifier;
 		this.textureName = componentName;
 		this.displayName = displayName;
