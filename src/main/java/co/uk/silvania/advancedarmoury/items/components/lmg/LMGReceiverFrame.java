@@ -6,7 +6,7 @@ import co.uk.silvania.advancedarmoury.items.generic.ReceiverFrame;
 public class LMGReceiverFrame extends ReceiverFrame {
 	
 	public LMGReceiverFrame() {
-		super("lmg");
+		super("lmg", "lmgReceiverFrame", "LMG Receiver Frame");
 		//this.setCreativeTab(AdvancedArmoury.tabComponentsAssault);
 	}
 }

@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class ItemComponent extends Item {
 
-	MaterialStats stats;
+	protected MaterialStats stats;
 	public String componentName;
 	public String displayName;
 	public String identifier;
@@ -34,6 +34,17 @@ public class ItemComponent extends Item {
 	public double size;
 	
 	ComponentGenerator compGen;
+	
+	//Only used by asset components
+	public String modelName = "m4receiver";
+	public String modelTexture = "m4receiver";
+	public String iconTexture = "m4receiver";
+	public String weaponType;
+	public float xSize = 0;
+	public float ySize = 0;
+	public float zSize = 0;
+	
+	public boolean assetComponent = false;
 	
 	public ItemComponent(String componentName, String displayName, String identifier, double size, boolean acc, boolean pwr, boolean rng, boolean cos, boolean frt, boolean cal) {
 		this.componentName = componentName;
@@ -132,6 +143,12 @@ public class ItemComponent extends Item {
 			if (componentName.toLowerCase().contains("pistol"))  { itemComponent.stackTagCompound.setString("gunType", "Pistol"); }
 			if (componentName.toLowerCase().contains("shotgun")) { itemComponent.stackTagCompound.setString("gunType", "Shotgun"); }
 
+			if (assetComponent) {
+				itemComponent.stackTagCompound.setString("modelName", modelName);
+				itemComponent.stackTagCompound.setString("modelTexture", modelTexture);
+				itemComponent.stackTagCompound.setString("iconTexture", iconTexture);
+			}
+				
 			list.add(itemComponent);
 		}
 	}
@@ -143,8 +160,10 @@ public class ItemComponent extends Item {
 				EnumRarity rarity = RarityRegistry.getEnumRarity(item.stackTagCompound.getString("rarity"));
 				list.add(RarityRegistry.getRarityTag(rarity));
 			}
-			list.add(identifier);//identCol + "Part Identifier: " + identName);
-			list.add("");
+			if (identifier.length() > 0) {
+				list.add(identifier);
+				list.add("");
+			}
 			list.add(item.stackTagCompound.getString("textCol") + "Material: " + getMaterial(item));
 			list.add("");
 			list.add(accDisplay(getAccuracy(item)));
@@ -236,12 +255,12 @@ public class ItemComponent extends Item {
 	public int getCost(ItemStack item)				{ return tag(item) ? item.stackTagCompound.getInteger("cost") : null; }
 	public int getBuildTime(ItemStack item)			{ return tag(item) ? item.stackTagCompound.getInteger("buildTime") : null; }
 	
-	public float getAccuracy(ItemStack item)	{ return tag(item) && accuracyEnabled ? item.stackTagCompound.getFloat("accuracy") : -1; }
-	public int getPower(ItemStack item)			{ return tag(item) && powerEnabled    ? item.stackTagCompound.getInteger("power") : -1; }
-	public int getRange(ItemStack item)			{ return tag(item) && rangeEnabled    ? item.stackTagCompound.getInteger("range") : -1; }
+	public float getAccuracy(ItemStack item)	{ return tag(item) && accuracyEnabled ? item.stackTagCompound.getFloat("accuracy") : 0; }
+	public int getPower(ItemStack item)			{ return tag(item) && powerEnabled    ? item.stackTagCompound.getInteger("power") : 0; }
+	public int getRange(ItemStack item)			{ return tag(item) && rangeEnabled    ? item.stackTagCompound.getInteger("range") : 0; }
 	public String getTexture(ItemStack item)	{ return tag(item) && cosmeticEnabled ? item.stackTagCompound.getString("cosmetic") : ""; }
-	public int getFireRate(ItemStack item)		{ return tag(item) && fireRateEnabled ? item.stackTagCompound.getInteger("fireRate") : -1; }
-	public double getCalibre(ItemStack item)	{ return tag(item) && calibreEnabled  ? item.stackTagCompound.getDouble("calibre") : -1; }
+	public int getFireRate(ItemStack item)		{ return tag(item) && fireRateEnabled ? item.stackTagCompound.getInteger("fireRate") : 0; }
+	public double getCalibre(ItemStack item)	{ return tag(item) && calibreEnabled  ? item.stackTagCompound.getDouble("calibre") : 0; }
 	
 	public boolean tag(ItemStack item) { return item.stackTagCompound != null ? true : false; }
 	
