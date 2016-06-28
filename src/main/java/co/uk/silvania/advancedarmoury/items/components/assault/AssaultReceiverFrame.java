@@ -6,7 +6,7 @@ import co.uk.silvania.advancedarmoury.items.generic.ReceiverFrame;
 public class AssaultReceiverFrame extends ReceiverFrame {
 
 	public AssaultReceiverFrame() {
-		super("assault");
+		super("assault", "assaultReceiverFrame", "Assault Rifle Receiver Frame");
 		this.setCreativeTab(AdvancedArmoury.tabComponentsAssault);
 	}
 
