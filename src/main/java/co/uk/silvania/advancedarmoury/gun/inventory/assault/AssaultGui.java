@@ -18,7 +18,7 @@ public class AssaultGui extends GuiContainer {
 		this.inventory = containerGun.inventory;
 		
 		xSize = 256;
-		ySize = 216;
+		ySize = 256;
 	}
 	
 	@Override

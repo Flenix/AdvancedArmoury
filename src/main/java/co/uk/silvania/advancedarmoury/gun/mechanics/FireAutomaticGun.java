@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Random;
 
 import co.uk.silvania.advancedarmoury.AAItems;
+import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.DamageSourceShot;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultContainer;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
+import co.uk.silvania.advancedarmoury.items.generic.Barrel;
+import co.uk.silvania.advancedarmoury.items.generic.GunFrame;
 import co.uk.silvania.advancedarmoury.items.modifiers.IModifierCore;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.GunFrame;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
 import co.uk.silvania.advancedarmoury.items_old.rounds.ItemRound;
 import co.uk.silvania.advancedarmoury.skills.SkillAssaultRifles;
 import co.uk.silvania.rpgcore.skills.SkillLevelBase;
@@ -33,9 +34,11 @@ public class FireAutomaticGun {
 		AssaultIInventory inventory = new AssaultIInventory(item);
 		ItemStack barrel = inventory.getBarrel();
 		if (barrel != null) {
-			ItemBarrel itemBarrel = (ItemBarrel) barrel.getItem();
-			float accuracy = itemBarrel.accuracy(item);
+			System.out.println("The barrel exists!");
+			Barrel itemBarrel = (Barrel) barrel.getItem();
+			float accuracy = itemBarrel.getAccuracy(barrel);
 			int length = barrel.stackTagCompound.getInteger("length");
+			System.out.println("Acc: " + accuracy + ", length: " + length);
 			double d0 = length / 100.0;
 			if (d0 < 0.01) { d0 = 0.01; }
 			float f0 = (float) (accuracy - d0);
@@ -58,8 +61,8 @@ public class FireAutomaticGun {
 	}
 	
 	public boolean isCompleteGun(ItemStack item, AssaultIInventory inv) {
-		for (int i = 2; i < 20; i++) {
-			if (i != 11 && inv.getStackInSlot(i) == null) {
+		for (int i = 2; i < 5; i++) {
+			if (inv.getStackInSlot(i) == null) {
 				return false;
 			}
 		}
@@ -79,7 +82,7 @@ public class FireAutomaticGun {
 	}
 	
 	public void dryFire(World world, EntityPlayer player, ItemStack item) {
-		world.playSoundAtEntity(player, "advancedarmoury:dryfire", 3.0F, 1.0F);
+		world.playSoundAtEntity(player, AdvancedArmoury.modid + ":dryfire", 3.0F, 1.0F);
 	}
 	
 	public void fireAssault(World world, EntityPlayer player, ItemStack gun, ItemStack round, IModifierCore mod) {
@@ -89,8 +92,8 @@ public class FireAutomaticGun {
 		Random rand = new Random();
 		
 		if (isCompleteGun(gun, gunInv)) {
-			double chambreCal = gunInv.getStackInSlot(12).stackTagCompound.getDouble("calibre");
-			double barrelCal  = gunInv.getStackInSlot(13).stackTagCompound.getDouble("calibre");
+			double chambreCal = gunInv.getStackInSlot(4).stackTagCompound.getDouble("calibre");
+			double barrelCal  = gunInv.getStackInSlot(2).stackTagCompound.getDouble("calibre");
 			
 			if (round == null) {
 				if (player.capabilities.isCreativeMode) {
@@ -110,13 +113,13 @@ public class FireAutomaticGun {
 		
 			if (!(chambreCal == barrelCal && barrelCal == roundCal)) {
 				gunFrame.damageItem(gun, 5);
-				world.playSoundAtEntity(player, "advancedarmoury:dryfire", 3.0F, 1.0F);
+				world.playSoundAtEntity(player, AdvancedArmoury.modid + ":dryfire", 3.0F, 1.0F);
 				return;
 			}
 
 			//Pull sound from round type, adjust pitch based on barrel length
 			//If (silencer) { //silenced sound } else { //This vv }
-			world.playSoundAtEntity(player, "advancedarmoury:m4a1_shoot", 5.0F, 1.0F);
+			world.playSoundAtEntity(player, AdvancedArmoury.modid + ":m4a1_shoot", 5.0F, 1.0F);
 			
 			if (mod != null) {
 				mod.onFireWeapon(gun, player);
@@ -151,7 +154,8 @@ public class FireAutomaticGun {
 			}
 			
 			//System.out.println("Acc: " + accuracy + ", ADSacc: " + ADSacc + ", sneakAcc: " + sneakAcc + ", moveAcc: " + moveAcc + ", fireAcc: " + fireAcc);
-			accuracy = accuracy - ADSacc - sneakAcc + moveAcc + fireAcc;
+			accuracy = Math.abs(accuracy - ADSacc - sneakAcc + moveAcc + fireAcc);
+			System.out.println("Accuracy value: " + accuracy);
 			double modifyX = ((rand.nextInt((int) Math.round(accuracy * 200)) - (int) accuracy*100)/7500D);
 			double modifyY = ((rand.nextInt((int) Math.round(accuracy * 200)) - (int) accuracy*100)/7500D);
 			double modifyZ = ((rand.nextInt((int) Math.round(accuracy * 200)) - (int) accuracy*100)/7500D);

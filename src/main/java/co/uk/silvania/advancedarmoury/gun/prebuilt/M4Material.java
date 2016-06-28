@@ -3,13 +3,12 @@ package co.uk.silvania.advancedarmoury.gun.prebuilt;
 import java.util.List;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.config.ComponentGenerator;
 import co.uk.silvania.advancedarmoury.config.MaterialStats;
 import co.uk.silvania.advancedarmoury.gun.inventory.ItemIInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
+import co.uk.silvania.advancedarmoury.items.generic.Barrel;
+import co.uk.silvania.advancedarmoury.items.generic.GunFrame;
 import co.uk.silvania.advancedarmoury.items_old.AAItemModifierCores;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.GunFrame;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,26 +29,26 @@ public class M4Material extends GunFrame {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item stack, CreativeTabs tab, List list) {
-		for (int i = 0; i < ItemBarrel.cal.length; i++) {
+		for (int i = 0; i < Barrel.cal.length; i++) {
 			ItemStack item = new ItemStack(stack);
 			item.stackTagCompound = new NBTTagCompound();
 			item.stackTagCompound.setBoolean("hasInternals", true);
 			item.stackTagCompound.setBoolean("isCompletedGun", true);
 			item.stackTagCompound.setString("name", MaterialStats.getTextCol(material) + material + " M4A1");
-			item.stackTagCompound.setString("tag", "Standardized Firearm, " + ItemBarrel.cal[i] + "mm");
+			item.stackTagCompound.setString("tag", "Standardized Firearm, " + Barrel.cal[i] + "mm");
 			item.stackTagCompound.setString("creator", "\u00A7c[Advanced Armoury]");
 			ItemIInventory inventory = new AssaultIInventory(item);
 			
 			ItemStack barrel = new ItemStack(GameRegistry.findItem(AdvancedArmoury.modid, "barrel" + material));
 			barrel.stackTagCompound = new NBTTagCompound();
 			barrel.stackTagCompound.setInteger("length", 15);
-			barrel.stackTagCompound.setDouble("calibre", ItemBarrel.cal[i]);
+			barrel.stackTagCompound.setDouble("calibre", Barrel.cal[i]);
 			barrel.stackTagCompound.setString("partName", "barrel");
 			item.stackTagCompound.setFloat("accuracy", MaterialStats.getAccuracry("Gold"));
 			
 			ItemStack chamber = new ItemStack(GameRegistry.findItem(AdvancedArmoury.modid, "assaultChamber" + material));
 			chamber.stackTagCompound = new NBTTagCompound();
-			chamber.stackTagCompound.setDouble("calibre", ItemBarrel.cal[i]);
+			chamber.stackTagCompound.setDouble("calibre", Barrel.cal[i]);
 			chamber.stackTagCompound.setString("partName", "chamber");
 			
 			inventory.setInventorySlotContents(2, new ItemStack(GameRegistry.findItem(AdvancedArmoury.modid, "assaultBolt" + material))); //bolt

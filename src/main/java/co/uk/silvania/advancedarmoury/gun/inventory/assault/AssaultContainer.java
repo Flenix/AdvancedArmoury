@@ -23,52 +23,33 @@ public class AssaultContainer extends ItemContainer {
 		this.inventory = invGun;
 		this.containerStack = player.getHeldItem();
 		
-		this.addSlotToContainer(new SlotMagazine(this.inventory, 0, 114, 112));
-		this.addSlotToContainer(new SlotRound(this.inventory, 1, 132, 112));
+		this.addSlotToContainer(new SlotMagazine(this.inventory, 0, 134, 152));
+		this.addSlotToContainer(new SlotRound(this.inventory, 1, 152, 152));
 		
-		/* TODO
-		addSlotToContainer(new SlotComponent(this.inventory, 2, 214, 19, "bolt")); //keeping
-		addSlotToContainer(new SlotComponent(this.inventory, 3, 214, 37, "boltCarrier")); //going
-		addSlotToContainer(new SlotComponent(this.inventory, 4, 214, 55, "chargingHandle")); //keeping
-		addSlotToContainer(new SlotComponent(this.inventory, 5, 214, 73, "ejector")); //going
-		addSlotToContainer(new SlotComponent(this.inventory, 6, 214, 91, "extractor")); //going
-		addSlotToContainer(new SlotComponent(this.inventory, 7, 214, 109, "firingPin")); //keeping
-		addSlotToContainer(new SlotComponent(this.inventory, 8, 214, 127, "firingPinRetainerPin")); //going
-		
-		addSlotToContainer(new SlotComponentOption(this.inventory, 9, 232, 37, "pistonChamber", "gasChamber")); //v
-		addSlotToContainer(new SlotComponentOption(this.inventory, 10, 232, 55, "spring", "gasFeed")); //v
-		addSlotToContainer(new SlotComponent(this.inventory, 11, 232, 73, "piston")); //Replace with "firing system", two options
-		
-		addSlotToContainer(new SlotComponent(this.inventory, 12, 232, 19, "chamber")); //Keeping
-		addSlotToContainer(new SlotComponent(this.inventory, 13, 232, 91, "barrel")); //keeping
-		
-		addSlotToContainer(new SlotComponent(this.inventory, 14, 232, 109, "trigger"));//keeping/RECEIVER
-		addSlotToContainer(new SlotComponent(this.inventory, 15, 232, 127, "fireSelector")); //keeping/RECEIVER
-		
-		addSlotToContainer(new SlotCore(this.inventory, 16, 174, 192));	//Modifier Core
-		
-		addSlotToContainer(new SlotComponent(this.inventory, 17, 196, 192, "receiver"));
-		addSlotToContainer(new SlotComponent(this.inventory, 18, 214, 192, "stock"));
-		addSlotToContainer(new SlotComponent(this.inventory, 19, 232, 192, "frontEnd"));
-		
-		addSlotToContainer(new SlotAttachment(this.inventory, 20, 8, 76, "flashHider"));
+		addSlotToContainer(new SlotComponent(this.inventory, 2, 178, 232, "barrel", false));
+		addSlotToContainer(new SlotComponent(this.inventory, 3, 196, 232, "frontEnd", false));
+		addSlotToContainer(new SlotComponent(this.inventory, 4, 214, 232, "casing", false));
+		addSlotToContainer(new SlotComponent(this.inventory, 5, 232, 232, "stock", false));
+
+		addSlotToContainer(new SlotCore(this.inventory, 6, 232, 210));	//Modifier Core
+
+		addSlotToContainer(new SlotAttachment(this.inventory, 7, 8, 96, "barrel"));
 		
 		//Any double space slots which have a double-size attachment must have the attachment installed in the rear slot.
-		addSlotToContainer(new SlotAttachment(this.inventory, 21, 74, 40,  "rail")); //Front top
-		addSlotToContainer(new SlotAttachment(this.inventory, 22, 28, 112, "rail")); //Front left
-		addSlotToContainer(new SlotAttachment(this.inventory, 23, 28, 40,  "rail")); //Front right
-		addSlotToContainer(new SlotAttachment(this.inventory, 24, 57, 112, "rail")); //Front bottom front
-		addSlotToContainer(new SlotAttachment(this.inventory, 25, 75, 112, "rail")); //Front bottom rear
-		addSlotToContainer(new SlotAttachment(this.inventory, 26, 114, 40, "rail")); //Rec low front
-		addSlotToContainer(new SlotAttachment(this.inventory, 27, 132, 40, "rail")); //rec low rear 
-		addSlotToContainer(new SlotAttachment(this.inventory, 28, 114, 22, "rail")); //rec high front
-		addSlotToContainer(new SlotAttachment(this.inventory, 29, 132, 22, "rail")); //rec high rear
+		addSlotToContainer(new SlotAttachment(this.inventory, 8,  28, 40,  "rail")); //Front top
+		addSlotToContainer(new SlotAttachment(this.inventory, 9,  51, 40,  "rail")); //Front left
+		addSlotToContainer(new SlotAttachment(this.inventory, 10, 74, 40,  "rail")); //Front right
+		addSlotToContainer(new SlotAttachment(this.inventory, 11, 28, 152, "rail")); //Front bottom front
+		addSlotToContainer(new SlotAttachment(this.inventory, 12, 46, 152, "rail")); //Front bottom rear
+		addSlotToContainer(new SlotAttachment(this.inventory, 13, 114, 40, "rail")); //Rec low front
+		addSlotToContainer(new SlotAttachment(this.inventory, 14, 132, 40, "rail")); //rec low rear 
+		addSlotToContainer(new SlotAttachment(this.inventory, 15, 114, 22, "rail")); //rec high front
+		addSlotToContainer(new SlotAttachment(this.inventory, 16, 132, 22, "rail")); //rec high rear
 		
-		addSlotToContainer(new SlotAttachment(this.inventory, 30, 172, 40, "stock")); //Stock*/
+		addSlotToContainer(new SlotAttachment(this.inventory, 17, 232, 96, "stock")); //Stock
 
-		bindPlayerInventory(invPlayer, 8, 192);
+		bindPlayerInventory(invPlayer, 8, 232);
 	}
-	
 
 	public void writeToNBT() {
 		if (!this.containerStack.hasTagCompound()) {

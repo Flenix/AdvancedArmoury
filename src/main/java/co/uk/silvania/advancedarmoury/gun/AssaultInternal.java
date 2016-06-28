@@ -7,12 +7,12 @@ import org.lwjgl.input.Mouse;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.IMagazine;
-import co.uk.silvania.advancedarmoury.attachment.magazine.MagazineInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.ItemIInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultContainer;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetReceiver;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentReceiver;
+import co.uk.silvania.advancedarmoury.items.assets.AssetReceiver;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentReceiver;
+import co.uk.silvania.advancedarmoury.items.attachment.magazine.MagazineInventory;
 import co.uk.silvania.advancedarmoury.network.GunEventPacket;
 import co.uk.silvania.advancedarmoury.network.GunGuiPacket;
 import cpw.mods.fml.common.registry.GameRegistry;
