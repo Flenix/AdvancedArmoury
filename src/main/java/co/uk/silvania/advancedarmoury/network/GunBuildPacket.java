@@ -1,5 +1,7 @@
 package co.uk.silvania.advancedarmoury.network;
 
+import co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.ComponentAssemblyTableContainer;
+import co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.ComponentAssemblyTableEntity;
 import co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.assault.AssaultAssemblyTableContainer;
 import co.uk.silvania.advancedarmoury.blocks.machines.assemblytable.assault.AssaultAssemblyTableEntity;
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -72,7 +74,7 @@ public class GunBuildPacket implements IMessage {
 					if (buildGun.equalsIgnoreCase("true")) {
 						tileEntity.building = true;
 						tileEntity.initiator = userName;
-						ItemStack gun = tileEntity.getStackInSlot(0);
+						ItemStack gun = tileEntity.getStackInSlot(1);
 						if (gun != null) {
 							if (gun.stackTagCompound == null) {
 								gun.stackTagCompound = new NBTTagCompound();
@@ -86,7 +88,30 @@ public class GunBuildPacket implements IMessage {
 					}
 				}
 				tileEntity.getDescriptionPacket();
-			} 
+			} else if (player.openContainer instanceof ComponentAssemblyTableContainer) {
+				ComponentAssemblyTableContainer container = (ComponentAssemblyTableContainer) player.openContainer;
+				
+				ComponentAssemblyTableEntity tileEntity = container.tileEntity;
+				
+				if (tileEntity != null) {
+					if (buildGun.equalsIgnoreCase("true")) {
+						tileEntity.building = true;
+						tileEntity.initiator = userName;
+						ItemStack component = tileEntity.getStackInSlot(9);
+						if (component != null) {
+							if (component.stackTagCompound == null) {
+								component.stackTagCompound = new NBTTagCompound();
+							}
+							component.stackTagCompound.setString("name", name);
+							component.stackTagCompound.setString("tag", tag);
+						}
+					} else {
+						tileEntity.gunName = name;
+						tileEntity.gunTag = tag;
+					}
+				}
+				tileEntity.getDescriptionPacket();
+			}
 			return null;
 		}
 	}
