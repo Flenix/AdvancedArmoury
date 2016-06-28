@@ -1,9 +1,9 @@
 package co.uk.silvania.advancedarmoury;
 
-import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentFrontEnd;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentReceiver;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.ComponentStock;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentFrontEnd;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentReceiver;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentStock;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentType;
 
 public enum EnumComponentName {
 	
