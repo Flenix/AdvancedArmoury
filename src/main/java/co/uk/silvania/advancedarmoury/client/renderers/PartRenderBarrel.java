@@ -3,8 +3,7 @@ package co.uk.silvania.advancedarmoury.client.renderers;
 import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
-import co.uk.silvania.advancedarmoury.config.MaterialStats;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
+import co.uk.silvania.advancedarmoury.items.generic.Barrel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -48,13 +47,13 @@ public class PartRenderBarrel implements IItemRenderer {
 		
 	public void renderPart(int rotXAngle, int rotYAngle, float scale, float moveX, float moveY, float moveZ, ItemStack item) {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-		if (item.getItem() instanceof ItemBarrel) {
+		if (item.getItem() instanceof Barrel) {
 			if (item.stackTagCompound != null) {
 				int length = item.stackTagCompound.getInteger("length");
 				for (int i = 0; i < length; i++) {
 					float offset = i * 0.05F;
 					GL11.glPushMatrix();
-					applyColor(MaterialStats.getRGB(material));
+					applyColor(item.stackTagCompound.getInteger("itemCol"));
 					GL11.glRotatef(rotXAngle, 0F, 1F, 0F);
 					GL11.glRotatef(rotYAngle, 1F, 0F, 0F);
 					GL11.glScalef(scale, scale, scale);

@@ -33,7 +33,7 @@ public class AssaultReceiverRenderer implements IItemRenderer {
 	int rgbFireSel;
 	
 
-	public AssaultReceiverRenderer(String model, String texture, boolean customTextured, int rgb) {
+	public AssaultReceiverRenderer(String model, String texture, boolean customTextured) {
 		modelReceiver = new ResourceLocation(AdvancedArmoury.modid, "models/" + model + ".obj");
 		modelBolt = new ResourceLocation(AdvancedArmoury.modid, "models/" + model + "_bolt.obj");
 		modelChargingHandle = new ResourceLocation(AdvancedArmoury.modid, "models/" + model + "_charginghandle.obj");
@@ -51,8 +51,6 @@ public class AssaultReceiverRenderer implements IItemRenderer {
 		mdlBolt = AdvancedModelLoader.loadModel(modelBolt);
 		mdlChargingHandle = AdvancedModelLoader.loadModel(modelChargingHandle);
 		mdlFireSelector = AdvancedModelLoader.loadModel(modelFireSelector);
-		
-		this.rgbRec = rgb;
 	}
 
 	@Override
@@ -68,10 +66,12 @@ public class AssaultReceiverRenderer implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		if (item.stackTagCompound != null) {
-			rgbBolt = MaterialStats.getRGB(item.stackTagCompound.getString("boltMaterial"));
-			rgbCharge = MaterialStats.getRGB(item.stackTagCompound.getString("chargingHandleMaterial"));
-			rgbFireSel = MaterialStats.getRGB(item.stackTagCompound.getString("fireSelectorMaterial"));
+			rgbRec = item.stackTagCompound.getInteger("itemCol");
+			rgbBolt = item.stackTagCompound.getInteger("boltTextureColour");
+			rgbCharge = item.stackTagCompound.getInteger("chargingHandleTextureColour");
+			rgbFireSel = item.stackTagCompound.getInteger("fireSelectorTextureColour");
 		} else {
+			rgbRec = MaterialStats.getRGB("Polymer");
 			rgbBolt = MaterialStats.getRGB("Polymer");
 			rgbCharge = MaterialStats.getRGB("Polymer");
 			rgbFireSel = MaterialStats.getRGB("Polymer");

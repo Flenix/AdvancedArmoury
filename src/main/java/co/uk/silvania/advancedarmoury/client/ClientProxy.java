@@ -27,11 +27,11 @@ import co.uk.silvania.advancedarmoury.client.renderers.blocks.Slope45Renderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.TinyLootCrateRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.WalkwayFenceRenderer;
 import co.uk.silvania.advancedarmoury.client.renderers.blocks.WalkwayStairsRenderer;
+import co.uk.silvania.advancedarmoury.items.assets.AssetFrontEnd;
+import co.uk.silvania.advancedarmoury.items.assets.AssetReceiver;
+import co.uk.silvania.advancedarmoury.items.assets.AssetStock;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentType;
 import co.uk.silvania.advancedarmoury.items_old.AAItemPrebuiltGuns;
-import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetFrontEnd;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetReceiver;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.AssetStock;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
@@ -82,7 +82,7 @@ public class ClientProxy extends CommonProxy {
 		}
 		
 		MinecraftForgeClient.registerItemRenderer(AAItems.m4mag, new PartRenderBase("m4mag", "m4mag", true));
-		//MinecraftForgeClient.registerItemRenderer(AAItems.assaultFrame, new RenderAssaultRifle());
+		MinecraftForgeClient.registerItemRenderer(AAItems.gunFrame, new RenderAssaultRifle());
 		MinecraftForgeClient.registerItemRenderer(AAItems.itemRound, new RoundRenderer());
 		
 		renderBlocks();
@@ -182,8 +182,8 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@Override
-	public void renderReceivers(Item item, String material, int rgb) {
-		MinecraftForgeClient.registerItemRenderer(item, new AssaultReceiverRenderer("m4receiver", material, false, rgb));
+	public void renderReceivers(Item item, String material) {
+		MinecraftForgeClient.registerItemRenderer(item, new AssaultReceiverRenderer("m4receiver", material, false));
 	}
 	
 	@Override

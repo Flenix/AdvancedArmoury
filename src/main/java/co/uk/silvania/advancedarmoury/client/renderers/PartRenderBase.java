@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import co.uk.silvania.advancedarmoury.AdvancedArmoury;
 import co.uk.silvania.advancedarmoury.config.MaterialStats;
-import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -19,7 +19,6 @@ public class PartRenderBase implements IItemRenderer {
 	public ResourceLocation modelLoc;
 	public ResourceLocation texture;
 	public IModelCustom model;
-	String material;
 	boolean customTexture;
 	
 	public PartRenderBase(String modelName, String modelTexture, boolean customTexture) {
@@ -29,7 +28,7 @@ public class PartRenderBase implements IItemRenderer {
 			texture = new ResourceLocation(AdvancedArmoury.modid, "models/" + modelTexture + ".png");
 		} else {
 			texture = new ResourceLocation(AdvancedArmoury.modid, "models/white.png");
-			this.material = modelTexture;
+			customTexture = true;
 		}
 
 		model = AdvancedModelLoader.loadModel(modelLoc);
@@ -73,7 +72,9 @@ public class PartRenderBase implements IItemRenderer {
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		GL11.glPushMatrix();
 		if (!customTexture) {
-			applyColor(MaterialStats.getRGB(material));
+			if (item.stackTagCompound != null) {
+				applyColor(item.stackTagCompound.getInteger("itemCol"));
+			}
 		}
 		GL11.glRotatef(rotX, 0F, 1F, 0F);
 		GL11.glRotatef(rotY, 1F, 0F, 0F);

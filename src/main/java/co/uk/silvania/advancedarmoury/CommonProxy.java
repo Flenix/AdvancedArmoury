@@ -31,7 +31,7 @@ public class CommonProxy {
 	public void renderTriggers(Item itemTrigger, String materialName) {}
 	public void renderBarrels(Item item, String material) {}
 	public void renderFlashHiders(Item item, String material) {}
-	public void renderReceivers(Item item, String material, int rgb) {}
+	public void renderReceivers(Item item, String material) {}
 	public void renderFrontEnds(Item item, String material) {}
 	public void renderStocks(Item item, String material) {}
 	

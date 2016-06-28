@@ -7,12 +7,11 @@ import co.uk.silvania.advancedarmoury.client.renderers.PartRenderBase;
 import co.uk.silvania.advancedarmoury.gun.EntityItemGun;
 import co.uk.silvania.advancedarmoury.gun.inventory.ItemIInventory;
 import co.uk.silvania.advancedarmoury.gun.inventory.assault.AssaultIInventory;
-import co.uk.silvania.advancedarmoury.items_old.components.ComponentType;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.FrontEnd;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.Receiver;
-import co.uk.silvania.advancedarmoury.items_old.components.asset.Stock;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemBarrel;
-import co.uk.silvania.advancedarmoury.items_old.components.generic.ItemComponent;
+import co.uk.silvania.advancedarmoury.items.assets.ComponentType;
+import co.uk.silvania.advancedarmoury.items.generic.Barrel;
+import co.uk.silvania.advancedarmoury.items.generic.FrontEnd;
+import co.uk.silvania.advancedarmoury.items.generic.ReceiverCasing;
+import co.uk.silvania.advancedarmoury.items.generic.Stock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
@@ -50,7 +49,7 @@ public class RenderAssaultRifle implements IItemRenderer {
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
 		ItemIInventory inventory = new AssaultIInventory(item);
 		if (inventory != null) {
-			if (inventory.getStackInSlot(17) != null) {
+			if (inventory.getStackInSlot(4) != null) {
 				return true;
 			}
 		}
@@ -67,28 +66,20 @@ public class RenderAssaultRifle implements IItemRenderer {
 		ItemIInventory inventory = new AssaultIInventory(item);
 		if (inventory != null) {
 			ItemStack magazine = inventory.getStackInSlot(0);
-			ItemStack bolt = inventory.getStackInSlot(3);
-			ItemStack chargingHandle = inventory.getStackInSlot(5);
-			ItemStack barrel = inventory.getStackInSlot(13);
-			ItemStack fireSelector = inventory.getStackInSlot(15);
-			ItemStack trigger = inventory.getStackInSlot(14);			
-			ItemStack receiver = inventory.getStackInSlot(17);
-			ItemStack stock = inventory.getStackInSlot(18);
-			ItemStack frontEnd = inventory.getStackInSlot(19);
+			ItemStack barrel = inventory.getStackInSlot(2);
+			ItemStack frontEnd = inventory.getStackInSlot(3);
+			ItemStack receiver = inventory.getStackInSlot(4);
+			ItemStack stock = inventory.getStackInSlot(5);
 			
-			ItemStack barrelAttachment = inventory.getStackInSlot(20);
+			ItemStack barrelAttachment = inventory.getStackInSlot(7);
 			
 			if (receiver != null) {
-				if (receiver.getItem() instanceof Receiver) {
-					Receiver compReceiver = (Receiver) receiver.getItem();
+				if (receiver.getItem() instanceof ReceiverCasing) {
+					ReceiverCasing compReceiver = (ReceiverCasing) receiver.getItem();
 					
 					float frontEndX = compReceiver.barrelX;
 					float frontEndY = compReceiver.barrelY;
 					float frontEndZ = compReceiver.barrelZ;
-					
-					float triggerX = compReceiver.triggerX;
-					float triggerY = compReceiver.triggerY;
-					float triggerZ = compReceiver.triggerZ;
 					
 					float magX = compReceiver.magX;
 					float magY = compReceiver.magY;
@@ -110,19 +101,13 @@ public class RenderAssaultRifle implements IItemRenderer {
 					}
 					
 					if (barrel != null) {
-						if (barrel.getItem() instanceof ItemBarrel) {
+						if (barrel.getItem() instanceof Barrel) {
 							render(barrel, frontEndX, frontEndY, frontEndZ, type, item);
 							
 							if (barrelAttachment != null) {
 								int barrelLength = barrel.stackTagCompound.getInteger("length");
 								render(barrelAttachment, frontEndX - ((barrelLength - 1) * 0.05F), frontEndY, frontEndZ, type, item);
 							}
-						}
-					}
-			
-					if (trigger != null) {
-						if (trigger.getItem() instanceof ItemComponent) {
-							render(trigger, triggerX, triggerY, triggerZ, type, item);
 						}
 					}
 					
