@@ -96,10 +96,8 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 		}
 		
 		if (building) {
-			System.out.println("Building is true! Progress: " + buildProgress + "/" + buildTime);
 			if (partsValue >= gunCost(2, 9)) {
 				if (buildProgress < buildTime) {
-					System.out.println(buildProgress + "/" + buildTime);
 					buildProgress++;
 				} else {
 					ArrayList<EntityPlayer> players = (ArrayList<EntityPlayer>) MinecraftServer.getServer().getConfigurationManager().playerEntityList;
