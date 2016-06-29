@@ -9,5 +9,4 @@ public class AssaultStock extends Stock {
 		super(componentName, displayName, modelName, modelTexture, gunType, xSize, ySize, zSize);
 		this.setCreativeTab(AdvancedArmoury.tabComponentsAssault);
 	}
-
 }

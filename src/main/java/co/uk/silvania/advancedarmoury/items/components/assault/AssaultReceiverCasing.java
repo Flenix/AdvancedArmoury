@@ -15,13 +15,6 @@ public class AssaultReceiverCasing extends ReceiverCasing {
 			String modelName, String modelTexture) {
 		super(componentName, displayName, gunType, xSize, ySize, zSize, barrelX, barrelY, barrelZ, stockX, stockY, stockZ,
 				magX, magY, magZ, attachmentX, attachmentY, attachmentZ, magId, topRail, modelName, modelTexture);
-	}
-	
-	public AssaultReceiverCasing(String componentName, String displayName) {
-		super(componentName, displayName);
 		this.setCreativeTab(AdvancedArmoury.tabComponentsAssault);
 	}
-	
-
-
 }

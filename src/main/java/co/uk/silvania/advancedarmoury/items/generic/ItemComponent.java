@@ -188,7 +188,9 @@ public class ItemComponent extends Item {
 			list.add("ITEM GENERATION HAS FAILED.");
 			list.add("This item is useless. I suggest bathing it in lava.");
 			list.add("This can only happen via bad item spawning methods;");
-			list.add("Use the creative menu or NEI.");
+			list.add("/give and NEI WILL NOT WORK for my stuff! (Sorry!)");
+			list.add("Use the creative menu, or when implemented, the");
+			list.add("Creative Component Creation Centre.");
 			list.add("");
 			list.add("If you somehow got this in survival,");
 			list.add("Please tell Flenix EXACTLY what you did.");
