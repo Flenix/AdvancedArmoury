@@ -1,6 +1,7 @@
 package co.uk.silvania.advancedarmoury.blocks.machines;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import scala.actors.threadpool.Arrays;
 
 public class MachineGui extends GuiContainer {
 
