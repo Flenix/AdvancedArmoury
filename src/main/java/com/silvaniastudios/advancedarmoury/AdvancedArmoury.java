@@ -80,7 +80,7 @@ import net.minecraftforge.common.MinecraftForge;
 @Mod(modid = AdvancedArmoury.modid, version = AdvancedArmoury.version, dependencies="after:rpgcore")
 public class AdvancedArmoury
 {
-    public static final String modid = "advancedarmoury-be";
+    public static final String modid = "advancedarmoury";
     public static final String version = "Alpha-0.0.2";
     
     public static DamageSource damageShot;
@@ -91,7 +91,7 @@ public class AdvancedArmoury
     public static AdvancedArmoury instance;
     public static GuiHandler guiHandler = new GuiHandler();
 
-    @SidedProxy(clientSide="co.uk.silvania.advancedarmoury.client.ClientProxy", serverSide="co.uk.silvania.advancedarmoury.CommonProxy")
+    @SidedProxy(clientSide="com.silvaniastudios.advancedarmoury.client.ClientProxy", serverSide="com.silvaniastudios.advancedarmoury.CommonProxy")
     public static CommonProxy proxy;
     
     private static int modGuiIndex = 0;
