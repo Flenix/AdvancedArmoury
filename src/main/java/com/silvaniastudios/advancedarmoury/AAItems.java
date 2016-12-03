@@ -2,8 +2,7 @@ package com.silvaniastudios.advancedarmoury;
 
 import com.silvaniastudios.advancedarmoury.items.ItemParts;
 import com.silvaniastudios.advancedarmoury.items.attachment.magazine.Magazine;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverFrame;
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
 import com.silvaniastudios.advancedarmoury.items_old.AAItemModifierCores;
 import com.silvaniastudios.advancedarmoury.items_old.AAItemPrebuiltGuns;
 import com.silvaniastudios.advancedarmoury.items_old.rounds.ItemBullet;
@@ -15,7 +14,6 @@ import net.minecraft.item.Item;
 
 public class AAItems {
 
-	public static Item assaultReceiverFrame;
 	public static Item gunFrame;
 	
 	public static Item itemPartGear;
@@ -73,7 +71,6 @@ public class AAItems {
 	}
 
 	public static void items() {
-		assaultReceiverFrame = new AssaultReceiverFrame().setUnlocalizedName("assaultReceiverFrame");
 		gunFrame = new GunFrame().setUnlocalizedName("gunFrame");
 	}
 	
@@ -118,15 +115,14 @@ public class AAItems {
 	}
 
 	public static void parts() {
-		itemPartGear = new ItemParts(40).setUnlocalizedName("itemPartGear");
-		itemPartScrew = new ItemParts(20).setUnlocalizedName("itemPartScrew");
-		itemPartWasher = new ItemParts(10).setUnlocalizedName("itemPartWasher");
-		itemPartBolt = new ItemParts(30).setUnlocalizedName("itemPartBolt");
-		itemPartNut = new ItemParts(20).setUnlocalizedName("itemPartNut");
+		itemPartGear = new ItemParts(5).setUnlocalizedName("itemPartGear");
+		itemPartScrew = new ItemParts(3).setUnlocalizedName("itemPartScrew");
+		itemPartWasher = new ItemParts(1).setUnlocalizedName("itemPartWasher");
+		itemPartBolt = new ItemParts(4).setUnlocalizedName("itemPartBolt");
+		itemPartNut = new ItemParts(2).setUnlocalizedName("itemPartNut");
 	}
 	
 	public static void registerItems() {
-    	GameRegistry.registerItem(assaultReceiverFrame, "assaultReceiverFrame");
     	GameRegistry.registerItem(gunFrame, "gunFrame");
     	
     	GameRegistry.registerItem(m4mag, "m4mag");
