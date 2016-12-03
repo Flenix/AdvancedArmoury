@@ -12,12 +12,12 @@ public class MaterialRegistry {
 	public static void register(String str) {
 		String[] splitter = str.split(",");
 		String materialName = splitter[0].trim();
-		if (splitter.length < 11) {
+		if (splitter.length < 8) {
 			AdvancedArmoury.println("WARNING! Failed to register material " + materialName + ". Check you have included ALL values and try again.");
 			return;
 		}
 		AdvancedArmoury.println("Registering Material: " + materialName);
-		RarityRegistry.register(materialName, RarityRegistry.getEnumRarity(splitter[10].trim()));
+		RarityRegistry.register(materialName, RarityRegistry.getEnumRarity(splitter[7].trim()));
 		materials.add(str);
 	}
 }

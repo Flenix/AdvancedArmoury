@@ -3,17 +3,27 @@ package com.silvaniastudios.advancedarmoury.config;
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.items.MaterialRegistry;
 import com.silvaniastudios.advancedarmoury.items.attachment.magazine.Magazine;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultBolt;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultFiringMechanism;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultFiringPin;
 import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultFrontEnd;
 import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverCasing;
 import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultStock;
-import com.silvaniastudios.advancedarmoury.items.generic.Barrel;
-import com.silvaniastudios.advancedarmoury.items.generic.Chamber;
-import com.silvaniastudios.advancedarmoury.items.generic.ChargingHandle;
-import com.silvaniastudios.advancedarmoury.items.generic.FireSelector;
-import com.silvaniastudios.advancedarmoury.items.generic.Trigger;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Barrel;
+import com.silvaniastudios.advancedarmoury.items.components.generic.BoltLarge;
+import com.silvaniastudios.advancedarmoury.items.components.generic.BoltSmall;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ChamberLarge;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ChamberSmall;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ChargingHandle;
+import com.silvaniastudios.advancedarmoury.items.components.generic.FireSelector;
+import com.silvaniastudios.advancedarmoury.items.components.generic.FiringMechanismLarge;
+import com.silvaniastudios.advancedarmoury.items.components.generic.FiringMechanismSmall;
+import com.silvaniastudios.advancedarmoury.items.components.generic.FiringPinLarge;
+import com.silvaniastudios.advancedarmoury.items.components.generic.FiringPinSmall;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Hammer;
+import com.silvaniastudios.advancedarmoury.items.components.generic.MagazineTube;
+import com.silvaniastudios.advancedarmoury.items.components.generic.RevolvingChamber;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Trigger;
+import com.silvaniastudios.advancedarmoury.items.components.pistol.PistolSlide;
+import com.silvaniastudios.advancedarmoury.items.components.rifle.BoltArm;
+import com.silvaniastudios.advancedarmoury.items.components.shotgun.ForeEnd;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
@@ -27,35 +37,59 @@ public class ComponentGenerator {
 		for (int i = 0; i < config.materials.length; i++) {
 			MaterialRegistry.register(config.materials[i]);
 		}
-		
-		Item itemAssaultBolt = new AssaultBolt("assaultBolt", "Assault Rifle Bolt").setUnlocalizedName("assaultBolt");
-		Item itemAssaultFiringPin = new AssaultFiringPin("assaultFiringPin", "Assault Rifle Firing Pin").setUnlocalizedName("assaultFiringPin");
-		Item itemAssaultReceiverCasing = new AssaultReceiverCasing("assaultReceiverCasing", "Assault Receiver Casing", "assault", 0.155F, 0.677F, 0.501F, -0.35F, 0.03F, 0.0F, 0.175F, 0.035F, 0.0F, -0.24F, -0.01F, 0.0F, 0.0F, 0.0F, 0.0F, 0, true, "m4receiver", "m4receiver").setUnlocalizedName("assaultReceiverCasing");
-		Item itemFiringMechanism = new AssaultFiringMechanism("assaultFiringMechanism", "Assault Firing Mechanism").setUnlocalizedName("assaultFiringMechanism");
+
+		Item itemAssaultReceiverCasing = new AssaultReceiverCasing("assaultReceiverCasing", "Assault Receiver Casing", 0.155F, 0.677F, 0.501F, -0.35F, 0.03F, 0.0F, 0.175F, 0.035F, 0.0F, -0.24F, -0.01F, 0.0F, 0.0F, 0.0F, 0.0F, 0, true, "m4receiver", "m4receiver").setUnlocalizedName("assaultReceiverCasing");
+
+		Item boltLarge = new BoltLarge("boltLarge", "Large Bolt").setUnlocalizedName("boltLarge");
+		Item boltSmall = new BoltSmall("boltSmall", "Small Bolt").setUnlocalizedName("boltSmall");
+		Item firingPinLarge = new FiringPinLarge("firingPinLarge", "Large Firing Pin").setUnlocalizedName("firingPinLarge");
+		Item firingPinSmall = new FiringPinSmall("firingPinSmall", "Small Firing Pin").setUnlocalizedName("firingPinSmall");
+		Item firingMechanismLarge = new FiringMechanismLarge("firingMechanismLarge", "Large Firing Mechanism").setUnlocalizedName("firingMechanismLarge");
+		Item firingMechanismSmall = new FiringMechanismSmall("firingMechanismSmall", "Small Firing Mechanism").setUnlocalizedName("firingMechanismSmall");
 		
 		Item itemChargingHandle = new ChargingHandle("chargingHandle", "Charging Handle").setUnlocalizedName("chargingHandle");
 		Item itemFireSelector = new FireSelector("fireSelector", "Fire Selector").setUnlocalizedName("fireSelector");
 		Item itemTrigger = new Trigger("trigger", "Trigger").setUnlocalizedName("trigger");
 		
-		Item itemChamber = new Chamber("chamber", "Chamber").setUnlocalizedName("chamber");
+		Item itemChamberLarge = new ChamberLarge("chamberLarge", "Large Chamber").setUnlocalizedName("chamberLarge");
+		Item itemChamberSmall = new ChamberSmall("chamberSmall", "Small Chamber").setUnlocalizedName("chamberSmall");
 		Item itemBarrel = new Barrel("barrel", "Barrel").setUnlocalizedName("barrel");
+		
+		Item itemHammer = new Hammer("hammer", "Hammer").setUnlocalizedName("hammer");
+		Item pistolSlide = new PistolSlide("pistolSlide", "Semi-Auto Pistol Slide").setUnlocalizedName("pistolSlide");
+		Item revolvingChamber = new RevolvingChamber("revolvingChamber", "Revolving Chamber").setUnlocalizedName("revolvingChamber");
+		Item magazineTube = new MagazineTube("magazineTube", "Shotgun Magazine Tube").setUnlocalizedName("magazineTube");
+		Item foreEnd = new ForeEnd("foreEnd", "Shotgun Fore End").setUnlocalizedName("foreEnd");
+		Item boltArm = new BoltArm("boltArm", "Bolt Arm").setUnlocalizedName("boltArm");
 		
 		Item itemAssaultFrontEnd = new AssaultFrontEnd("frontEnd", "Front End", "m4FrontEnd", "m4FrontEnd", "assault", 0.16F, 0.162F, 1.042F, true, true, true, true).setUnlocalizedName("assaultFrontEnd");
 		Item itemAssaultStock = new AssaultStock("stock", "Stock", "m4Stock", "m4Stock", "assault", 0.0F, 0.0F, 0.0F).setUnlocalizedName("assaultStock");
 		
 		Item magazine30rd = new Magazine(0, 30).setUnlocalizedName("magazine30rd");
 		
-		GameRegistry.registerItem(itemAssaultBolt, "assaultBolt");
-		GameRegistry.registerItem(itemAssaultFiringPin, "assaultFiringPin");
 		GameRegistry.registerItem(itemAssaultReceiverCasing, "assaultReceiverCasing");
-		GameRegistry.registerItem(itemFiringMechanism, "assaultFiringMechanism");
+		
+		GameRegistry.registerItem(boltLarge, "boltLarge");
+		GameRegistry.registerItem(boltSmall, "boltSmall");
+		GameRegistry.registerItem(firingPinLarge, "firingPinLarge");
+		GameRegistry.registerItem(firingPinSmall, "firingPinSmall");
+		GameRegistry.registerItem(firingMechanismLarge, "firingMechanismLarge");
+		GameRegistry.registerItem(firingMechanismSmall, "firingMechanismSmall");
 		
 		GameRegistry.registerItem(itemChargingHandle, "chargingHandle");
 		GameRegistry.registerItem(itemFireSelector, "fireSelector");
 		GameRegistry.registerItem(itemTrigger, "trigger");
 		
-		GameRegistry.registerItem(itemChamber, "chamber");
+		GameRegistry.registerItem(itemChamberLarge, "chamberLarge");
+		GameRegistry.registerItem(itemChamberSmall, "chamberSmall");
 		GameRegistry.registerItem(itemBarrel, "barrel");
+		
+		GameRegistry.registerItem(itemHammer, "hammer");
+		GameRegistry.registerItem(pistolSlide, "pistolSlide");
+		GameRegistry.registerItem(revolvingChamber, "revolvingChamber");
+		GameRegistry.registerItem(magazineTube, "magazineTube");
+		GameRegistry.registerItem(foreEnd, "foreEnd");
+		GameRegistry.registerItem(boltArm, "boltArm");
 		
 		GameRegistry.registerItem(itemAssaultFrontEnd, "assaultFrontEnd");
 		GameRegistry.registerItem(itemAssaultStock, "assaultStock");
@@ -108,11 +142,11 @@ public class ComponentGenerator {
 		generateMaterial("Silvanian, 			3.0, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.VERY_RARE); //High fire rate & high durability
 		generateMaterial("Silvanian, 			0.6, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.LEGENDARY); //High fire rate/high power/high range
 		generateMaterial("Silvanian, 			3.0, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.LEGENDARY); //High fire rate/high power/high durability
-		generateMaterial("Abramov Militia, 		0.6, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.LEGENDARY); //High power
+		generateMaterial("Arbamov Militia, 		0.6, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.LEGENDARY); //High power
 		generateMaterial("Silvanian, 			0.6, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.VERY_RARE); //High power & high range
 		generateMaterial("Silvanian, 			3.0, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.VERY_RARE); //High power & high durability
 		generateMaterial("Silvanian, 			3.0, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.LEGENDARY); //High power/high range/high durability
-		generateMaterial("Girchler & Schmidt, 	0.6, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.RARE); //High range
+		generateMaterial("Girchler & Schmitt, 	0.6, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.RARE); //High range
 		generateMaterial("Silvanian, 			3.0, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.VERY_RARE); //High range & high durability
 		generateMaterial("Silvanian, 			3.0, 1935, 0.31, \u00A7e, 16635392, 3, null, x, x" + EnumRarity.RARE); //High durability*/
 	}

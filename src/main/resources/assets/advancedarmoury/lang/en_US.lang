@@ -169,8 +169,8 @@ death.attack.advancedArmoury.melee=%s was beaten down.
 death.attack.advancedArmoury.melee.player=%1$s was beaten down by %2$s using %2$3.
 death.attack.advancedArmoury.event=%s was killed by an event modifier. This is an error of sorts... you shouldn't see this. Tell Flenix.
 
-itemGroup.tabComponentsGeneric=[Adv. Armoury] Generic Components
-itemGroup.tabComponentsAssault=[Adv. Armoury] Assault Components
+itemGroup.tabComponentsInternal=[Adv. Armoury] Internal Components
+itemGroup.tabComponentsExternal=[Adv. Armoury] External Components
 itemGroup.tabComponentsCalibre=[Adv. Armoury] Calibre Components
 itemGroup.tabGeneric=Advanced Armoury
 itemGroup.tabParts=[Adv. Armoury] Parts

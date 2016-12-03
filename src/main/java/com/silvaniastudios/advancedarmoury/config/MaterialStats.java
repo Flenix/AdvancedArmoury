@@ -64,18 +64,6 @@ public class MaterialStats {
 		return 0;
 	}
 	
-	public static int getFireRate(String str) {
-		for (int i = 0; i < config.materials.length; i++) {
-			String[] splitter = config.materials[i].split(",");
-			String materialName = splitter[0].trim();
-			int fireRate = ComponentGenerator.parseInt(splitter[6].trim());
-			if (materialName.equalsIgnoreCase(str)) {
-				return fireRate;
-			}
-		}
-		return 0;
-	}
-	
 	public static String getOreDict(String str) {
 		for (int i = 0; i < config.materials.length; i++) {
 			String[] splitter = config.materials[i].split(",");
