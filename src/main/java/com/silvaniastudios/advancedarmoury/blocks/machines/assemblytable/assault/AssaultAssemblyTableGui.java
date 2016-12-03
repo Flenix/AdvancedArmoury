@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.blocks.machines.MachineGui;
-import com.silvaniastudios.advancedarmoury.items.generic.Barrel;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Barrel;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
 import com.silvaniastudios.advancedarmoury.network.GunBuildPacket;
 
 import co.uk.silvania.rpgcore.client.skillgui.MultiLineButton;
@@ -175,7 +175,7 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		
 		if (drawProgressTooltip) {
 			if (te.clientBuildProgress > 0) {
-				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + totalBuildTime(2, 5, te));
+				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + buildTime(te.getStackInSlot(1)));
 				drawHoveringText(progressList, mouseX, mouseZ, fontRendererObj);
 			}
 		}
@@ -188,14 +188,14 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		int width = fontRendererObj.getStringWidth("Assault Rifle Assembly Table");
 		
 		String title = "Assault Rifle Assembly Table";
-		String bt = "Build Time: " + totalBuildTime(2, 5, te);
-		String cost = "Cost: " + partsCost(2, 5, te);
+		String bt = "Build Time: " + buildTime(te.getStackInSlot(1));
+		String cost = "Cost: " + partCost(te.getStackInSlot(1));
 		
 		String dura = "DUR: " + totalDurability(2, 5, te);
 		String weight = "WGT: " + totalWeight(2, 5, te);
 		String acc = "ACC: " + totalAccuracy(2, 5, te);
-		String frate = "FRT: " + fireRate(2, 5, te);
-		String power = "PWR: " + power(2, 5, te);
+		//TODO String frate = "FRT: " + fireRate(2, 5, te);
+		//TODO String power = "PWR: " + power(2, 5, te);
 		
 		fontRendererObj.drawString(title, pos(title), 6, 4210752);
 		fontRendererObj.drawString(bt, 89, 20, 4210752);
@@ -204,8 +204,8 @@ public class AssaultAssemblyTableGui extends MachineGui {
 		fontRendererObj.drawString(dura, 194, 20, 4210752);
 		fontRendererObj.drawString(weight, 194, 30, 4210752);
 		fontRendererObj.drawString(acc, 194, 40, 4210752);
-		fontRendererObj.drawString(frate, 194, 50, 4210752);
-		fontRendererObj.drawString(power, 194, 60, 4210752);
+		//TODO fontRendererObj.drawString(frate, 194, 50, 4210752);
+		//TODO fontRendererObj.drawString(power, 194, 60, 4210752);
 		
 		fontRendererObj.drawString("Parts: ", 55, 8, 4210752);
 		fontRendererObj.drawString("" + te.partsValue, 55, 17, 4210752);
@@ -303,7 +303,7 @@ public class AssaultAssemblyTableGui extends MachineGui {
 	
 	private boolean isGunValid() {
 		boolean frame = te.getStackInSlot(1) != null;
-		boolean afford = te.partsValue >= partsCost(2, 5, te) ? true : false;
+		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) ? true : false;
 		return frame() && barrel() && frontEnd() && receiver() && stock() && calibre() && afford;
 	}
 	
@@ -326,7 +326,7 @@ public class AssaultAssemblyTableGui extends MachineGui {
 				
 		boolean frame = te.getStackInSlot(1) != null;
 		boolean modifier = te.getStackInSlot(6) != null;
-		boolean afford = te.partsValue >= partsCost(2, 5, te) ? true : false;
+		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) ? true : false;
 
 		List result = new ArrayList();
 
@@ -368,7 +368,7 @@ public class AssaultAssemblyTableGui extends MachineGui {
 				
 		boolean frame = te.getStackInSlot(1) != null;
 		boolean modifier = te.getStackInSlot(6) != null;
-		boolean afford = te.partsValue >= partsCost(2, 5, te) ? true : false;
+		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) ? true : false;
 
 		List result = new ArrayList();
 

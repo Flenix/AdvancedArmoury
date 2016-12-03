@@ -7,10 +7,10 @@ import com.silvaniastudios.advancedarmoury.blocks.machines.MachineEntity;
 import com.silvaniastudios.advancedarmoury.gun.inventory.ItemIInventory;
 import com.silvaniastudios.advancedarmoury.gun.inventory.assault.AssaultIInventory;
 import com.silvaniastudios.advancedarmoury.items.ItemParts;
-import com.silvaniastudios.advancedarmoury.items.generic.Barrel;
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverCasing;
-import com.silvaniastudios.advancedarmoury.skills.SkillAssaultCraft;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Barrel;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
+import com.silvaniastudios.advancedarmoury.skills.SkillFirearmCrafting;
 
 import co.uk.silvania.rpgcore.skills.SkillLevelBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -88,11 +88,11 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 		}
 		
 		if (isGunValid()) {
-			buildTime = gunBuildTime(2, 5);
+			buildTime = buildTime(this.getStackInSlot(1));
 		}
 		
 		if (building) {
-			if (partsValue >= gunCost(2, 5)) {
+			if (partsValue >= partCost(this.getStackInSlot(1))) {
 				if (buildProgress < buildTime) {
 					buildProgress++;
 				} else {
@@ -130,7 +130,7 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 		ItemStack modifierCore = this.getStackInSlot(6);
 		
 		if (isGunValid()) {
-			partsValue = partsValue - gunCost(2, 5);
+			partsValue = partsValue - partCost(this.getStackInSlot(1));
 			getDescriptionPacket();
 			
 			if (frame != null) {
@@ -160,8 +160,8 @@ public class AssaultAssemblyTableEntity extends MachineEntity implements IInvent
 					frame.stackTagCompound.setString("creator", player.getDisplayName());
 					
 					System.out.println("Adding XP to player!");
-					SkillAssaultCraft skillAssaultCraft = (SkillAssaultCraft) SkillLevelBase.get(player, SkillAssaultCraft.staticSkillId);
-					skillAssaultCraft.addXPWithUpdate(20, player);
+					SkillFirearmCrafting skillFirearmCrafting = (SkillFirearmCrafting) SkillLevelBase.get(player, SkillFirearmCrafting.staticSkillId);
+					skillFirearmCrafting.addXPWithUpdate(20, player);
 				}
 			}
 			return true;
