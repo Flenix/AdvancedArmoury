@@ -1,6 +1,8 @@
-package com.silvaniastudios.advancedarmoury.items.generic;
+package com.silvaniastudios.advancedarmoury.items.components.generic;
 
 import java.util.List;
+
+import org.lwjgl.input.Keyboard;
 
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.RarityRegistry;
@@ -26,13 +28,10 @@ public class ItemComponent extends Item {
 	public String identifier;
 	
 	public boolean accuracyEnabled;
-	public boolean powerEnabled;
-	public boolean rangeEnabled;
 	public boolean cosmeticEnabled;
-	public boolean fireRateEnabled;
 	public boolean calibreEnabled;
 	
-	public double size;
+	public double volume;
 	
 	ComponentGenerator compGen;
 	
@@ -47,23 +46,20 @@ public class ItemComponent extends Item {
 	
 	public boolean assetComponent = false;
 	
-	public ItemComponent(String componentName, String displayName, String identifier, double size, boolean acc, boolean pwr, boolean rng, boolean cos, boolean frt, boolean cal) {
+	public ItemComponent(String componentName, String displayName, String identifier, double volume, boolean acc, boolean cos, boolean cal) {
 		this.componentName = componentName;
 		this.displayName = displayName;
 		this.identifier = identifier;
-		this.size = size;
+		this.volume = volume;
 		
 		this.accuracyEnabled = acc;
-		this.powerEnabled 	 = pwr;
-		this.rangeEnabled 	 = rng;
 		this.cosmeticEnabled = cos;
-		this.fireRateEnabled = frt;
 		this.calibreEnabled  = cal;
 	}
 	
 	//For decorative-only stuff, such as assets, trigger etc
 	public ItemComponent(String componentName, String displayName, String identifier, double size) {
-		this(componentName, displayName, identifier, size, false, false, false, true, false, false);
+		this(componentName, displayName, identifier, size, false, true, false);
 	}
 	
 	@Override
@@ -99,11 +95,8 @@ public class ItemComponent extends Item {
 			float accuracy = compGen.parseFloat(splitter[3].trim());
 			String textCol = splitter[4].trim();
 			int rgb = compGen.parseInt(splitter[5].trim());
-			int fireRate = compGen.parseInt(splitter[6].trim());
-			String oreDict = splitter[7].trim();
-			int power = compGen.parseInt(splitter[8].trim());
-			int range = compGen.parseInt(splitter[9].trim());
-			String rarity = splitter[10].trim();
+			String oreDict = splitter[6].trim();
+			String rarity = splitter[7].trim();
 			
 			String cosmetic = materialName;
 				
@@ -115,27 +108,20 @@ public class ItemComponent extends Item {
 			itemComponent.stackTagCompound.setInteger("itemCol", rgb);
 			itemComponent.stackTagCompound.setString("oreDict", oreDict);
 			
-			itemComponent.stackTagCompound.setDouble("durability", durability*size*50);
-			itemComponent.stackTagCompound.setInteger("weight", (int) Math.round(weight*size));
-			
-			itemComponent.stackTagCompound.setInteger("cost", (int) Math.round((size*getWeight(itemComponent))/20));
-			itemComponent.stackTagCompound.setInteger("buildTime", (int) Math.round(((size*getDurability(itemComponent))*3)/20));
+			itemComponent.stackTagCompound.setInteger("durability", (int) (durability*volume*10));
+			itemComponent.stackTagCompound.setInteger("weight", (int) Math.ceil((weight*volume)/1000));
 			
 			if (RarityRegistry.getEnumRarity(rarity) != null) {
 				itemComponent.stackTagCompound.setString("rarity", rarity);
 			}
 			
 			if (!this.accuracyEnabled)	{ accuracy = 0; }
-			if (!this.powerEnabled)		{ power = 0; }
-			if (!this.rangeEnabled)	 	{ range = 0; }
 			if (!this.cosmeticEnabled)	{ cosmetic = ""; }
-			if (!this.fireRateEnabled)	{ fireRate = 0; }
+			
+			if (this instanceof FiringPinLarge || this instanceof FiringPinSmall) { accuracy = accuracy/10; }
 			
 			itemComponent.stackTagCompound.setFloat("accuracy", accuracy);
-			itemComponent.stackTagCompound.setInteger("power", power);
-			itemComponent.stackTagCompound.setInteger("range", range);
 			itemComponent.stackTagCompound.setString("cosmetic", cosmetic);
-			itemComponent.stackTagCompound.setInteger("fireRate", fireRate);
 			
 			if (componentName.toLowerCase().contains("assault")) { itemComponent.stackTagCompound.setString("gunType", "Assault"); }
 			if (componentName.toLowerCase().contains("rifle"))	 { itemComponent.stackTagCompound.setString("gunType", "Rifle"); }
@@ -161,30 +147,35 @@ public class ItemComponent extends Item {
 				EnumRarity rarity = RarityRegistry.getEnumRarity(item.stackTagCompound.getString("rarity"));
 				list.add(RarityRegistry.getRarityTag(rarity));
 			}
-			if (identifier.length() > 0) {
-				list.add(identifier);
-				list.add("");
-			}
 			list.add(item.stackTagCompound.getString("textCol") + "Material: " + getMaterial(item));
-			list.add("");
-			list.add(accDisplay(getAccuracy(item)));
-			list.add(fireRateDisplay(item, getFireRate(item)));
-			list.add(powerDisplay(item, getPower(item)));
-			list.add(weightDisplay(item, getWeight(item)));
-			list.add(durabilityDisplay(item, getDurability(item)));
-			list.add("");
-			list.add("Cost (Parts): " + getCost(item));
-			list.add("Build Time: " + getBuildTime(item));
-			list.add("");
-			if (item.stackTagCompound != null) {
-				if (item.stackTagCompound.getInteger("length") > 0) {
-					list.add("Length: " + item.stackTagCompound.getInteger("length") + "\"");
+			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+				list.add("");
+				if (identifier.length() > 0) {
+					list.add(identifier);
+					list.add("");
 				}
-				if (item.stackTagCompound.getDouble("calibre") > 0) {
-					list.add("Calibre: " + item.stackTagCompound.getDouble("calibre") + "mm");
+				if (accuracyEnabled) { list.add(accDisplay(getAccuracy(item))); }
+				list.add(weightDisplay(item, getWeight(item)));
+				list.add(durabilityDisplay(item, getDurability(item)));
+				list.add("");
+				if (item.stackTagCompound != null) {
+					if (item.stackTagCompound.getInteger("length") > 0) {
+						list.add("Length: " + item.stackTagCompound.getInteger("length") + "\"");
+					}
+					if (item.stackTagCompound.getDouble("calibre") > 0) {
+						if (item.stackTagCompound.getDouble("calibre") == 18.5) {
+							list.add("Calibre: 12-Gauge (Shotgun Only)");
+						} else {
+							list.add("Calibre: " + item.stackTagCompound.getDouble("calibre") + "mm");
+						}
+					}
+					if (item.stackTagCompound.getInteger("capacity") > 0) {
+						list.add("Capacity: " + item.stackTagCompound.getInteger("capacity") + " Rounds");
+					}
 				}
+			} else {
+				list.add("Hold shift for more information");
 			}
-			list.add("Hold shift for more information");
 		} else {
 			list.add("ITEM GENERATION HAS FAILED.");
 			list.add("This item is useless. I suggest bathing it in lava.");
@@ -207,26 +198,6 @@ public class ItemComponent extends Item {
 			else return "\u00A72" + "Accuracy: " + acc;
 		}
 		return "\u00A78" + "Accuracy: N/A";
-	}
-	
-	public String fireRateDisplay(ItemStack item, int fireRate) {
-		if (fireRate > 0 && tag(item)) {
-			return "Fire Rate: " + fireRate + " RPM";
-		}
-		return "\u00A78" + "Fire Rate: N/A";
-	}
-	
-	public String powerDisplay(ItemStack item, int power) {
-		//return "vulgar"; ;)
-		if (power > 0) {
-			int matWeight = stats.getWeight(getMaterial(item)); //TODO make better
-			if (matWeight >= 1601) { return "\u00A72" + "Power: " + power; }
-			else if (matWeight >= 1201) { return "\u00A7a" + "Power: " + power; }
-			else if (matWeight >= 801) { return "\u00A7e" + "Power: " + power; }
-			else if (matWeight >= 401) { return "\u00A7c" + "Power: " + power; }
-			else return "\u00A74" + "Power: " + power;
-		}
-		return "\u00A78" + "Power: N/A";
 	}
 	
 	public String weightDisplay(ItemStack item, int weight) {
@@ -255,17 +226,10 @@ public class ItemComponent extends Item {
 	public String getTextCol(ItemStack item) 		{ return tag(item) ? item.stackTagCompound.getString("textCol") : null; }
 	public int getItemCol(ItemStack item) 			{ return tag(item) ? item.stackTagCompound.getInteger("itemCol") : null; }
 	public String getOreDict(ItemStack item) 		{ return tag(item) ? item.stackTagCompound.getString("oreDict") : null; }
-	public int getCost(ItemStack item)				{ return tag(item) ? item.stackTagCompound.getInteger("cost") : null; }
-	public int getBuildTime(ItemStack item)			{ return tag(item) ? item.stackTagCompound.getInteger("buildTime") : null; }
 	
 	public float getAccuracy(ItemStack item)	{ return tag(item) && accuracyEnabled ? item.stackTagCompound.getFloat("accuracy") : 0; }
-	public int getPower(ItemStack item)			{ return tag(item) && powerEnabled    ? item.stackTagCompound.getInteger("power") : 0; }
-	public int getRange(ItemStack item)			{ return tag(item) && rangeEnabled    ? item.stackTagCompound.getInteger("range") : 0; }
 	public String getTexture(ItemStack item)	{ return tag(item) && cosmeticEnabled ? item.stackTagCompound.getString("cosmetic") : ""; }
-	public int getFireRate(ItemStack item)		{ return tag(item) && fireRateEnabled ? item.stackTagCompound.getInteger("fireRate") : 0; }
 	public double getCalibre(ItemStack item)	{ return tag(item) && calibreEnabled  ? item.stackTagCompound.getDouble("calibre") : 0; }
 	
 	public boolean tag(ItemStack item) { return item.stackTagCompound != null ? true : false; }
-	
-
 }

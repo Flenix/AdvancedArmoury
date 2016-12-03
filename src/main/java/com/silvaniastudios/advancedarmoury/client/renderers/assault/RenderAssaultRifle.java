@@ -8,10 +8,10 @@ import com.silvaniastudios.advancedarmoury.gun.EntityItemGun;
 import com.silvaniastudios.advancedarmoury.gun.inventory.ItemIInventory;
 import com.silvaniastudios.advancedarmoury.gun.inventory.assault.AssaultIInventory;
 import com.silvaniastudios.advancedarmoury.items.assets.ComponentType;
-import com.silvaniastudios.advancedarmoury.items.generic.Barrel;
-import com.silvaniastudios.advancedarmoury.items.generic.FrontEnd;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverCasing;
-import com.silvaniastudios.advancedarmoury.items.generic.Stock;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Barrel;
+import com.silvaniastudios.advancedarmoury.items.components.generic.FrontEnd;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Stock;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;

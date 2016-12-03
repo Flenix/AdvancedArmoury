@@ -1,7 +1,6 @@
 package com.silvaniastudios.advancedarmoury.blocks.machines.assemblytable.assault;
 
-import com.silvaniastudios.advancedarmoury.items.generic.ItemComponent;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponent;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

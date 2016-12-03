@@ -5,17 +5,9 @@ import java.util.ArrayList;
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.blocks.machines.MachineEntity;
 import com.silvaniastudios.advancedarmoury.items.ItemParts;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultBolt;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultFiringMechanism;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultFiringPin;
-import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverCasing;
-import com.silvaniastudios.advancedarmoury.items.generic.Chamber;
-import com.silvaniastudios.advancedarmoury.items.generic.ChargingHandle;
-import com.silvaniastudios.advancedarmoury.items.generic.FireSelector;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverCasing;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverFrame;
-import com.silvaniastudios.advancedarmoury.items.generic.Trigger;
-import com.silvaniastudios.advancedarmoury.skills.SkillAssaultCraft;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ChamberLarge;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
+import com.silvaniastudios.advancedarmoury.skills.SkillFirearmCrafting;
 
 import co.uk.silvania.rpgcore.skills.SkillLevelBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -93,11 +85,11 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 		}
 		
 		if (isComponentValid()) {
-			buildTime = gunBuildTime(2, 9);
+			buildTime = buildTime(this.getStackInSlot(1));
 		}
 		
 		if (building) {
-			if (partsValue >= gunCost(2, 9)) {
+			if (partsValue >= partCost(this.getStackInSlot(1))) {
 				if (buildProgress < buildTime) {
 					buildProgress++;
 				} else {
@@ -126,9 +118,9 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	
 	public boolean isComponentValid() {
 		if (this.getStackInSlot(1) != null) {
-			ItemStack itemFrame = this.getStackInSlot(1);
-			if (itemFrame.getItem() instanceof ReceiverFrame) {
-				ReceiverFrame receiver = (ReceiverFrame) itemFrame.getItem();
+			ItemStack itemCasing = this.getStackInSlot(1);
+			if (itemCasing.getItem() instanceof ReceiverCasing) {
+				ReceiverCasing receiver = (ReceiverCasing) itemCasing.getItem();
 				if (receiver.gunType.equalsIgnoreCase("assault")) {
 					boolean b1 = this.getStackInSlot(1) != null;
 					boolean b2 = this.getStackInSlot(2) != null;
@@ -137,8 +129,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 					boolean b5 = this.getStackInSlot(5) != null;
 					boolean b6 = this.getStackInSlot(7) != null;
 					boolean b7 = this.getStackInSlot(8) != null;
-					boolean b8 = this.getStackInSlot(9) != null;
-					return b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8;
+					return b1 && b2 && b3 && b4 && b5 && b6 && b7;
 				}
 			}
 		}
@@ -149,7 +140,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 		System.out.println("Building!");
 		if (isComponentValid()) {
 			System.out.println("Component is valid");
-			ItemStack frame =	 			this.getStackInSlot(1);
+			ItemStack casing =	 			this.getStackInSlot(1);
 			ItemStack itemBolt = 			this.getStackInSlot(2);
 			ItemStack itemChamber = 		this.getStackInSlot(3);
 			ItemStack itemFiringPin = 		this.getStackInSlot(4);
@@ -157,48 +148,40 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 			ItemStack itemFireSelector = 	this.getStackInSlot(6);
 			ItemStack itemChargingHandle = 	this.getStackInSlot(7);
 			ItemStack itemTrigger = 		this.getStackInSlot(8);
-			ItemStack itemCasing = 			this.getStackInSlot(9);
 			
-			System.out.println("gunCost: " + gunCost(2, 9));
-			partsValue -= gunCost(2, 9);
+			System.out.println("gunCost: " + partCost(this.getStackInSlot(1)));
+			partsValue -= partCost(this.getStackInSlot(1));
 			getDescriptionPacket();
 			
-			if (itemCasing != null) {
+			if (casing != null) {
 				System.out.println("Frame isn't null");
-				if (itemCasing.getItem() instanceof ReceiverCasing) {
-					if (itemCasing.stackTagCompound == null) {
-						itemCasing.stackTagCompound = new NBTTagCompound();
+				if (casing.getItem() instanceof ReceiverCasing) {
+					if (casing.stackTagCompound == null) {
+						casing.stackTagCompound = new NBTTagCompound();
 					}
 					System.out.println("Setting values");
-					AssaultBolt bolt = (AssaultBolt) itemBolt.getItem();
-					Chamber chamber = (Chamber) itemChamber.getItem();
-					AssaultFiringPin firingPin = (AssaultFiringPin) itemFiringPin.getItem();
-					AssaultFiringMechanism firingMechanism = (itemFiringMechanism != null) ? (AssaultFiringMechanism) itemFiringMechanism.getItem() : null;
-					FireSelector fireSelector = (FireSelector) itemFireSelector.getItem();
-					ChargingHandle chargingHandle = (ChargingHandle) itemChargingHandle.getItem();
-					Trigger trigger = (Trigger) itemTrigger.getItem();
-					AssaultReceiverCasing casing = (AssaultReceiverCasing) itemCasing.getItem();
+					ChamberLarge chamber = (ChamberLarge) itemChamber.getItem();
 					
-					itemCasing.stackTagCompound.setBoolean("hasInternals", true);
+					casing.stackTagCompound.setBoolean("hasInternals", true);
 					
-					itemCasing.stackTagCompound.setInteger("weight", calculateWeight());
-					itemCasing.stackTagCompound.setFloat("accuracy", calculateAccuracy());
-					itemCasing.stackTagCompound.setInteger("fireRate", calculateFireRate());
-					itemCasing.stackTagCompound.setInteger("power", calculatePower());
-					itemCasing.stackTagCompound.setInteger("durability", calculateDurability());
+					casing.stackTagCompound.setInteger("weight", calculateWeight());
+					casing.stackTagCompound.setFloat("accuracy", calculateAccuracy());
+					casing.stackTagCompound.setInteger("fireRate", calculateFireRate());
+					casing.stackTagCompound.setInteger("power", calculatePower());
+					casing.stackTagCompound.setInteger("durability", calculateDurability());
 					
-					itemCasing.stackTagCompound.setInteger("boltTextureColour", itemBolt.stackTagCompound.getInteger("itemCol"));
-					itemCasing.stackTagCompound.setInteger("fireSelectorTextureColour", itemFireSelector.stackTagCompound.getInteger("itemCol"));
-					itemCasing.stackTagCompound.setInteger("chargingHandleTextureColour", itemChargingHandle.stackTagCompound.getInteger("itemCol"));
-					itemCasing.stackTagCompound.setInteger("triggerTextureColour", itemTrigger.stackTagCompound.getInteger("itemCol"));
-					itemCasing.stackTagCompound.setDouble("calibre", chamber.getCalibre(itemChamber));
-					itemCasing.stackTagCompound.setString("creator", player.getDisplayName());
+					casing.stackTagCompound.setInteger("boltTextureColour", itemBolt.stackTagCompound.getInteger("itemCol"));
+					casing.stackTagCompound.setInteger("fireSelectorTextureColour", itemFireSelector.stackTagCompound.getInteger("itemCol"));
+					casing.stackTagCompound.setInteger("chargingHandleTextureColour", itemChargingHandle.stackTagCompound.getInteger("itemCol"));
+					casing.stackTagCompound.setInteger("triggerTextureColour", itemTrigger.stackTagCompound.getInteger("itemCol"));
+					casing.stackTagCompound.setDouble("calibre", chamber.getCalibre(itemChamber));
+					casing.stackTagCompound.setString("creator", player.getDisplayName());
 					
-					System.out.println("Adding XP to player!");
-					SkillAssaultCraft skillAssaultCraft = (SkillAssaultCraft) SkillLevelBase.get(player, SkillAssaultCraft.staticSkillId);
-					skillAssaultCraft.addXPWithUpdate(20, player);
+					System.out.println("Adding " + (Math.ceil(calculateWeight()/5)) + " (" + calculateWeight() + " / 5) XP to player!");
+					SkillFirearmCrafting skillFirearmCrafting = (SkillFirearmCrafting) SkillLevelBase.get(player, SkillFirearmCrafting.staticSkillId);
+					skillFirearmCrafting.addXPWithUpdate((float) Math.ceil(calculateWeight()/5), player);
 					
-					this.setInventorySlotContents(1, itemCasing);
+					this.setInventorySlotContents(1, casing);
 					this.setInventorySlotContents(2, null);
 					this.setInventorySlotContents(3, null);
 					this.setInventorySlotContents(4, null);
@@ -235,6 +218,11 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	}
 	
 	public int calculateFireRate() {
+		//Calculate semi and full-auto fire rates
+		//For full auto, round up and use chart
+		//For semi, value is the delay before you can fire again
+		
+		
 		double fireRate = 0;
 		double count = 0.0;
 		for (int i = 2; i < 9; i++) {

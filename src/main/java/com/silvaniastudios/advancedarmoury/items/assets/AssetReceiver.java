@@ -2,7 +2,7 @@ package com.silvaniastudios.advancedarmoury.items.assets;
 
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.config.MaterialStats;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -12,9 +12,8 @@ public class AssetReceiver extends ReceiverCasing {
 	public boolean topRail = false;
 	
 	public AssetReceiver(ComponentReceiver cpt) {
-		super(cpt.componentName,
+		super("large", cpt.gunType, cpt.componentName,
 				cpt.displayName, 
-				cpt.gunType, 
 				cpt.xSize,
 				cpt.ySize, 
 				cpt.zSize, 

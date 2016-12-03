@@ -7,7 +7,7 @@ import com.silvaniastudios.advancedarmoury.config.ComponentGenerator;
 import com.silvaniastudios.advancedarmoury.config.MaterialStats;
 import com.silvaniastudios.advancedarmoury.gun.inventory.ItemIInventory;
 import com.silvaniastudios.advancedarmoury.gun.inventory.assault.AssaultIInventory;
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
 import com.silvaniastudios.advancedarmoury.items_old.AAItemModifierCores;
 
 import cpw.mods.fml.common.registry.GameRegistry;

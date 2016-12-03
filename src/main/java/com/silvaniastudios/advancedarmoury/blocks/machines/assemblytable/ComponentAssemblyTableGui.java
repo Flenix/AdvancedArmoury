@@ -11,8 +11,12 @@ import org.lwjgl.opengl.GL11;
 
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.blocks.machines.MachineGui;
-import com.silvaniastudios.advancedarmoury.items.generic.ItemComponent;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverFrame;
+import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponent;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.lmg.LMGReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.rifle.RifleReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.smg.SMGReceiverCasing;
 import com.silvaniastudios.advancedarmoury.network.GunBuildPacket;
 
 import co.uk.silvania.rpgcore.client.skillgui.MultiLineButton;
@@ -53,7 +57,7 @@ public class ComponentAssemblyTableGui extends MachineGui {
 	@Override
 	public void initGui() {
 		super.initGui();
-		button = new MultiLineButton(1, guiLeft + 95, guiTop + 93, 92, 16, "Build Gun");
+		button = new MultiLineButton(1, guiLeft + 95, guiTop + 93, 92, 16, "Build Component");
 		name = new GuiTextField(this.fontRendererObj, 9, 129, 158, 10);
 		tag = new GuiTextField(this.fontRendererObj, 9, 144, 158, 10);
 		
@@ -129,9 +133,9 @@ public class ComponentAssemblyTableGui extends MachineGui {
 			Integer[] check = {2, 4, 5, 6, 7, 8, 9, 10, 11, 13};
 			drawCustomHoveringText(componentStatReportA(), componentStatReportB(), mouseX, mouseZ, fontRendererObj, check);
 		}
+		List text = new ArrayList();
 		
 		if (mouseX >= guiLeft + 7 && mouseZ >= guiTop + 127 && mouseX <= guiLeft + 186 && mouseZ <= guiTop + 139) {
-			List text = new ArrayList();
 			text.add("Rename your component here!");
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
@@ -144,7 +148,6 @@ public class ComponentAssemblyTableGui extends MachineGui {
 			} else {
 				text.add("\u00A7oHold Shift to see formatting help!");
 			}
-			drawHoveringText(text, mouseX, mouseZ, fontRendererObj);
 			if (Mouse.isButtonDown(0)) {
 				name.setFocused(true);
 				tag.setFocused(false);
@@ -152,7 +155,6 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		}
 		
 		if (mouseX >= guiLeft + 7 && mouseZ >= guiTop + 142 && mouseX <= guiLeft + 186 && mouseZ <= guiTop + 154) {
-			List text = new ArrayList();
 			text.add("Add a custom tagline to your component here!");
 			
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
@@ -165,7 +167,6 @@ public class ComponentAssemblyTableGui extends MachineGui {
 			} else {
 				text.add("\u00A7oHold Shift to see formatting help!");
 			}
-			drawHoveringText(text, mouseX, mouseZ, fontRendererObj);
 			if (Mouse.isButtonDown(0)) {
 				name.setFocused(false);
 				tag.setFocused(true);
@@ -174,15 +175,49 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		
 		if (te.getStackInSlot(1) == null) {
 			if (mouseX >= guiLeft + 36 && mouseZ >= guiTop + 49 && mouseX <= guiLeft + 61 && mouseZ <= guiTop + 74) {
-				String[] text = {"Insert a Receiver Frame to begin!"};
+				text.add("Insert a Receiver Casing to begin!");
+			}
+		} else {
+			if (te.getStackInSlot(1).getItem() instanceof AssaultReceiverCasing) {
+				if (te.getStackInSlot(2) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 49 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 67)  { text.add("A: Large Bolt"); }
+				if (te.getStackInSlot(3) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 89)  { text.add("B: Large Chamber"); }
+				if (te.getStackInSlot(4) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 111) { text.add("C: Large Firing Pin"); }
+				if (te.getStackInSlot(5) == null && mouseX >= guiLeft + 29 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 47 && mouseZ <= guiTop + 111) { text.add("D: Large Firing Mechanic"); }
+				if (te.getStackInSlot(6) == null && mouseX >= guiLeft + 51 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 69 && mouseZ <= guiTop + 111) { text.add("E: Fire Selector \u00A7o(Optional)"); }
+				if (te.getStackInSlot(7) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 111) { text.add("F: Charging Handle"); }
+				if (te.getStackInSlot(8) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 89)  { text.add("G: Trigger"); }
+			} else if (te.getStackInSlot(1).getItem() instanceof RifleReceiverCasing) {
+				if (te.getStackInSlot(2) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 49 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 67)  { text.add("A: Large Bolt"); }
+				if (te.getStackInSlot(3) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 89)  { text.add("B: Large Chamber"); }
+				if (te.getStackInSlot(4) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 111) { text.add("C: Large Firing Pin"); }
+				if (te.getStackInSlot(7) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 111) { text.add("F: Bolt Arm"); }
+				if (te.getStackInSlot(8) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 89)  { text.add("G: Trigger"); }
+			} else if (te.getStackInSlot(1).getItem() instanceof LMGReceiverCasing) {
+				if (te.getStackInSlot(2) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 49 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 67)  { text.add("A: Large Bolt"); }
+				if (te.getStackInSlot(3) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 89)  { text.add("B: Large Chamber"); }
+				if (te.getStackInSlot(4) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 111) { text.add("C: Large Firing Pin"); }
+				if (te.getStackInSlot(5) == null && mouseX >= guiLeft + 29 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 47 && mouseZ <= guiTop + 111) { text.add("D: Large Firing Mechanic"); }
+				if (te.getStackInSlot(7) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 111) { text.add("F: Charging Handle"); }
+				if (te.getStackInSlot(8) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 89)  { text.add("G: Trigger"); }
+			} else if (te.getStackInSlot(1).getItem() instanceof SMGReceiverCasing) {
+				if (te.getStackInSlot(2) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 49 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 67)  { text.add("A: Small Bolt"); }
+				if (te.getStackInSlot(3) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 89)  { text.add("B: Small Chamber"); }
+				if (te.getStackInSlot(4) == null && mouseX >= guiLeft + 7  && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 25 && mouseZ <= guiTop + 111) { text.add("C: Small Firing Pin"); }
+				if (te.getStackInSlot(5) == null && mouseX >= guiLeft + 29 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 47 && mouseZ <= guiTop + 111) { text.add("D: Small Firing Mechanic"); }
+				if (te.getStackInSlot(6) == null && mouseX >= guiLeft + 51 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 69 && mouseZ <= guiTop + 111) { text.add("E: Fire Selector \u00A7o(Optional)"); }
+				if (te.getStackInSlot(7) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 93 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 111) { text.add("F: Charging Handle"); }
+				if (te.getStackInSlot(8) == null && mouseX >= guiLeft + 73 && mouseZ >= guiTop + 71 && mouseX <= guiLeft + 91 && mouseZ <= guiTop + 89)  { text.add("G: Trigger"); }
 			}
 		}
 
 		if (mouseX >= guiLeft + 7 && mouseZ >= guiTop + 115 && mouseX <= guiLeft + 186 && mouseZ <= guiTop + 124) {
 			if (te.clientBuildProgress > 0) {
-				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + totalBuildTime(2, 13, te));
+				List progressList = Arrays.asList("Progress: " + te.clientBuildProgress + "/" + buildTime(te.getStackInSlot(1)));
 				drawHoveringText(progressList, mouseX, mouseZ, fontRendererObj);
 			}
+		}
+		if (text.size() > 0) {
+			drawHoveringText(text, mouseX, mouseZ, fontRendererObj);
 		}
 	}
 	
@@ -193,6 +228,19 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		
 		fontRendererObj.drawString("Parts: ", 55, 8, 4210752);
 		fontRendererObj.drawString("" + te.partsValue, 55, 17, 4210752);
+		
+		if (te.getStackInSlot(1) != null) {			
+			if (te.getStackInSlot(1).getItem() instanceof AssaultReceiverCasing) {
+				fontRendererObj.drawString("Part Cost: ", 55, 8, 4210752);
+				fontRendererObj.drawString("Build Time: ", 55, 8, 4210752);
+			} else if (te.getStackInSlot(1).getItem() instanceof RifleReceiverCasing) {
+				
+			} else if (te.getStackInSlot(1).getItem() instanceof SMGReceiverCasing) {
+				
+			} else if (te.getStackInSlot(1).getItem() instanceof LMGReceiverCasing) {
+				
+			}
+		}
 		
 		GL11.glPushMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -223,14 +271,39 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		if (te.getStackInSlot(1) != null) {
 			drawTexturedModalRect(guiLeft + 36, guiTop + 49, 230, 230, 26, 26);
 			
-			drawTexturedModalRect(guiLeft +  7, guiTop + 49, 194, 238, 18, 18);
-			drawTexturedModalRect(guiLeft +  7, guiTop + 71, 194, 238, 18, 18);
-			drawTexturedModalRect(guiLeft +  7, guiTop + 93, 194, 238, 18, 18);
-			drawTexturedModalRect(guiLeft + 29, guiTop + 93, 194, 238, 18, 18);
-			drawTexturedModalRect(guiLeft + 51, guiTop + 93, 212, 238, 18, 18);
-			drawTexturedModalRect(guiLeft + 73, guiTop + 93, 194, 238, 18, 18);
-			drawTexturedModalRect(guiLeft + 73, guiTop + 71, 194, 238, 18, 18);
-			drawTexturedModalRect(guiLeft + 73, guiTop + 49, 194, 238, 18, 18);
+			if (te.getStackInSlot(1).getItem() instanceof AssaultReceiverCasing) {
+				drawTexturedModalRect(guiLeft +  7, guiTop + 49, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 71, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 29, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 51, guiTop + 93, 212, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 71, 194, 238, 18, 18);
+			} else if (te.getStackInSlot(1).getItem() instanceof RifleReceiverCasing) {
+				drawTexturedModalRect(guiLeft +  7, guiTop + 49, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 71, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 29, guiTop + 93, 29,  93,  18, 18);
+				drawTexturedModalRect(guiLeft + 51, guiTop + 93, 29,  93,  18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 71, 194, 238, 18, 18);
+			} else if (te.getStackInSlot(1).getItem() instanceof LMGReceiverCasing) {
+				drawTexturedModalRect(guiLeft +  7, guiTop + 49, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 71, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 29, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 51, guiTop + 93, 29,  93,  18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 71, 194, 238, 18, 18);
+			} else if (te.getStackInSlot(1).getItem() instanceof SMGReceiverCasing) {
+				drawTexturedModalRect(guiLeft +  7, guiTop + 49, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 71, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft +  7, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 29, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 51, guiTop + 93, 212, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 93, 194, 238, 18, 18);
+				drawTexturedModalRect(guiLeft + 73, guiTop + 71, 194, 238, 18, 18);
+			}
 		}
 		
 		if (te.getStackInSlot(2) != null) { drawTexturedModalRect(guiLeft +  7, guiTop + 49, 212, 238, 18, 18); }
@@ -239,7 +312,6 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		if (te.getStackInSlot(5) != null) { drawTexturedModalRect(guiLeft + 29, guiTop + 93, 212, 238, 18, 18); }
 		if (te.getStackInSlot(7) != null) { drawTexturedModalRect(guiLeft + 73, guiTop + 93, 212, 238, 18, 18); }
 		if (te.getStackInSlot(8) != null) { drawTexturedModalRect(guiLeft + 73, guiTop + 71, 212, 238, 18, 18); }
-		if (te.getStackInSlot(9) != null) { drawTexturedModalRect(guiLeft + 73, guiTop + 49, 212, 238, 18, 18); }
 	}
 	
 	public boolean isComponentValid() {
@@ -249,29 +321,27 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		boolean s5 = false;
 		boolean s7 = false;
 		boolean s8 = false;
-		boolean s9 = false;
 		
-		if (te.getStackInSlot(1) != null && te.getStackInSlot(1).getItem() instanceof ReceiverFrame) {
+		if (te.getStackInSlot(1) != null && te.getStackInSlot(1).getItem() instanceof ReceiverCasing) {
 			if (te.getStackInSlot(2) != null) { if (te.getStackInSlot(2).getItem() instanceof ItemComponent) { s2 = true; }}
 			if (te.getStackInSlot(3) != null) { if (te.getStackInSlot(3).getItem() instanceof ItemComponent) { s3 = true; }}
 			if (te.getStackInSlot(4) != null) { if (te.getStackInSlot(4).getItem() instanceof ItemComponent) { s4 = true; }}
 			if (te.getStackInSlot(5) != null) { if (te.getStackInSlot(5).getItem() instanceof ItemComponent) { s5 = true; }}
 			if (te.getStackInSlot(7) != null) { if (te.getStackInSlot(7).getItem() instanceof ItemComponent) { s7 = true; }}
 			if (te.getStackInSlot(8) != null) { if (te.getStackInSlot(8).getItem() instanceof ItemComponent) { s8 = true; }}
-			if (te.getStackInSlot(9) != null) { if (te.getStackInSlot(9).getItem() instanceof ItemComponent) { s9 = true; }}
 		}
-		return s2 && s3 && s4 && s5 && s7 && s8 && s9;
+		return s2 && s3 && s4 && s5 && s7 && s8;
 	}
 	
 	private List componentStatReportA() {
-		boolean afford = te.partsValue >= partsCost(2, 9, te) ? true : false;
+		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) ? true : false;
 
 		List result = new ArrayList();
 
 		EnumChatFormatting b = EnumChatFormatting.BLACK;
 		result.add("Listing Component Report:");
 		result.add("");
-		result.add("Frame Status:");
+		result.add("Casing Status:");
 		result.add("");
 		result.add("Bolt Status:");
 		result.add("Chamber Status:");
@@ -280,7 +350,6 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		result.add("Fire Selector Status:");
 		result.add("Charging Handle Status:");
 		result.add("Trigger Status:");
-		result.add("Casing Status:");
 		result.add("");
 		result.add("Parts:");
 		if (!afford) {
@@ -293,7 +362,7 @@ public class ComponentAssemblyTableGui extends MachineGui {
 	}
 	
 	private List componentStatReportB() {
-		boolean afford = te.partsValue >= partsCost(2, 9, te) ? true : false;
+		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) ? true : false;
 
 		List result = new ArrayList();
 
@@ -309,9 +378,8 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		result.add(parseBool(te.getStackInSlot(6) != null ? true : false) + " \u00A77(Optional)");
 		result.add(parseBool(te.getStackInSlot(7) != null ? true : false));
 		result.add(parseBool(te.getStackInSlot(8) != null ? true : false));
-		result.add(parseBool(te.getStackInSlot(9) != null ? true : false));
 		result.add("");
-		result.add(te.partsValue + "/" + partsCost(2, 9, te));
+		result.add(te.partsValue + "/" + partCost(te.getStackInSlot(1)));
 		result.add(EnumChatFormatting.DARK_RED + "");
 
 		return result;

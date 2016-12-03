@@ -2,7 +2,7 @@ package com.silvaniastudios.advancedarmoury.items.assets;
 
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.config.MaterialStats;
-import com.silvaniastudios.advancedarmoury.items.generic.FrontEnd;
+import com.silvaniastudios.advancedarmoury.items.components.generic.FrontEnd;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 

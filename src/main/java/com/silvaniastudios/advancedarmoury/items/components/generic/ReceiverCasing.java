@@ -1,4 +1,4 @@
-package com.silvaniastudios.advancedarmoury.items.generic;
+package com.silvaniastudios.advancedarmoury.items.components.generic;
 
 import java.util.List;
 
@@ -32,12 +32,17 @@ public class ReceiverCasing extends ItemComponent {
 	public boolean topRail = false;
 	
 	static double size = 19*0.75;
+	
+	public String gunType;
+	public String gunSize;
 
-	public ReceiverCasing(String componentName, String displayName) {
-		super(componentName, displayName, "Receiver Component H", 15, true, true, true, true, true, true);
+	public ReceiverCasing(String gunSize, String gunType, String componentName, String displayName) {
+		super(componentName, displayName, "", 15, false, true, false);
+		this.gunType = gunType;
+		this.gunSize = gunSize;
 	}
 	
-	public ReceiverCasing(String componentName, String displayName, String gunType,
+	public ReceiverCasing(String gunSize, String gunType, String componentName, String displayName,
 		float xSize, float ySize, float zSize, 
 		float barrelX, float barrelY, float barrelZ,
 		float stockX, float stockY, float stockZ,
@@ -45,9 +50,12 @@ public class ReceiverCasing extends ItemComponent {
 		float attachmentX, float attachmentY, float attachmentZ,
 		int magId, boolean topRail,
 		String modelName, String modelTexture) {
-		super(componentName, displayName, "Receiver Component H", 15, true, true, true, true, true, true);
+		super(componentName, displayName, "", 15, false, true, false);
 		this.modelName = modelName;
 		this.modelTexture = modelTexture;
+		
+		this.gunType = gunType;
+		this.gunSize = gunSize;
 		
 		this.ySize = ySize;
 		this.zSize = zSize;
@@ -92,21 +100,18 @@ public class ReceiverCasing extends ItemComponent {
 				list.add(RarityRegistry.getRarityTag(rarity));
 				list.add("");
 			}
+			list.add(item.stackTagCompound.getString("textCol") + "Material: " + getMaterial(item));
+			
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				if (identifier.length() > 0) {
-					list.add(identifier);
-					list.add("");
-				}
-				list.add(item.stackTagCompound.getString("textCol") + "Material: " + getMaterial(item));
 				list.add("");
-				list.add(accDisplay(getAccuracy(item)));
-				list.add(fireRateDisplay(item, getFireRate(item)));
-				list.add(powerDisplay(item, getPower(item)));
+				if ((item.stackTagCompound != null && !item.stackTagCompound.getBoolean("hasInternals")) || item.stackTagCompound == null) {
+					if (identifier.length() > 0) {
+						list.add(identifier);
+						list.add("");
+					}
+				}
 				list.add(weightDisplay(item, getWeight(item)));
 				list.add(durabilityDisplay(item, getDurability(item)));
-				list.add("");
-				list.add("Cost (Parts): " + getCost(item));
-				list.add("Build Time: " + getBuildTime(item));
 				list.add("");
 				if (item.stackTagCompound != null) {
 					if (item.stackTagCompound.getInteger("length") > 0) {
@@ -121,6 +126,7 @@ public class ReceiverCasing extends ItemComponent {
 				}
 			} else {
 				if (item.stackTagCompound != null) {
+					list.add("");
 					if (item.stackTagCompound.getInteger("length") > 0) {
 						list.add("Length: " + item.stackTagCompound.getInteger("length") + "\"");
 					}
@@ -129,7 +135,7 @@ public class ReceiverCasing extends ItemComponent {
 					}
 				}
 				if (item.stackTagCompound.getString("creator").length() > 0) {
-					list.add("Crafted by: " + item.stackTagCompound.getString("creator"));
+					list.add("Created By: " + item.stackTagCompound.getString("creator"));
 				}
 				list.add("Hold shift for more information");
 			}

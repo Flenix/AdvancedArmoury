@@ -1,6 +1,5 @@
 package com.silvaniastudios.advancedarmoury.blocks.machines;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -8,14 +7,15 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.silvaniastudios.advancedarmoury.blocks.machines.assemblytable.assault.AssaultAssemblyTableContainer;
-import com.silvaniastudios.advancedarmoury.items.generic.ItemComponent;
+import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponent;
+import com.silvaniastudios.advancedarmoury.items.components.lmg.LMGReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.rifle.RifleReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.smg.SMGReceiverCasing;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -142,21 +142,6 @@ public class MachineGui extends GuiContainer {
 	
 	@Override protected void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {}
 	
-	protected int totalBuildTime(int low, int high, MachineEntity te) {
-		int total = 0;
-		for (int i = low; i <= high; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					if (itemComponent.stackTagCompound != null) {
-						total += itemComponent.stackTagCompound.getInteger("buildTime");
-					}
-				}
-			}
-		}
-		return total;		
-	}
-	
 	protected double totalDurability(int low, int high, MachineEntity te) {
 		double total = 0.0;
 		for (int i = low; i <= high; i++) {
@@ -199,7 +184,7 @@ public class MachineGui extends GuiContainer {
 		return total;
 	}
 	
-	protected int fireRate(int low, int high, MachineEntity te) {
+	/*TODO Remake protected int fireRate(int low, int high, MachineEntity te) {
 		int rate = 0;
 		for (int i = low; i <= high; i++) {
 			ItemStack itemComponent = te.getStackInSlot(i);
@@ -225,21 +210,36 @@ public class MachineGui extends GuiContainer {
 			}
 		}
 		return power;
-	}
+	}*/
 	
-	protected int partsCost(int low, int high, MachineEntity te) {
-		int cost = 0;
-		for (int i = low; i <= high; i++) {
-			ItemStack itemComponent = te.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					if (itemComponent.stackTagCompound != null) {
-						cost += itemComponent.stackTagCompound.getInteger("cost");
-					}
-				}
+	protected int partCost(ItemStack item) {
+		if (item != null) {
+			if (item.getItem() instanceof AssaultReceiverCasing) {
+				return 450;
+			} else if (item.getItem() instanceof RifleReceiverCasing) {
+				return 350;
+			} else if (item.getItem() instanceof LMGReceiverCasing) {
+				return 400;
+			} else if (item.getItem() instanceof SMGReceiverCasing) {
+				return 450;
 			}
 		}
-		return cost;
+		return 0;
+	}
+	
+	protected int buildTime(ItemStack item) {
+		if (item != null) {
+			if (item.getItem() instanceof AssaultReceiverCasing) {
+				return 1200;
+			} else if (item.getItem() instanceof RifleReceiverCasing) {
+				return 2400;
+			} else if (item.getItem() instanceof LMGReceiverCasing) {
+				return 1800;
+			} else if (item.getItem() instanceof SMGReceiverCasing) {
+				return 900;
+			}
+		}
+		return 0;
 	}
 
 	protected String parseBool(boolean bool) {

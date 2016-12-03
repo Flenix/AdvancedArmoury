@@ -1,6 +1,6 @@
 package com.silvaniastudios.advancedarmoury;
 
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
 import com.silvaniastudios.advancedarmoury.network.LocateDamagePacket;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

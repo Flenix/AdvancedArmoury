@@ -1,4 +1,4 @@
-package com.silvaniastudios.advancedarmoury.items.generic;
+package com.silvaniastudios.advancedarmoury.items.components.generic;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class Chamber extends ItemComponent {
+public class ChamberLarge extends ItemComponent {
 	
 	public static double[] cal = {5.56, 7.62, 9.00, 12.7};
 
-	public Chamber(String componentName, String displayName) {
-		super(componentName, displayName, "Receiver Component B", 4.425, false, true, false, false, true, true);
-		this.setCreativeTab(AdvancedArmoury.tabComponentsCalibre);
+	public ChamberLarge(String componentName, String displayName) {
+		super(componentName, displayName, "Receiver Component B", 4.425, false, false, true);
+		this.setCreativeTab(AdvancedArmoury.tabComponentsInternal);
 	}
 	
 	@Override
@@ -36,13 +36,12 @@ public class Chamber extends ItemComponent {
 				float accuracy = compGen.parseFloat(splitter[3].trim());
 				String textCol = splitter[4].trim();
 				int rgb = compGen.parseInt(splitter[5].trim());
-				int fireRate = compGen.parseInt(splitter[6].trim());
-				String oreDict = splitter[7].trim();
-				int power = compGen.parseInt(splitter[8].trim());
-				int range = compGen.parseInt(splitter[9].trim());
-				String rarity = splitter[10].trim();
+				String oreDict = splitter[6].trim();
+				String rarity = splitter[7].trim();
 				
 				String cosmetic = materialName;
+				
+				volume = ((cal[j]*cal[j]) - ((cal[j]-0.1)*(cal[j]-0.1))) * 2.2;
 					
 				itemComponent.stackTagCompound = new NBTTagCompound();
 				
@@ -52,27 +51,21 @@ public class Chamber extends ItemComponent {
 				itemComponent.stackTagCompound.setInteger("itemCol", rgb);
 				itemComponent.stackTagCompound.setString("oreDict", oreDict);
 				
-				itemComponent.stackTagCompound.setDouble("durability", durability*size*50);
-				itemComponent.stackTagCompound.setInteger("weight", (int) Math.round(weight*size));
+				itemComponent.stackTagCompound.setInteger("durability", (int) (durability*volume*10));
+				itemComponent.stackTagCompound.setInteger("weight", (int) Math.ceil((weight*volume)/1000));
 				
-				itemComponent.stackTagCompound.setInteger("cost", (int) Math.round((size*getWeight(itemComponent))/20));
-				itemComponent.stackTagCompound.setInteger("buildTime", (int) Math.round(((size*getDurability(itemComponent))*3)/20));
+				itemComponent.stackTagCompound.setInteger("cost", (int) Math.round((volume*getWeight(itemComponent))/20));
+				itemComponent.stackTagCompound.setInteger("buildTime", (int) Math.round(((volume*getDurability(itemComponent))*3)/20));
 				
 				if (RarityRegistry.getEnumRarity(rarity) != null) {
 					itemComponent.stackTagCompound.setString("rarity", rarity);
 				}
 				
 				if (!this.accuracyEnabled)	{ accuracy = 0; }
-				if (!this.powerEnabled)		{ power = 0; }
-				if (!this.rangeEnabled)	 	{ range = 0; }
 				if (!this.cosmeticEnabled)	{ cosmetic = ""; }
-				if (!this.fireRateEnabled)	{ fireRate = 0; }
 				
 				itemComponent.stackTagCompound.setFloat("accuracy", accuracy);
-				itemComponent.stackTagCompound.setInteger("power", power);
-				itemComponent.stackTagCompound.setInteger("range", range);
 				itemComponent.stackTagCompound.setString("cosmetic", cosmetic);
-				itemComponent.stackTagCompound.setInteger("fireRate", fireRate);
 				
 				itemComponent.stackTagCompound.setDouble("calibre", cal[j]);
 				

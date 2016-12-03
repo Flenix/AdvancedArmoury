@@ -1,6 +1,9 @@
 package com.silvaniastudios.advancedarmoury.blocks.machines;
 
-import com.silvaniastudios.advancedarmoury.items.generic.ItemComponent;
+import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.lmg.LMGReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.rifle.RifleReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.smg.SMGReceiverCasing;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -98,32 +101,34 @@ public class MachineEntity extends TileEntity implements IInventory {
 		clientBuildProgress = b;
 	}
 	
-	public int gunCost(int slotLow, int slotHigh) {
-		int cost = 0;
-		for (int i = slotLow; i <= slotHigh; i++) {
-			ItemStack itemComponent = this.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					cost += component.getCost(itemComponent);
-				}
+	public int partCost(ItemStack item) {
+		if (item != null) {
+			if (item.getItem() instanceof AssaultReceiverCasing) {
+				return 450;
+			} else if (item.getItem() instanceof RifleReceiverCasing) {
+				return 350;
+			} else if (item.getItem() instanceof LMGReceiverCasing) {
+				return 400;
+			} else if (item.getItem() instanceof SMGReceiverCasing) {
+				return 450;
 			}
 		}
-		return cost;
+		return 0;
 	}
 	
-	public int gunBuildTime(int slotLow, int slotHigh) {
-		int time = 0;
-		for (int i = slotLow; i <= slotHigh; i++) {
-			ItemStack itemComponent = this.getStackInSlot(i);
-			if (itemComponent != null) {
-				if (itemComponent.getItem() instanceof ItemComponent) {
-					ItemComponent component = (ItemComponent) itemComponent.getItem();
-					time += component.getBuildTime(itemComponent);
-				}
+	public int buildTime(ItemStack item) {
+		if (item != null) {
+			if (item.getItem() instanceof AssaultReceiverCasing) {
+				return 1200;
+			} else if (item.getItem() instanceof RifleReceiverCasing) {
+				return 2400;
+			} else if (item.getItem() instanceof LMGReceiverCasing) {
+				return 1800;
+			} else if (item.getItem() instanceof SMGReceiverCasing) {
+				return 900;
 			}
 		}
-		return time;
+		return 0;
 	}
 
 	@Override

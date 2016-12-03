@@ -1,7 +1,7 @@
 package com.silvaniastudios.advancedarmoury.blocks.machines;
 
-import com.silvaniastudios.advancedarmoury.items.generic.ItemComponent;
-import com.silvaniastudios.advancedarmoury.items.generic.ReceiverFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponent;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -23,14 +23,14 @@ public class SlotComponent extends Slot {
 		ItemStack itemReceiver = inventory.getStackInSlot(1);
 		if (itemReceiver != null && item != null) {
 			if (item != null) {
-				if (item.getItem() instanceof ItemComponent && itemReceiver.getItem() instanceof ReceiverFrame) {
-					ReceiverFrame receiver = (ReceiverFrame) itemReceiver.getItem();
+				if (item.getItem() instanceof ItemComponent && itemReceiver.getItem() instanceof ReceiverCasing) {
+					ReceiverCasing receiver = (ReceiverCasing) itemReceiver.getItem();
 					if (item.stackTagCompound != null) {
 						String compName = item.stackTagCompound.getString("componentName").toLowerCase();
-						String gunType = gunSpecific ? receiver.gunType : "";
+						String gunSize = gunSpecific ? receiver.gunSize : "";
 						
-						System.out.println("GunSpecific? " + gunSpecific + "Checking names. Item: " + compName + " must contain " + componentName + " and " + gunType);
-						if (compName.contains(componentName.toLowerCase()) && compName.contains(gunType)) {
+						System.out.println("GunSpecific? " + gunSpecific + "Checking names. Item: " + compName + " must contain " + componentName + " and " + gunSize);
+						if (compName.contains(componentName.toLowerCase()) && compName.contains(gunSize)) {
 							return true;
 						}
 					}

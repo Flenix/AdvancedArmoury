@@ -1,4 +1,4 @@
-package com.silvaniastudios.advancedarmoury.items.generic;
+package com.silvaniastudios.advancedarmoury.items.components.generic;
 
 public class FrontEnd extends ItemComponent {
 	

@@ -1,7 +1,7 @@
 package com.silvaniastudios.advancedarmoury;
 
 import com.silvaniastudios.advancedarmoury.items.EnumRarity;
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

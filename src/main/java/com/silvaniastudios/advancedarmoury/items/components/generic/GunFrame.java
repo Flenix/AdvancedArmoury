@@ -1,4 +1,4 @@
-package com.silvaniastudios.advancedarmoury.items.generic;
+package com.silvaniastudios.advancedarmoury.items.components.generic;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -50,7 +50,7 @@ public class GunFrame extends ItemInventory implements IGun {
 
 	public GunFrame() {
 		maxStackSize = 1;
-		setCreativeTab(AdvancedArmoury.tabComponentsAssault);
+		setCreativeTab(AdvancedArmoury.tabComponentsExternal);
 		invSize = 32;
 	}
 	
@@ -92,7 +92,7 @@ public class GunFrame extends ItemInventory implements IGun {
 	}
 	
 	//Gets the total power of all power-effective parts. Does nothing with it.
-	public int getPower(ItemStack item) {
+	/*public int getPower(ItemStack item) {
 		AssaultIInventory inventory = new AssaultIInventory(item);
 		int power = 0;
 		
@@ -107,7 +107,7 @@ public class GunFrame extends ItemInventory implements IGun {
 			}
 		}
 		return power + item.stackTagCompound.getInteger("powerBuildOffset");
-	}
+	}*/
 	
 	public int getWeight(ItemStack item) {
 		AssaultIInventory inventory = new AssaultIInventory(item);
@@ -139,7 +139,7 @@ public class GunFrame extends ItemInventory implements IGun {
 		return (int) (dura/3.0) + item.stackTagCompound.getInteger("duraBuildOffset");
 	}
 	
-	public int getFireRate(ItemStack item) {
+	/*TODO public int getFireRate(ItemStack item) {
 		AssaultIInventory inventory = new AssaultIInventory(item);
 		double rate = 0.0;
 		double count = 0.0;
@@ -157,7 +157,7 @@ public class GunFrame extends ItemInventory implements IGun {
 		}
 		
 		return (int) (rate/count) + item.stackTagCompound.getInteger("rateBuildOffset");
-	}
+	}*/
 	
 	public String parseAccuracy(float acc) {
 		DecimalFormat df = new DecimalFormat("#.##");
@@ -208,9 +208,9 @@ public class GunFrame extends ItemInventory implements IGun {
 		list.add(parseAccuracy(gunFire.getAccuracy(item)) + " at 20m");
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 			list.add(displayWeight((double) getWeight(item) / 10000.0, Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)));
-			list.add(displayPower(getPower(item), Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)));
+			//TODO list.add(displayPower(getPower(item), Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)));
 		}
-		list.add("Fire Rate: " + getFireRate(item) + " RPM");
+		//TODO list.add("Fire Rate: " + getFireRate(item) + " RPM");
 		list.add("Damage: " + item.stackTagCompound.getInteger("damage") + "/" + getDurability(item));
 		list.add("");
 		AssaultIInventory inventory = new AssaultIInventory(item);

@@ -6,7 +6,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.silvaniastudios.advancedarmoury.config.AAConfig;
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
 import com.silvaniastudios.advancedarmoury.network.LocateDamagePacket;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;

@@ -1,7 +1,7 @@
 package com.silvaniastudios.advancedarmoury.blocks.machines;
 
 import com.silvaniastudios.advancedarmoury.items.ItemParts;
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

@@ -3,7 +3,7 @@ package com.silvaniastudios.advancedarmoury.client.renderers;
 import org.lwjgl.opengl.GL11;
 
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
-import com.silvaniastudios.advancedarmoury.items.generic.Barrel;
+import com.silvaniastudios.advancedarmoury.items.components.generic.Barrel;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
