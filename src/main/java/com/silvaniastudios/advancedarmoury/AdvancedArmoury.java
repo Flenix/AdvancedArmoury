@@ -16,6 +16,7 @@ import java.util.zip.ZipInputStream;
 import com.silvaniastudios.advancedarmoury.config.AAConfig;
 import com.silvaniastudios.advancedarmoury.config.ComponentGenerator;
 import com.silvaniastudios.advancedarmoury.config.ComponentGeneratorConfig;
+import com.silvaniastudios.advancedarmoury.config.SkillsConfig;
 import com.silvaniastudios.advancedarmoury.items.assets.AssetFrontEnd;
 import com.silvaniastudios.advancedarmoury.items.assets.AssetReceiver;
 import com.silvaniastudios.advancedarmoury.items.assets.AssetStock;
@@ -29,31 +30,16 @@ import com.silvaniastudios.advancedarmoury.network.GunBuildPacket;
 import com.silvaniastudios.advancedarmoury.network.GunEventPacket;
 import com.silvaniastudios.advancedarmoury.network.GunGuiPacket;
 import com.silvaniastudios.advancedarmoury.network.LocateDamagePacket;
-import com.silvaniastudios.advancedarmoury.skills.SkillAssaultCraft;
 import com.silvaniastudios.advancedarmoury.skills.SkillAssaultRifles;
 import com.silvaniastudios.advancedarmoury.skills.SkillCombatKnives;
-import com.silvaniastudios.advancedarmoury.skills.SkillEnergyAssaultRifles;
-import com.silvaniastudios.advancedarmoury.skills.SkillEnergyLMGs;
-import com.silvaniastudios.advancedarmoury.skills.SkillEnergyPistols;
-import com.silvaniastudios.advancedarmoury.skills.SkillEnergyRifles;
-import com.silvaniastudios.advancedarmoury.skills.SkillEnergySMGs;
-import com.silvaniastudios.advancedarmoury.skills.SkillEnergyShotguns;
 import com.silvaniastudios.advancedarmoury.skills.SkillExplosives;
-import com.silvaniastudios.advancedarmoury.skills.SkillExplosivesCraft;
-import com.silvaniastudios.advancedarmoury.skills.SkillFirearms;
-import com.silvaniastudios.advancedarmoury.skills.SkillLMGCraft;
+import com.silvaniastudios.advancedarmoury.skills.SkillFirearmCrafting;
 import com.silvaniastudios.advancedarmoury.skills.SkillLMGs;
-import com.silvaniastudios.advancedarmoury.skills.SkillPistolCraft;
 import com.silvaniastudios.advancedarmoury.skills.SkillPistols;
 import com.silvaniastudios.advancedarmoury.skills.SkillRegistrationHandler;
-import com.silvaniastudios.advancedarmoury.skills.SkillRifleCraft;
 import com.silvaniastudios.advancedarmoury.skills.SkillRifles;
-import com.silvaniastudios.advancedarmoury.skills.SkillRoundCraft;
-import com.silvaniastudios.advancedarmoury.skills.SkillSMGCraft;
 import com.silvaniastudios.advancedarmoury.skills.SkillSMGs;
-import com.silvaniastudios.advancedarmoury.skills.SkillShotgunCraft;
 import com.silvaniastudios.advancedarmoury.skills.SkillShotguns;
-import com.silvaniastudios.advancedarmoury.skills.SkillWeaponServicing;
 
 import co.uk.silvania.rpgcore.RegisterSkill;
 import cpw.mods.fml.common.Loader;
@@ -70,7 +56,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -81,7 +66,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class AdvancedArmoury
 {
     public static final String modid = "advancedarmoury";
-    public static final String version = "Alpha-0.0.2";
+    public static final String version = "0.1.0";
     
     public static DamageSource damageShot;
     public static DamageSource damageMelee;
@@ -107,6 +92,7 @@ public class AdvancedArmoury
     	NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
     	AAConfig.init(event.getModConfigurationDirectory().getParent() + "/Advanced Armoury/");
     	ComponentGeneratorConfig.init(event.getModConfigurationDirectory().getParent() + "/Advanced Armoury/");
+    	if (Loader.isModLoaded("rpgcore")) { SkillsConfig.init(event.getModConfigurationDirectory().getParent() + "/Advanced Armoury/"); }
     	assetDir = new File(event.getModConfigurationDirectory().getParentFile(), "/Advanced Armoury/");
     	
     	if (!assetDir.exists()) {
@@ -131,55 +117,25 @@ public class AdvancedArmoury
     		rpgcore = true;
     		println("RPGCore detected! Initializing skills!");
     		
-    		SkillFirearms skillFirearms = new SkillFirearms(null, "skillFirearms");
     		SkillPistols skillPistols = new SkillPistols(null, "skillPistols");
     		SkillSMGs skillSMGs = new SkillSMGs(null, "skillSMGs");
     		SkillShotguns skillShotguns = new SkillShotguns(null, "skillShotguns");
     		SkillAssaultRifles skillAssault = new SkillAssaultRifles(null, "skillAssaultRifles");
     		SkillLMGs skillLMGs = new SkillLMGs(null, "skillLMGs");
     		SkillRifles skillRifles = new SkillRifles(null, "skillSnipers");
-    		SkillEnergyPistols skillEnergyPistols = new SkillEnergyPistols(null, "skillEnergyPistols");
-    		SkillEnergySMGs skillEnergySMGs = new SkillEnergySMGs(null, "skillEnergySMGs");
-    		SkillEnergyShotguns skillEnergyShotguns = new SkillEnergyShotguns(null, "skillEnergyShotguns");
-    		SkillEnergyAssaultRifles skillEnergyAssaults = new SkillEnergyAssaultRifles(null, "skillEnergyAssaultRifles");
-    		SkillEnergyLMGs skillEnergyLMGs = new SkillEnergyLMGs(null, "skillEnergyLMGs");
-    		SkillEnergyRifles skillEnergyRifles = new SkillEnergyRifles(null, "skillEnergyRifles");
     		SkillExplosives skillExplosives = new SkillExplosives(null, "skillExplosives");
     		SkillCombatKnives skillCombatKnives = new SkillCombatKnives(null, "skillCombatKnives");
-    		SkillPistolCraft skillPistolCraft = new SkillPistolCraft(null, "skillPistolCraft");
-    		SkillSMGCraft skillSMGCraft = new SkillSMGCraft(null, "skillSMGCraft");
-    		SkillShotgunCraft skillShotgunCraft = new SkillShotgunCraft(null, "skillShotgunCraft");
-    		SkillAssaultCraft skillAssaultCraft = new SkillAssaultCraft(null, "skillAssaultCraft");
-    		SkillLMGCraft skillLMGCraft = new SkillLMGCraft(null, "skillLMGCraft");
-    		SkillRifleCraft skillRifleCraft = new SkillRifleCraft(null, "skillRifleCraft");
-    		SkillExplosivesCraft skillExplosivesCraft = new SkillExplosivesCraft(null, "skillExplosivesCraft");
-    		SkillRoundCraft skillRoundCraft = new SkillRoundCraft(null, "skillRoundCraft");
-    		SkillWeaponServicing skillWeaponServicing = new SkillWeaponServicing(null, "skillWeaponServicing");
-    		
-    		RegisterSkill.register(skillFirearms);
+    		SkillFirearmCrafting skillFirearmCrafting = new SkillFirearmCrafting(null, "skillFirearmCrafting");
+
     		RegisterSkill.register(skillPistols);
     		RegisterSkill.register(skillSMGs);
     		RegisterSkill.register(skillShotguns);
     		RegisterSkill.register(skillAssault);
     		RegisterSkill.register(skillLMGs);
     		RegisterSkill.register(skillRifles);
-    		RegisterSkill.register(skillEnergyPistols);
-    		RegisterSkill.register(skillEnergySMGs);
-    		RegisterSkill.register(skillEnergyShotguns);
-    		RegisterSkill.register(skillEnergyAssaults);
-    		RegisterSkill.register(skillEnergyLMGs);
-    		RegisterSkill.register(skillEnergyRifles);
     		RegisterSkill.register(skillExplosives);
     		RegisterSkill.register(skillCombatKnives);
-    		RegisterSkill.register(skillPistolCraft);
-    		RegisterSkill.register(skillSMGCraft);
-    		RegisterSkill.register(skillShotgunCraft);
-    		RegisterSkill.register(skillAssaultCraft);
-    		RegisterSkill.register(skillLMGCraft);
-    		RegisterSkill.register(skillRifleCraft);
-    		RegisterSkill.register(skillExplosivesCraft);
-    		RegisterSkill.register(skillRoundCraft);
-    		RegisterSkill.register(skillWeaponServicing);
+    		RegisterSkill.register(skillFirearmCrafting);
     		
     		MinecraftForge.EVENT_BUS.register(new SkillRegistrationHandler());
     	}
@@ -316,17 +272,17 @@ public class AdvancedArmoury
       return test == 0x504b0304;
   }
   
-    public static CreativeTabs tabComponentsGeneric = new CreativeTabs("tabComponentsGeneric") {
+    public static CreativeTabs tabComponentsInternal = new CreativeTabs("tabComponentsInternal") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		return getTabIcon(tabComponentsGeneric);
+    		return getTabIcon(tabComponentsInternal);
     	}
     };
     
-    public static CreativeTabs tabComponentsAssault = new CreativeTabs("tabComponentsAssault") {
+    public static CreativeTabs tabComponentsExternal = new CreativeTabs("tabComponentsExternal") {
     	@Override @SideOnly(Side.CLIENT)
     	public Item getTabIconItem() {
-    		return getTabIcon(tabComponentsAssault);
+    		return getTabIcon(tabComponentsExternal);
     	}
     };
     
