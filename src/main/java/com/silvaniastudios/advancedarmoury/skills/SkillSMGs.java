@@ -19,13 +19,6 @@ public class SkillSMGs extends SkillLevelBase implements IExtendedEntityProperti
 		staticSkillId = skillID;
 		this.xp = 0;
 	}
-	
-	@Override
-	public void addXP(float xpAdd, EntityPlayer player) {
-		SkillLevelBase firearms = (SkillLevelBase) SkillFirearms.get(player, SkillFirearms.staticSkillId);
-		firearms.forceAddXP(xpAdd/2, player);
-		super.addXP(xpAdd, player);
-	}
 
 	@Override
 	public void saveNBTData(NBTTagCompound compound) {

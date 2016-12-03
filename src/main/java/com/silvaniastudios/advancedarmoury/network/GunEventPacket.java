@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.silvaniastudios.advancedarmoury.items.assets.AssetReceiver;
-import com.silvaniastudios.advancedarmoury.items.generic.GunFrame;
+import com.silvaniastudios.advancedarmoury.items.components.generic.GunFrame;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

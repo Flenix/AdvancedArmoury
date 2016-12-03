@@ -23,9 +23,6 @@ public class SkillAssaultRifles extends SkillLevelBase implements IExtendedEntit
 	@Override
 	public void addXP(float xpAdd, EntityPlayer player) {
 		System.out.println("Calling addXP! Current XP " + getXP() + ", adding: " + xpAdd);
-		//TODO XP isn't being added. WHY.
-		SkillLevelBase firearms = (SkillLevelBase) SkillFirearms.get(player, SkillFirearms.staticSkillId);
-		firearms.forceAddXP(xpAdd/2, player);
 		super.addXP(xpAdd, player);
 	}
 	

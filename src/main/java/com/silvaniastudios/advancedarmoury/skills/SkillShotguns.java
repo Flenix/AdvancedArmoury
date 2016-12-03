@@ -21,13 +21,6 @@ public class SkillShotguns extends SkillLevelBase implements IExtendedEntityProp
 	}
 	
 	@Override
-	public void addXP(float xpAdd, EntityPlayer player) {
-		SkillLevelBase firearms = (SkillLevelBase) SkillFirearms.get(player, SkillFirearms.staticSkillId);
-		firearms.forceAddXP(xpAdd/2, player);
-		super.addXP(xpAdd, player);
-	}
-
-	@Override
 	public void saveNBTData(NBTTagCompound compound) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setFloat(skillId + "xp", xp);
