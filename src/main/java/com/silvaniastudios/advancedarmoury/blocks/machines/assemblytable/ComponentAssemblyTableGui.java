@@ -19,6 +19,8 @@ import com.silvaniastudios.advancedarmoury.items.components.rifle.RifleReceiverC
 import com.silvaniastudios.advancedarmoury.items.components.smg.SMGReceiverCasing;
 import com.silvaniastudios.advancedarmoury.network.GunBuildPacket;
 
+import co.uk.silvania.rpgcore.RPGCore;
+import co.uk.silvania.rpgcore.RPGUtils;
 import co.uk.silvania.rpgcore.client.skillgui.MultiLineButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -227,12 +229,16 @@ public class ComponentAssemblyTableGui extends MachineGui {
 		tag.drawTextBox();
 		
 		fontRendererObj.drawString("Parts: ", 55, 8, 4210752);
-		fontRendererObj.drawString("" + te.partsValue, 55, 17, 4210752);
+		fontRendererObj.drawString("" + te.partsValue, 55, 19, 4210752);
 		
 		if (te.getStackInSlot(1) != null) {			
 			if (te.getStackInSlot(1).getItem() instanceof AssaultReceiverCasing) {
-				fontRendererObj.drawString("Part Cost: ", 55, 8, 4210752);
-				fontRendererObj.drawString("Build Time: ", 55, 8, 4210752);
+				String cost = "" + partCost(te.getStackInSlot(1));
+				String time = "" + buildTime(te.getStackInSlot(1));
+				fontRendererObj.drawString("Part Cost:", 95, 8, 4210752);
+				fontRendererObj.drawString(cost, 189-fontRendererObj.getStringWidth(cost), 8, 4210752);
+				fontRendererObj.drawString("Build Time:", 95, 19, 4210752);
+				fontRendererObj.drawString(time, 189-fontRendererObj.getStringWidth(time), 19, 4210752);
 			} else if (te.getStackInSlot(1).getItem() instanceof RifleReceiverCasing) {
 				
 			} else if (te.getStackInSlot(1).getItem() instanceof SMGReceiverCasing) {
@@ -242,11 +248,29 @@ public class ComponentAssemblyTableGui extends MachineGui {
 			}
 		}
 		
+		fontRendererObj.drawString("Durability: ", 95, 49, 4210752);
+		fontRendererObj.drawString("Weight: ",     95, 60, 4210752);
+		fontRendererObj.drawString("RPS Base: ",   95, 71, 4210752);
+		fontRendererObj.drawString("Power Base: ", 95, 82, 4210752);
+		
+		String dura = "" + te.calculateDurability();
+		String weight = "" + te.calculateWeight();
+		String rps = "" + te.calculateFireRate();
+		String power = "" + te.calculatePower();
+		
+		fontRendererObj.drawString(dura,   189-fontRendererObj.getStringWidth(dura),   49, 4210752);
+		fontRendererObj.drawString(weight, 189-fontRendererObj.getStringWidth(weight), 60, 4210752);
+		fontRendererObj.drawString(rps,    189-fontRendererObj.getStringWidth(rps),    71, 4210752);
+		fontRendererObj.drawString(power,  189-fontRendererObj.getStringWidth(power),  82, 4210752);
+		
+		fontRendererObj.getStringWidth("");
+		
+		//TODO bar does not fill all the way. Test and fix.
 		GL11.glPushMatrix();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-		double buildTime = te.buildTime;
+		double buildTime = buildTime(te.getStackInSlot(1));
 		double progress = te.clientBuildProgress;
 		if (progress > buildTime) { progress = buildTime; }
 		if (buildTime == 0) { buildTime = 1; } //Prevent crashes when build time is zero.
@@ -315,6 +339,7 @@ public class ComponentAssemblyTableGui extends MachineGui {
 	}
 	
 	public boolean isComponentValid() {
+		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) && te.partsValue > 0 ? true : false;
 		boolean s2 = false;
 		boolean s3 = false;
 		boolean s4 = false;
@@ -330,11 +355,11 @@ public class ComponentAssemblyTableGui extends MachineGui {
 			if (te.getStackInSlot(7) != null) { if (te.getStackInSlot(7).getItem() instanceof ItemComponent) { s7 = true; }}
 			if (te.getStackInSlot(8) != null) { if (te.getStackInSlot(8).getItem() instanceof ItemComponent) { s8 = true; }}
 		}
-		return s2 && s3 && s4 && s5 && s7 && s8;
+		return s2 && s3 && s4 && s5 && s7 && s8 && afford;
 	}
 	
 	private List componentStatReportA() {
-		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) ? true : false;
+		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) && te.partsValue > 0 ? true : false;
 
 		List result = new ArrayList();
 
@@ -362,8 +387,6 @@ public class ComponentAssemblyTableGui extends MachineGui {
 	}
 	
 	private List componentStatReportB() {
-		boolean afford = te.partsValue >= partCost(te.getStackInSlot(1)) ? true : false;
-
 		List result = new ArrayList();
 
 		EnumChatFormatting b = EnumChatFormatting.BLACK;

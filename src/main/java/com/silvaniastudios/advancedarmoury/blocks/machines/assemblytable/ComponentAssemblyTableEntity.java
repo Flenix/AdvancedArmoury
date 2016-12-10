@@ -197,7 +197,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	
 	public int calculateWeight() {
 		int weight = 0;
-		for (int i = 2; i < 9; i++) {
+		for (int i = 1; i < 9; i++) {
 			ItemStack item = this.getStackInSlot(i);
 			if (item != null && item.stackTagCompound != null) {
 				weight += item.stackTagCompound.getInteger("weight");
@@ -208,7 +208,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	
 	public float calculateAccuracy() {
 		float acc = 0;
-		for (int i = 2; i < 9; i++) {
+		for (int i = 1; i < 9; i++) {
 			ItemStack item = this.getStackInSlot(i);
 			if (item != null && item.stackTagCompound != null) {
 				acc += item.stackTagCompound.getFloat("accuracy");
@@ -225,7 +225,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 		
 		double fireRate = 0;
 		double count = 0.0;
-		for (int i = 2; i < 9; i++) {
+		for (int i = 1; i < 9; i++) {
 			ItemStack item = this.getStackInSlot(i);
 			if (item != null && item.stackTagCompound != null) {
 				if (item.stackTagCompound.getInteger("fireRate") > 0) {
@@ -238,13 +238,14 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	}
 	
 	public int calculatePower() {
-		System.out.println("Checking power");
+		int boltWeight;
+		int boltDurability;
+		
+		
 		int power = 0;
-		for (int i = 2; i < 9; i++) {
+		for (int i = 1; i < 9; i++) {
 			ItemStack item = this.getStackInSlot(i);
-			System.out.println("Slot: " + i);
 			if (item != null && item.stackTagCompound != null) {
-				System.out.println("Power: " + power + " + " + item.stackTagCompound.getInteger("power"));
 				power += item.stackTagCompound.getInteger("power");
 			}
 		}
@@ -253,7 +254,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	
 	public int calculateDurability() {
 		int durability = 0;
-		for (int i = 2; i < 9; i++) {
+		for (int i = 1; i < 9; i++) {
 			ItemStack item = this.getStackInSlot(i);
 			if (item != null && item.stackTagCompound != null) {
 				durability += item.stackTagCompound.getInteger("durability");
