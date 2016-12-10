@@ -8,15 +8,22 @@ import net.minecraft.item.ItemStack;
 
 public class SlotReceiverCasing extends Slot {
 	
-	public SlotReceiverCasing(IInventory inventory, int id, int x, int y) {
+	boolean requireFilled; //True = receiver is full to be used in final gun. False = empty, to be filled.
+	
+	public SlotReceiverCasing(IInventory inventory, int id, int x, int y, boolean requireFilled) {
 		super (inventory, id, x, y);
+		this.requireFilled = requireFilled;
 	}
 	
 	@Override
 	public boolean isItemValid(ItemStack item) {
 		if (item != null) {
 			if (item.getItem() instanceof ReceiverCasing) {
-				return true;
+				if (item.stackTagCompound.getBoolean("hasInternals") && requireFilled) {
+					return true;
+				} else if (!item.stackTagCompound.getBoolean("hasInternals") && !requireFilled) {
+					return true;
+				}
 			}
 		}
 		return false;

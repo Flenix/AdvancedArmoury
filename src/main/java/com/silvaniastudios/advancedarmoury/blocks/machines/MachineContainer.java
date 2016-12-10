@@ -74,7 +74,7 @@ public class MachineContainer extends Container {
 	
 	@Override
 	public ItemStack slotClick(int slot, int button, int flag, EntityPlayer player) {
-		if (slot > 1 || slot < 1) {
+		if (slot != 0) {
 			if (tileEntity.building) {
 				return null; //No clicking slots while things are building. Stops you taking out parts as they are added.
 			}

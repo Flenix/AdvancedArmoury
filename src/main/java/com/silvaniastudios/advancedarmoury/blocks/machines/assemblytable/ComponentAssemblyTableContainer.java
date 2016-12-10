@@ -16,7 +16,7 @@ public class ComponentAssemblyTableContainer extends MachineContainer {
 		
 		addSlotToContainer(new SlotParts(tileEntity, 0, 8, 10)); //Insert parts slot
 		
-		addSlotToContainer(new SlotReceiverCasing(tileEntity, 1, 41, 54)); 				//Core  		ALL
+		addSlotToContainer(new SlotReceiverCasing(tileEntity, 1, 41, 54, false)); 				//Core  		ALL
 
 		addSlotToContainer(new SlotComponent(tileEntity, 2,  8, 50, "bolt", true)); 			//Bolt			ALL
 		addSlotToContainer(new SlotComponent(tileEntity, 3,  8, 72, "chamber", true)); 		//Chamber		ALL
