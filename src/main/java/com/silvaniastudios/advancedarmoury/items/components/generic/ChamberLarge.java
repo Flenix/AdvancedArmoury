@@ -18,7 +18,7 @@ public class ChamberLarge extends ItemComponent {
 	public static double[] cal = {5.56, 7.62, 9.00, 12.7};
 
 	public ChamberLarge(String componentName, String displayName) {
-		super(componentName, displayName, "Receiver Component B", 4.425, false, false, true);
+		super(componentName, displayName, "Receiver Component B", 4.425, false, false, true, "The component which holds the cartridge in place until it is fired. \nAffects compatible calibre of cartridge.");
 		this.setCreativeTab(AdvancedArmoury.tabComponentsInternal);
 	}
 	

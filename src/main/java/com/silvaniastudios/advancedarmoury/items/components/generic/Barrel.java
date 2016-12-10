@@ -23,7 +23,7 @@ public class Barrel extends ItemComponent {
 	public static double[] cal = {5.56, 7.62, 9.00, 12.7, 18.5};
 
 	public Barrel(String componentName, String displayName) {
-		super(componentName, displayName, "Barrel", 0.3, true, true, true);
+		super(componentName, displayName, "Barrel", 0.3, true, true, true, "The component a bullet travels through while being fired. \nAffects Accuracy, and power to a lesser extent.");
 		this.setCreativeTab(AdvancedArmoury.tabComponentsInternal);
 	}
 	

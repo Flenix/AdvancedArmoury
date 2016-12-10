@@ -19,7 +19,7 @@ public class RevolvingChamber extends ItemComponent {
 	public static int[] capacity = {4, 5, 6, 7, 8};
 
 	public RevolvingChamber(String componentName, String displayName) {
-		super(componentName, displayName, "Revolver Component X", 4.425, false, true, true);
+		super(componentName, displayName, "Revolver Component X", 4.425, false, true, true, "The component which holds the cartridge in place until it is fired. \nAffects compatible calibre of cartridge. \nThis particular style rotates, allowing chambering of multiple rounds.");
 		this.setCreativeTab(AdvancedArmoury.tabComponentsInternal);
 	}
 	

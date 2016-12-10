@@ -6,7 +6,7 @@ import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponen
 public class PistolSlide extends ItemComponent {
 
 	public PistolSlide(String componentName, String displayName) {
-		super(componentName, displayName, "Semi-Auto Pistol Component X", 10);
+		super(componentName, displayName, "Semi-Auto Pistol Component X", 10, "This component works alongside the Firing Mechanism to chamber a new round. \nIt can also help to reduce recoil.");
 		this.setCreativeTab(AdvancedArmoury.tabComponentsExternal);
 	}
 }

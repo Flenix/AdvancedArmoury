@@ -19,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 
 public class ItemComponent extends Item {
 
@@ -26,6 +27,8 @@ public class ItemComponent extends Item {
 	public String componentName;
 	public String displayName;
 	public String identifier;
+	
+	public String use;
 	
 	public boolean accuracyEnabled;
 	public boolean cosmeticEnabled;
@@ -46,7 +49,7 @@ public class ItemComponent extends Item {
 	
 	public boolean assetComponent = false;
 	
-	public ItemComponent(String componentName, String displayName, String identifier, double volume, boolean acc, boolean cos, boolean cal) {
+	public ItemComponent(String componentName, String displayName, String identifier, double volume, boolean acc, boolean cos, boolean cal, String use) {
 		this.componentName = componentName;
 		this.displayName = displayName;
 		this.identifier = identifier;
@@ -55,11 +58,13 @@ public class ItemComponent extends Item {
 		this.accuracyEnabled = acc;
 		this.cosmeticEnabled = cos;
 		this.calibreEnabled  = cal;
+		
+		this.use = use;
 	}
 	
 	//For decorative-only stuff, such as assets, trigger etc
-	public ItemComponent(String componentName, String displayName, String identifier, double size) {
-		this(componentName, displayName, identifier, size, false, true, false);
+	public ItemComponent(String componentName, String displayName, String identifier, double size, String use) {
+		this(componentName, displayName, identifier, size, false, true, false, use);
 	}
 	
 	@Override
@@ -151,9 +156,17 @@ public class ItemComponent extends Item {
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 				list.add("");
 				if (identifier.length() > 0) {
-					list.add(identifier);
-					list.add("");
+					list.add(EnumChatFormatting.GREEN + "" + EnumChatFormatting.BOLD + identifier);
 				}
+				String[] splitter = use.split("\n");
+				for (int i = 0; i < splitter.length; i++) {
+					list.add(EnumChatFormatting.ITALIC + splitter[i]);
+				}
+				if (cosmeticEnabled) {
+					list.add("");
+					list.add(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + "This component affects a weapons look.");
+				}
+				list.add("");
 				if (accuracyEnabled) { list.add(accDisplay(getAccuracy(item))); }
 				list.add(weightDisplay(item, getWeight(item)));
 				list.add(durabilityDisplay(item, getDurability(item)));
@@ -173,6 +186,8 @@ public class ItemComponent extends Item {
 						list.add("Capacity: " + item.stackTagCompound.getInteger("capacity") + " Rounds");
 					}
 				}
+				
+				
 			} else {
 				list.add("Hold shift for more information");
 			}

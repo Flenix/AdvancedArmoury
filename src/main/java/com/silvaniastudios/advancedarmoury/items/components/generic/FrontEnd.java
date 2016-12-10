@@ -30,7 +30,7 @@ public class FrontEnd extends ItemComponent {
 	
 	public FrontEnd(String componentName, String displayName, String modelName, String modelTexture, String gunType, 
 			float xSize, float ySize, float zSize, boolean topRail, boolean leftRail, boolean rightRail, boolean underRail) {
-		super(componentName, displayName, "Receiver Component: F", 18);
+		super(componentName, displayName, "Receiver Component: F", 18, "This is the front section of a gun, sometimes called the fore-end. \nIf it has a RIS, attachments can be added to it.");
 		this.xSize = xSize;
 		this.ySize = ySize;
 		this.zSize = zSize;

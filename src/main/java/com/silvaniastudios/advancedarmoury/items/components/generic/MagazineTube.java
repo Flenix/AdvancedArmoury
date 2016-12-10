@@ -18,7 +18,7 @@ public class MagazineTube extends ItemComponent {
 	public static int[] length = {12, 15, 18, 21, 24};
 
 	public MagazineTube(String componentName, String displayName) {
-		super(componentName, displayName, "Pump Action Shotgun Component", 0.3, false, true, false);
+		super(componentName, displayName, "Pump Action Shotgun Component", 0.3, false, true, false, "This component holds shells for a pump-action shotgun.");
 		this.setCreativeTab(AdvancedArmoury.tabComponentsExternal);
 	}
 	

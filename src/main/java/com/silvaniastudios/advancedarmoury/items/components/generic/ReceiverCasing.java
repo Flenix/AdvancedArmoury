@@ -12,6 +12,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 public class ReceiverCasing extends ItemComponent {
 	
@@ -37,7 +38,7 @@ public class ReceiverCasing extends ItemComponent {
 	public String gunSize;
 
 	public ReceiverCasing(String gunSize, String gunType, String componentName, String displayName) {
-		super(componentName, displayName, "", 15, false, true, false);
+		super(componentName, displayName, "", 15, false, true, false, "This is the casing which holds all the internals together. \nOften compromised of two parts; Upper and Lower receiver.");
 		this.gunType = gunType;
 		this.gunSize = gunSize;
 	}
@@ -50,7 +51,7 @@ public class ReceiverCasing extends ItemComponent {
 		float attachmentX, float attachmentY, float attachmentZ,
 		int magId, boolean topRail,
 		String modelName, String modelTexture) {
-		super(componentName, displayName, "", 15, false, true, false);
+		super(componentName, displayName, "", 15, false, true, false, "This is the casing which holds all the internals together. \nOften compromised of two parts. \nThis affects the look of your weapon.");
 		this.modelName = modelName;
 		this.modelTexture = modelTexture;
 		
@@ -109,6 +110,15 @@ public class ReceiverCasing extends ItemComponent {
 						list.add(identifier);
 						list.add("");
 					}
+					String[] splitter = use.split("\n");
+					for (int i = 0; i < splitter.length; i++) {
+						list.add(EnumChatFormatting.ITALIC + splitter[i]);
+					}
+					if (cosmeticEnabled) {
+						list.add("");
+						list.add(EnumChatFormatting.DARK_PURPLE + "" + EnumChatFormatting.ITALIC + "This component affects a weapons look.");
+					}
+					list.add("");
 				}
 				list.add(weightDisplay(item, getWeight(item)));
 				list.add(durabilityDisplay(item, getDurability(item)));
