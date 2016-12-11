@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.blocks.machines.MachineEntity;
+import com.silvaniastudios.advancedarmoury.config.AAConfig;
 import com.silvaniastudios.advancedarmoury.items.ItemParts;
 import com.silvaniastudios.advancedarmoury.items.components.generic.ChamberLarge;
 import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponent;
@@ -252,7 +253,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 				negMod = (boltIntegrity - pinIntegrity)/10;
 			}
 			
-			double powerBase = ((boltWeight + pinWeight) / 30.0) + 1;
+			double powerBase = ((boltWeight + pinWeight) / AAConfig.damageModifier) + 1;
 			return (int) (Math.floor(powerBase - ((powerBase/100.0)*negMod)));
 		}
 		return 0;
