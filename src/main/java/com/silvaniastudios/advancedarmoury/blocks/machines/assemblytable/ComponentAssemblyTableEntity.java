@@ -6,6 +6,7 @@ import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.blocks.machines.MachineEntity;
 import com.silvaniastudios.advancedarmoury.items.ItemParts;
 import com.silvaniastudios.advancedarmoury.items.components.generic.ChamberLarge;
+import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponent;
 import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
 import com.silvaniastudios.advancedarmoury.skills.SkillFirearmCrafting;
 
@@ -238,18 +239,23 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	}
 	
 	public int calculatePower() {
-		int boltWeight;
-		int boltDurability;
-		
-		
-		int power = 0;
-		for (int i = 1; i < 9; i++) {
-			ItemStack item = this.getStackInSlot(i);
-			if (item != null && item.stackTagCompound != null) {
-				power += item.stackTagCompound.getInteger("power");
+		ItemStack bolt = this.getStackInSlot(2);
+		ItemStack pin = this.getStackInSlot(4);
+		if (bolt != null && pin != null && bolt.stackTagCompound != null && pin.stackTagCompound != null) {
+			int boltWeight = bolt.stackTagCompound.getInteger("weight");
+			int pinWeight = pin.stackTagCompound.getInteger("weight");
+			double boltIntegrity = stats.getIntegrity(getMaterial(bolt));
+			double pinIntegrity = stats.getIntegrity(getMaterial(pin));
+			double negMod = 0;
+			
+			if (pinIntegrity < boltIntegrity) {
+				negMod = (boltIntegrity - pinIntegrity)/10;
 			}
+			
+			double powerBase = ((boltWeight + pinWeight) / 30.0) + 1;
+			return (int) (Math.floor(powerBase - ((powerBase/100.0)*negMod)));
 		}
-		return power;
+		return 0;
 	}
 	
 	public int calculateDurability() {

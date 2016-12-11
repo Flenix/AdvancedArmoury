@@ -226,7 +226,7 @@ public class ItemComponent extends Item {
 	}
 	
 	public String durabilityDisplay(ItemStack item, double durability) {
-		double dura = stats.getDurability(getMaterial(item)); //TODO make better
+		double dura = stats.getIntegrity(getMaterial(item)); //TODO make better
 		if (dura <= 0.6) { return "\u00A74" + "Durability: " + (int) durability; }
 		else if (dura <= 2.0) { return "\u00A7c" + "Durability: " + (int) durability; }
 		else if (dura <= 3.5) { return "\u00A7e" + "Durability: " + (int) durability; }

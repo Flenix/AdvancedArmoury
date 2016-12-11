@@ -4,7 +4,7 @@ public class MaterialStats {
 	
 	static ComponentGeneratorConfig config;
 	
-	public static double getDurability(String str) {
+	public static double getIntegrity(String str) {
 		for (int i = 0; i < config.materials.length; i++) {
 			String[] splitter = config.materials[i].split(",");
 			String materialName = splitter[0].trim();

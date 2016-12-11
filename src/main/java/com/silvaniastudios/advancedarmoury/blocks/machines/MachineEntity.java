@@ -1,5 +1,6 @@
 package com.silvaniastudios.advancedarmoury.blocks.machines;
 
+import com.silvaniastudios.advancedarmoury.config.MaterialStats;
 import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverCasing;
 import com.silvaniastudios.advancedarmoury.items.components.lmg.LMGReceiverCasing;
 import com.silvaniastudios.advancedarmoury.items.components.rifle.RifleReceiverCasing;
@@ -19,6 +20,7 @@ import net.minecraft.world.EnumSkyBlock;
 public class MachineEntity extends TileEntity implements IInventory {
 	
 	public ItemStack[] inv;
+	protected MaterialStats stats;
 	
 	public int partsValue;
 	public int buildProgress;
@@ -177,5 +179,7 @@ public class MachineEntity extends TileEntity implements IInventory {
 	@Override public int getInventoryStackLimit() {				 		return 64; 			}
 	@Override public void openInventory() {}
 	@Override public void closeInventory() {}
+	
+	public String getMaterial(ItemStack item) 		{ return item.stackTagCompound != null ? item.stackTagCompound.getString("materialName") : null; }
 
 }
