@@ -168,7 +168,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 					
 					casing.stackTagCompound.setInteger("weight", calculateWeight());
 					casing.stackTagCompound.setFloat("accuracy", calculateAccuracy());
-					casing.stackTagCompound.setInteger("fireRate", calculateFireRate());
+					calculateFireRate(casing); //Set the fire rate, and semi auto lock boolean.
 					casing.stackTagCompound.setInteger("power", calculatePower());
 					casing.stackTagCompound.setInteger("durability", calculateDurability());
 					
@@ -219,24 +219,55 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 		return acc;
 	}
 	
-	public int calculateFireRate() {
+	public void calculateFireRate(ItemStack casing) {
 		//Calculate semi and full-auto fire rates
-		//For full auto, round up and use chart
-		//For semi, value is the delay before you can fire again
+		//Value is rounds per second - use chart to see rounds per tick and how many ticks between.
+		//Semi auto is capped at 20RPS - ie as fast as you can right click
+		//Bolt arm (Any rifle) adds 10 ticks
 		
-		
-		double fireRate = 0;
-		double count = 0.0;
-		for (int i = 1; i < 9; i++) {
-			ItemStack item = this.getStackInSlot(i);
-			if (item != null && item.stackTagCompound != null) {
-				if (item.stackTagCompound.getInteger("fireRate") > 0) {
-					fireRate += item.stackTagCompound.getInteger("fireRate");
-					count++;
-				}
+		ItemStack bolt = this.getStackInSlot(2);
+		ItemStack mech = this.getStackInSlot(4);
+		if (bolt != null && mech != null && bolt.stackTagCompound != null && mech.stackTagCompound != null) {
+			int boltWeight = bolt.stackTagCompound.getInteger("weight");
+			int mechWeight = mech.stackTagCompound.getInteger("weight");
+			double boltIntegrity = stats.getIntegrity(getMaterial(bolt));
+			double mechIntegrity = stats.getIntegrity(getMaterial(mech));
+			double negMod = 0;
+			
+			if (mechIntegrity < boltIntegrity) {
+				negMod = (boltIntegrity - mechIntegrity)/10;
 			}
+			
+			double frBase = (boltWeight + mechWeight + 1)- (((boltWeight + mechWeight + 1)/100.0)*negMod) / 50;
 		}
-		return (int) Math.round(fireRate/count);
+		
+		casing.stackTagCompound.setInteger("fireRate", 0);
+		casing.stackTagCompound.setBoolean("semiLocked", false);
+	}
+	
+	public int calculateFireRate() {
+		ItemStack bolt = this.getStackInSlot(2);
+		ItemStack mech = this.getStackInSlot(5);
+		if (bolt != null && mech != null && bolt.stackTagCompound != null && mech.stackTagCompound != null) {
+			int boltWeight = bolt.stackTagCompound.getInteger("weight");
+			int mechWeight = mech.stackTagCompound.getInteger("weight");
+			double boltIntegrity = stats.getIntegrity(getMaterial(bolt));
+			double mechIntegrity = stats.getIntegrity(getMaterial(mech));
+			double negMod = 0;
+			int weight = boltWeight + mechWeight;
+			
+			if (mechIntegrity < boltIntegrity) {
+				negMod = (boltIntegrity - mechIntegrity)/10;
+				return (int) Math.ceil((weight - ((weight/100.0)*negMod)) / 350.0);
+			}
+			
+			return (int) Math.ceil(weight / 350.0);
+		}
+		return 0;
+	}
+	
+	public String fireRateString() {
+		return "";
 	}
 	
 	public int calculatePower() {
