@@ -45,7 +45,7 @@ public class ComponentGeneratorConfig {
 					"Polymer, 0.95, 950, 0.69, \u00A78, 4079166, materialPolymer, COMMON", 
 					"Iron, 1.5, 7300, 0.69, \u00A77, 12303291, ingotIron, COMMON", 
 					
-					"Gold, 0.6, 19300, 0.77, \u00A76, 16635392, ingotGold, UNCOMMON", 
+					"Gold, 0.2, 19300, 0.77, \u00A76, 16635392, ingotGold, UNCOMMON", 
 					"Bronze, 2.65, 8850, 0.49, \u00A76, 11231279, ingotBronze, UNCOMMON", 
 					"Steel, 3.9, 7850, 0.4, \u00A78, 10329501, ingotSteel, UNCOMMON", 
 

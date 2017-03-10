@@ -76,7 +76,7 @@ public class HandlerOfEvents {
     		
     		//We add the held item twice (It was caught in the loop above) because the held item throws balance more.
     		//When you're running with a weapon in hand, it's harder than running with one slung over your shoulder
-    		//Therefore weilding a gun impacts you more than just having it in your inventory.
+    		//Therefore wielding a gun impacts you more than just having it in your inventory.
     		ItemStack heldItem = player.getHeldItem();
     		if (heldItem != null && heldItem.stackTagCompound != null) {
     			totalWeight += heldItem.stackTagCompound.getInteger("weight");
@@ -98,7 +98,7 @@ public class HandlerOfEvents {
     		return;
     	}
     	double rand = new Random().nextDouble();
-    	event.ammount = (float) (event.ammount * (8 + (rand*2)));*/
+    	event.ammount = (float) (event.ammount * (9 + (rand*2)));*/ //TODO Check that it's 9, because it was set to 8 for some reason and that's weird. Should be +/-10% damage.
     	
     	//While we're here, fire off a packet saying where abouts the attacker is in relation to the player.
     	//We use this for displaying located damage on-screen, which has to be done client-side.

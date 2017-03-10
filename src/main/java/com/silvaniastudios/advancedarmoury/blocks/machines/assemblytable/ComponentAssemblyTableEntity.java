@@ -6,9 +6,13 @@ import com.silvaniastudios.advancedarmoury.AdvancedArmoury;
 import com.silvaniastudios.advancedarmoury.blocks.machines.MachineEntity;
 import com.silvaniastudios.advancedarmoury.config.AAConfig;
 import com.silvaniastudios.advancedarmoury.items.ItemParts;
+import com.silvaniastudios.advancedarmoury.items.components.assault.AssaultReceiverCasing;
 import com.silvaniastudios.advancedarmoury.items.components.generic.ChamberLarge;
 import com.silvaniastudios.advancedarmoury.items.components.generic.ItemComponent;
 import com.silvaniastudios.advancedarmoury.items.components.generic.ReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.lmg.LMGReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.rifle.RifleReceiverCasing;
+import com.silvaniastudios.advancedarmoury.items.components.smg.SMGReceiverCasing;
 import com.silvaniastudios.advancedarmoury.skills.SkillFirearmCrafting;
 
 import co.uk.silvania.rpgcore.skills.SkillLevelBase;
@@ -273,6 +277,14 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 	public int calculatePower() {
 		ItemStack bolt = this.getStackInSlot(2);
 		ItemStack pin = this.getStackInSlot(4);
+		double typeMod = 1;
+		if (this.getStackInSlot(1) != null) {
+			if (this.getStackInSlot(1).getItem() instanceof AssaultReceiverCasing) {    typeMod = 1.3;  }
+			else if (this.getStackInSlot(1).getItem() instanceof RifleReceiverCasing) { typeMod = 2.0;  }
+			else if (this.getStackInSlot(1).getItem() instanceof SMGReceiverCasing) {   typeMod = 0.8;  }
+			else if (this.getStackInSlot(1).getItem() instanceof LMGReceiverCasing) {   typeMod = 1.65; }
+		}
+		
 		if (bolt != null && pin != null && bolt.stackTagCompound != null && pin.stackTagCompound != null) {
 			int boltWeight = bolt.stackTagCompound.getInteger("weight");
 			int pinWeight = pin.stackTagCompound.getInteger("weight");
@@ -285,7 +297,7 @@ public class ComponentAssemblyTableEntity extends MachineEntity implements IInve
 			}
 			
 			double powerBase = ((boltWeight + pinWeight) / AAConfig.damageModifier) + 1;
-			return (int) (Math.floor(powerBase - ((powerBase/100.0)*negMod)));
+			return (int) (Math.floor((powerBase - ((powerBase/100.0)*negMod)))*typeMod);
 		}
 		return 0;
 	}
